@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OxyGameS</string>
+    <string name="copyright">oxygames.fr</string>
+
+    <!-- label -->
+    <string name="label_inscription">INSCRIPTION</string>
+    <string name="label_connection">CONNECTION</string>
+    <string name="label_email">Email</string>
+    <string name="label_logout">Logout</string>
+    <string name="label_status">Status</string>
+    <string name="label_website">website</string>
+    <string name="label_facebook">Facebook</string>
+    <string name="label_instagram">Instagram</string>
+    <string name="label_todo">TODO</string>
+    <string name="label_profile">Profile</string>
+    <string name="label_settings">Settings</string>
+    <string name="label_username">Username</string>
+    <string name="label_password">Password</string>
+    <string name="label_passwordConfirm">Password Confirmation</string>
+    <string name="label_home">Home</string>
+    <string name="label_search_users_here">Search users here ...</string>
+    <string name="label_next">Next</string>
+    <string name="label_previous">Previous</string>
+    <string name="label_create_account">Crée un nouveau compte</string>
+
+    <!-- title -->
+    <string name="title_activity_welcome">Welcome</string>
+    <string name="title_profil_list">Profils</string>
+    <string name="title_profil_detail">Profil Detail</string>
+    <string name="title_activity_main">Main Activity</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails</string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="label_aide">AIDE</string>
+    <string name="label_deja_connecter">deja connecter</string>
+    <string name="label_chats">Chats</string>
+    <string name="label_write_message_here">write message here ...</string>
+    <string name="description_send_icone">send icone</string>
+    <string name="description_image_file">image file</string>
+</resources>

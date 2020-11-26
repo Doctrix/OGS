@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "219402818210",
+    "firebase_url": "https://oxygene-studio.firebaseio.com",
+    "project_id": "oxygene-studio",
+    "storage_bucket": "oxygene-studio.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:219402818210:android:599f8d175beb10544abdfb",
+        "android_client_info": {
+          "package_name": "fr.oxygames.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "219402818210-j80cjr1f40lfg48v1i1k58v5363kpcss.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAslB_ofONDU2VwHTB1Lm3hgNFHdWbnc4I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "219402818210-j80cjr1f40lfg48v1i1k58v5363kpcss.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
