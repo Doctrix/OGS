@@ -1,6 +1,6 @@
 package fr.oxygames.app.model
 
-class UsersModel {
+public class UsersModel {
     private var uid: String = ""
     private var username: String = ""
     private var avatar: String = ""

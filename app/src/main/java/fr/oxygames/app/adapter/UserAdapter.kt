@@ -18,7 +18,7 @@ import fr.oxygames.app.model.UsersModel
 class UserAdapter(
         private val mContext: Context,
         private val mUsers: List<UsersModel>,
-        private var isChatCheck: Boolean
+        private val isChatCheck: Boolean
     ) : RecyclerView.Adapter<UserAdapter.ViewHolder?>()
 {
 
@@ -45,24 +45,27 @@ class UserAdapter(
             val builder: AlertDialog.Builder = AlertDialog.Builder(mContext)
             builder.setTitle("What do you want?")
             builder.setItems(options, DialogInterface.OnClickListener{ dialog, position ->
-                if (position == 0){
+                if (position == 0)
+                {
                     val intent = Intent(mContext, MessageChatActivity::class.java)
                     intent.putExtra("visit_id", user.getUID())
                     mContext.startActivity(intent)
                 }
-                if (position == 1){
+                if (position == 1)
+                {
 
                 }
             })
+            builder.show()
         }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        public final var UsernameTextView: TextView = itemView.findViewById(R.id.username)
-        var profileImageView: CircleImageView = itemView.findViewById(R.id.image_profil)
-        var onlineImageView: CircleImageView = itemView.findViewById(R.id.image_online)
-        var offlineImageView: CircleImageView = itemView.findViewById(R.id.image_offline)
-        var lastMessageTxt: TextView = itemView.findViewById(R.id.message_last)
+        val UsernameTextView: TextView = itemView.findViewById(R.id.username)
+        val profileImageView: CircleImageView = itemView.findViewById(R.id.image_profil)
+        val onlineImageView: CircleImageView = itemView.findViewById(R.id.image_online)
+        val offlineImageView: CircleImageView = itemView.findViewById(R.id.image_offline)
+        val lastMessageTxt: TextView = itemView.findViewById(R.id.message_last)
 
     }
 }
