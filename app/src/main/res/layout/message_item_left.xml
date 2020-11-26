@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="295dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ic_msg_left_content_background"
+    android:padding="9dp">
+    
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_avatar"
+        >
+    </de.hdodenhof.circleimageview.CircleImageView>
+
+    <TextView
+        android:id="@+id/show_text_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/profile_image"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="30dp"
+        android:text="@string/label_testing_message"
+        android:textSize="18sp"
+        android:padding="8dp"
+        android:background="@drawable/ic_msg_left_background"
+        android:textColor="@color/white"
+        android:textStyle="normal"
+        >
+    </TextView>
+
+    <ImageView
+        android:id="@+id/left_image_view"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_toRightOf="@+id/profile_image"
+        android:layout_marginLeft="6dp"
+        android:visibility="gone"
+        android:contentDescription="@string/label_todo">
+    </ImageView>
+
+    <TextView
+        android:id="@+id/text_seen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="seen"
+        android:textColor="@color/white"
+        android:textStyle="normal"
+        android:layout_below="@+id/show_text_message">
+
+    </TextView>
+</RelativeLayout>

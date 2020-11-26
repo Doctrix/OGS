@@ -7,17 +7,19 @@
     tools:context=".fragment.SearchFragment">
 
     <EditText
-        android:id="@+id/searchUsers"
+        android:id="@+id/searchUsersET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="6dp"
         android:hint="@string/label_search_users_here"
+        android:autofillHints=""
+        android:inputType="text"
         >
     </EditText>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/searchList"
-        android:layout_below="@+id/searchUsers"
+        android:layout_below="@+id/searchUsersET"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >

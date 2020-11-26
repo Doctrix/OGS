@@ -31,8 +31,7 @@
         android:layout_toEndOf="@id/image_profil"
         android:padding="6dp"
         android:textColor="@color/black"
-        android:textSize="14sp"
-        android:text="@string/label_username"/>
+        android:textSize="14sp" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/image_online"

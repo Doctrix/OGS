@@ -1,10 +1,10 @@
 package fr.oxygames.app.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -19,7 +19,7 @@ import fr.oxygames.app.R
 import fr.oxygames.app.fragment.ChatsFragment
 import fr.oxygames.app.fragment.SearchFragment
 import fr.oxygames.app.fragment.SettingsFragment
-import fr.oxygames.app.model.UsersModel
+import fr.oxygames.app.model.Users
 import kotlinx.android.synthetic.main.activity_home.*
 import org.jetbrains.anko.longToast
 
@@ -42,7 +42,7 @@ class HomeActivity : AppCompatActivity() {
         val viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
 
         viewPagerAdapter.addFragment(ChatsFragment(), "Chats")
-        /*viewPagerAdapter.addFragment(SearchFragment(), "Search")*/
+        viewPagerAdapter.addFragment(SearchFragment(), "Search")
         viewPagerAdapter.addFragment(SettingsFragment(), "Settings")
 
         viewPager.adapter = viewPagerAdapter
@@ -65,7 +65,7 @@ class HomeActivity : AppCompatActivity() {
             override fun onDataChange(p0: DataSnapshot) {
                 if (p0.exists())
                 {
-                    val user: UsersModel? = p0.getValue(UsersModel::class.java)
+                    val user: Users? = p0.getValue(Users::class.java)
 
                     user_name.text = user!!.getUsername()
                     Picasso.get().load(user.getAvatar()).placeholder(R.drawable.ic_avatar).into(profile_image_home)

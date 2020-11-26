@@ -1,15 +1,15 @@
 package fr.oxygames.app.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import fr.oxygames.app.R
-import fr.oxygames.app.model.UsersModel
+import fr.oxygames.app.model.Users
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import org.jetbrains.anko.longToast
@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists())
                 {
-                    val user: UsersModel? = snapshot.getValue(UsersModel::class.java)
+                    val user: Users? = snapshot.getValue(Users::class.java)
 
                     username_TextView.text = user!!.getUsername()
                     fb_TextView.text = user.getFacebook()

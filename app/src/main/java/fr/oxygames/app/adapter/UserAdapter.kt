@@ -13,14 +13,23 @@ import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import fr.oxygames.app.R
 import fr.oxygames.app.activity.MessageChatActivity
-import fr.oxygames.app.model.UsersModel
+import fr.oxygames.app.model.Users
 
 class UserAdapter(
-        private val mContext: Context,
-        private val mUsers: List<UsersModel>,
-        private var isChatCheck: Boolean
+    mContext: Context,
+    mUsers: List<Users>,
+    isChatCheck: Boolean
     ) : RecyclerView.Adapter<UserAdapter.ViewHolder?>()
 {
+    private val mContext: Context
+    private val mUsers: List<Users>
+    private var isChatCheck: Boolean
+
+    init {
+        this.mUsers = mUsers
+        this.mContext = mContext
+        this.isChatCheck = isChatCheck
+    }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(mContext).inflate(R.layout.user_search_item_layout, viewGroup, false)
@@ -33,8 +42,8 @@ class UserAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, i: Int) {
 
-        val user: UsersModel = mUsers[i]
-        holder.UsernameTextView.text = user.getUsername()
+        val user: Users = mUsers[i]
+        holder.userNameTxt.text = user.getUsername()
         Picasso.get().load(user.getAvatar()).placeholder(R.drawable.ic_profile).into(holder.profileImageView)
 
         holder.itemView.setOnClickListener{
@@ -45,24 +54,26 @@ class UserAdapter(
             val builder: AlertDialog.Builder = AlertDialog.Builder(mContext)
             builder.setTitle("What do you want?")
             builder.setItems(options, DialogInterface.OnClickListener{ dialog, position ->
-                if (position == 0){
+                if (position == 0)
+                {
                     val intent = Intent(mContext, MessageChatActivity::class.java)
                     intent.putExtra("visit_id", user.getUID())
                     mContext.startActivity(intent)
                 }
-                if (position == 1){
+                else (position == 1)
+                {
 
                 }
             })
+            builder.show()
         }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        public final var UsernameTextView: TextView = itemView.findViewById(R.id.username)
-        var profileImageView: CircleImageView = itemView.findViewById(R.id.image_profil)
-        var onlineImageView: CircleImageView = itemView.findViewById(R.id.image_online)
-        var offlineImageView: CircleImageView = itemView.findViewById(R.id.image_offline)
-        var lastMessageTxt: TextView = itemView.findViewById(R.id.message_last)
-
+        val userNameTxt: TextView = itemView.findViewById(R.id.username)
+        val profileImageView: CircleImageView = itemView.findViewById(R.id.image_profil)
+        val onlineImageView: CircleImageView = itemView.findViewById(R.id.image_online)
+        val offlineImageView: CircleImageView = itemView.findViewById(R.id.image_offline)
+        val lastMessageTxt: TextView = itemView.findViewById(R.id.message_last)
     }
 }

@@ -1,6 +1,6 @@
 package fr.oxygames.app.model
 
-class UsersModel {
+class Users {
     private var uid: String = ""
     private var username: String = ""
     private var avatar: String = ""
@@ -43,7 +43,7 @@ class UsersModel {
         this.uid = uid
     }
 
-    fun getUsername(): String?{
+    fun getUsername(): String? {
         return username
     }
 

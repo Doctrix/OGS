@@ -7,12 +7,12 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -24,7 +24,7 @@ import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
 import com.squareup.picasso.Picasso
 import fr.oxygames.app.R
-import fr.oxygames.app.model.UsersModel
+import fr.oxygames.app.model.Users
 import kotlinx.android.synthetic.main.fragment_settings.*
 import kotlinx.android.synthetic.main.fragment_settings.view.*
 
@@ -54,7 +54,7 @@ class SettingsFragment : Fragment() {
         usersReference!!.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(p0: DataSnapshot) {
                 if (p0.exists()){
-                    val user: UsersModel? = p0.getValue(UsersModel::class.java)
+                    val user: Users? = p0.getValue(Users::class.java)
 
                     if (context != null) {
                         view.username_settings.text = user!!.getUsername()
@@ -226,6 +226,5 @@ class SettingsFragment : Fragment() {
             }
         }
     }
-
 }
 

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/Rl_parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="9dp"
+    android:layout_margin="5dp">
+
+    <RelativeLayout
+        android:id="@+id/Rl_content"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true">
+
+        <TextView
+            android:id="@+id/show_text_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="@string/label_testing_message"
+            android:textSize="18sp"
+            android:padding="8dp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/ic_msg_right_content_background">
+        </TextView>
+
+        <ImageView
+            android:id="@+id/right_image_view"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentEnd="true"
+            android:visibility="gone"
+            android:contentDescription="@string/label_todo">
+        </ImageView>
+
+        <TextView
+            android:id="@+id/text_seen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="@string/label_seen"
+            android:layout_below="@+id/show_text_message">
+
+        </TextView>
+
+    </RelativeLayout>
+
+</RelativeLayout>
