@@ -67,12 +67,12 @@ class Users {
         this.cover = cover
     }
 
-    fun getStatus(): String?{
+    fun getStatus(): String? {
         return status
     }
 
-    fun setStatus(status: String){
-        this.status = status
+    fun setStatus(status: String?){
+        this.status = status!!
     }
 
     fun getSearch(): String?{

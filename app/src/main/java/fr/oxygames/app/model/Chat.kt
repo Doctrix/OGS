@@ -4,7 +4,7 @@ class Chat {
     private var sender: String = ""
     private var message: String = ""
     private var receiver: String = ""
-    private var isSeen: String = ""
+    private var isSeen: Boolean = false
     private var url: String = ""
     private var messageId: String = ""
 
@@ -14,7 +14,7 @@ class Chat {
         sender: String,
         message: String,
         receiver: String,
-        isSeen: String,
+        isSeen: Boolean,
         url: String,
         messageId: String
     ) {
@@ -51,10 +51,10 @@ class Chat {
     }
 
     // isSeen
-    fun getIsSeen(): String?{
+    fun getIsSeen(): Boolean {
         return isSeen
     }
-    fun setIsSeen(isSeen: String?){
+    fun setIsSeen(isSeen: Boolean?){
         this.isSeen = isSeen!!
     }
 

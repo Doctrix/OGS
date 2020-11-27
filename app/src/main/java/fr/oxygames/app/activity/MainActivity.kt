@@ -43,8 +43,8 @@ class MainActivity : AppCompatActivity() {
                 if (snapshot.exists())
                 {
                     val user: Users? = snapshot.getValue(Users::class.java)
-
-                    username_TextView.text = user!!.getUsername()
+                    user!!.setStatus("Online")
+                    username_TextView.text = user.getUsername()
                     fb_TextView.text = user.getFacebook()
                     insta_TextView.text = user.getInstagram()
                     website_TextView.text = user.getWebsite()
