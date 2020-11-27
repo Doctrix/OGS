@@ -1,7 +1,9 @@
 package fr.oxygames.app.activity
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.google.firebase.auth.FirebaseAuth
@@ -44,11 +46,16 @@ class MainActivity : AppCompatActivity() {
                 {
                     val user: Users? = snapshot.getValue(Users::class.java)
                     user!!.setStatus("Online")
+
+                    val textView = status_profil.findViewById(R.id.status_profil) as TextView
+                    textView.setTextColor(Color.parseColor("green"))
+
                     username_TextView.text = user.getUsername()
                     fb_TextView.text = user.getFacebook()
                     insta_TextView.text = user.getInstagram()
                     website_TextView.text = user.getWebsite()
                     status_profil.text = user.getStatus()
+                    
                     Picasso.get().load(user.getCover()).placeholder(R.drawable.ic_cover).into(cover)
                     Picasso.get().load(user.getAvatar()).placeholder(R.drawable.ic_profile).into(image_profil)
                 }
