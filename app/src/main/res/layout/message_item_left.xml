@@ -37,17 +37,18 @@
         android:layout_toRightOf="@+id/profile_image"
         android:layout_marginLeft="6dp"
         android:visibility="gone"
-        android:contentDescription="@string/label_todo">
+        android:contentDescription="@string/label_todo"
+        >
     </ImageView>
 
     <TextView
         android:id="@+id/text_seen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="seen"
+        android:visibility="gone"
         android:textColor="@color/white"
         android:textStyle="normal"
-        android:layout_below="@+id/show_text_message">
-
+        android:layout_below="@+id/show_text_message"
+        >
     </TextView>
 </RelativeLayout>

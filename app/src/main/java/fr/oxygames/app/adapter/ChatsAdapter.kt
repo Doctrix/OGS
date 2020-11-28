@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.FirebaseDatabase
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import fr.oxygames.app.R
@@ -43,19 +45,23 @@ class ChatsAdapter (
     override fun onBindViewHolder(holder: ViewHolder, position: Int)
     {
         val chat: Chat = mChatList[position]
+
         Picasso.get().load(imageUrl).into(holder.profile_image)
 
         //images messages
-        if (chat.getMessage().equals("hello.") && !chat.getUrl().equals("")){
+        if (chat.getMessage().equals("hello") && !chat.getUrl().equals(""))
+        {
             // image message - right side
-            if (chat.getSender().equals(firebaseUser!!.uid)) {
+            if (chat.getSender().equals(firebaseUser!!.uid))
+            {
                 holder.show_text_message!!.visibility = View.GONE
                 holder.right_image_view!!.visibility = View.VISIBLE
                 Picasso.get().load(chat.getUrl()).into(holder.right_image_view)
 
             }
             // image message - left side
-            else if (!chat.getSender().equals(firebaseUser!!.uid)) {
+            else if (!chat.getSender().equals(firebaseUser!!.uid))
+            {
                 holder.show_text_message!!.visibility = View.GONE
                 holder.left_image_view!!.visibility = View.VISIBLE
                 Picasso.get().load(chat.getUrl()).into(holder.left_image_view)
@@ -126,5 +132,19 @@ class ChatsAdapter (
         {
             0
         }
+    }
+
+    private fun deleteSentMessage(position: Int, holder: ChatsAdapter.ViewHolder)
+    {
+        val ref = FirebaseDatabase.getInstance().reference.child("Chats")
+            .child(mChatList.get(position).getMessage()!!)
+            .removeValue()
+            .addOnCompleteListener{ task ->
+                if (task.isSuccessful)
+                {
+                    // toast
+                    Toast.makeText(holder.itemView.context, "Deleted.", Toast.LENGTH_SHORT).show()
+                }
+            }
     }
 }

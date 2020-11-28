@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +19,8 @@ import com.google.firebase.database.ValueEventListener
 import fr.oxygames.app.R
 import fr.oxygames.app.adapter.UserAdapter
 import fr.oxygames.app.model.Users
+import org.jetbrains.anko.*
+
 
 class SearchFragment : Fragment() {
     private var userAdapter: UserAdapter? = null
@@ -71,7 +74,7 @@ class SearchFragment : Fragment() {
                         val user: Users? = snapshot.getValue(Users::class.java)
                         if (!(user!!.getUID()).equals(firebaseUserID))
                         {
-                            (mUsers as ArrayList<Users>)
+                            (mUsers as ArrayList<Users>).add(user)
                         }
                     }
                     userAdapter = UserAdapter(context!!, mUsers!!, false)
@@ -102,7 +105,7 @@ class SearchFragment : Fragment() {
                     val user: Users? = snapshot.getValue(Users::class.java)
                     if ((user!!.getUID()) != (firebaseUserID))
                     {
-                        (mUsers as ArrayList<Users>)
+                        (mUsers as ArrayList<Users>).add(user)
                     }
                 }
                 userAdapter = UserAdapter(context!!, mUsers!!, false)
