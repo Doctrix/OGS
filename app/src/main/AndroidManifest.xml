@@ -15,8 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OxyGameS">
-        <activity
-            android:name=".activity.MessageChatActivity" />
+        <activity android:name=".activity.VisitUserProfileActivity"></activity>
+        <activity android:name=".activity.ViewFullImageActivity" />
+        <activity android:name=".activity.MessageChatActivity" />
         <activity
             android:name=".activity.HomeActivity"
             android:theme="@style/Theme.OxyGameS.NoActionBar" />
@@ -34,27 +35,27 @@
             android:theme="@style/Theme.OxyGameS.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
+
         <service
             android:name=".notifications.FirebaseMessaging"
-            android:exported="true"
-            android:enabled="true">
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service
             android:name=".notifications.FirebaseInstanceId"
-            android:exported="true"
-            android:enabled="true">
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-
     </application>
+
 </manifest>

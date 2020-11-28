@@ -41,7 +41,6 @@ class MessageChatActivity : AppCompatActivity()
     var mChatList: List<Chat>? = null
     lateinit var recycler_view_chats: RecyclerView
     var reference: DatabaseReference? = null
-
     var notify = false
     var apiService: APIService? = null
 
@@ -55,9 +54,6 @@ class MessageChatActivity : AppCompatActivity()
         supportActionBar!!.title = ""
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener {
-            val intent = Intent(this@MessageChatActivity, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
             finish()
         }
 
@@ -309,7 +305,6 @@ class MessageChatActivity : AppCompatActivity()
             }
         }
     }
-
 
     private fun retrieveMessages(senderId: String, receiverId: String?, receiverImageUrl: String?) {
         mChatList = ArrayList()

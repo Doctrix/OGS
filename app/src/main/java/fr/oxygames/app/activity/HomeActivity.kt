@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.FirebaseUserMetadata
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import fr.oxygames.app.R
@@ -41,18 +42,27 @@ class HomeActivity : AppCompatActivity() {
         supportActionBar!!.title = "Home"
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
+        // back button
+        toolbar.setNavigationOnClickListener {
+            val intent = Intent (this@HomeActivity, MainActivity::class.java)
+//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+            finish()
+        }
+
         val tabLayout: TabLayout = findViewById(R.id.tab_layout)
         val viewPager: ViewPager = findViewById(R.id.view_pager)
 
         val ref = FirebaseDatabase.getInstance().reference.child("Chats")
+
         ref!!.addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot)
+            override fun onDataChange(p0: DataSnapshot)
             {
                 val viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
 
                 var countUnreadMessages = 0
 
-                for (dataSnapShot in snapshot.children)
+                for (dataSnapShot in p0.children)
                 {
                     val chat = dataSnapShot.getValue(Chat::class.java)
                     if (chat!!.getReceiver().equals(firebaseUser!!.uid) && !chat.getIsSeen()){
@@ -73,11 +83,10 @@ class HomeActivity : AppCompatActivity() {
                 tabLayout.setupWithViewPager(viewPager)
             }
 
-            override fun onCancelled(error: DatabaseError) {
+            override fun onCancelled(p0: DatabaseError) {
 
             }
         })
-
 
         // username and profile picture
         refUsers!!.addValueEventListener(object : ValueEventListener {
@@ -95,14 +104,6 @@ class HomeActivity : AppCompatActivity() {
                 longToast("error")
             }
         })
-
-        // back button
-        toolbar.setNavigationOnClickListener {
-            val intent = Intent (this, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-            finish()
-        }
     }
 
     // <-- menu
@@ -110,38 +111,37 @@ class HomeActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId)
         {
+            // button home
             R.id.action_home -> {
-
                 longToast("Loading ...")
-
-                val intent = Intent(this, HomeActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                val intent = Intent(this@HomeActivity, HomeActivity::class.java)
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
                 finish()
-
                 return true
             }
 
+            // button profile
             R.id.action_profile -> {
-
                 longToast("Loading ...")
-
-                val intent = Intent(this, MainActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                val intent = Intent(this@HomeActivity, MainActivity::class.java)
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
                 finish()
-
                 return true
             }
 
+            // button logout
             R.id.action_logout -> {
-
-                longToast("deco")
-
+                FirebaseAuth.getInstance().signOut()
+                longToast("deco ...")
+                val intent = Intent (this@HomeActivity, WelcomeActivity::class.java)
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+                finish()
                 return true
             }
         }
@@ -150,9 +150,15 @@ class HomeActivity : AppCompatActivity() {
     // menu -->
 
     internal class ViewPagerAdapter(fragmentManager: FragmentManager) :
-            FragmentPagerAdapter(fragmentManager, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-        private val fragments: ArrayList<Fragment> = ArrayList<Fragment>()
-        private val titles: ArrayList<String> = ArrayList<String>()
+            FragmentPagerAdapter(fragmentManager)
+    {
+        private val fragments: ArrayList<Fragment>
+        private val titles: ArrayList<String>
+
+        init {
+            fragments = ArrayList<Fragment>()
+            titles = ArrayList<String>()
+        }
 
         override fun getItem(position: Int): Fragment {
             return fragments[position]
@@ -170,5 +176,25 @@ class HomeActivity : AppCompatActivity() {
         override fun getPageTitle(i: Int): CharSequence {
             return titles[i]
         }
+    }
+
+    private fun updateStatus(status : String)
+    {
+        val ref = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
+        val hashMap = HashMap<String, Any>()
+        hashMap["status"] = status
+        ref!!.updateChildren(hashMap)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        updateStatus("Online")
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        updateStatus("offline")
     }
 }

@@ -18,7 +18,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/username_TextView"
+                    android:id="@+id/username_main"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawablePadding="10dp"
@@ -31,7 +31,7 @@
                     app:drawableLeftCompat="@drawable/ic_person" />
 
                 <TextView
-                    android:id="@+id/website_TextView"
+                    android:id="@+id/website_main"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawablePadding="10dp"
@@ -44,7 +44,7 @@
                     app:drawableLeftCompat="@drawable/ic_website" />
 
                 <TextView
-                    android:id="@+id/insta_TextView"
+                    android:id="@+id/inst_main"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawablePadding="10dp"
@@ -57,7 +57,7 @@
                     app:drawableLeftCompat="@drawable/ic_inst" />
 
                 <TextView
-                    android:id="@+id/fb_TextView"
+                    android:id="@+id/facebook_main"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawablePadding="10dp"

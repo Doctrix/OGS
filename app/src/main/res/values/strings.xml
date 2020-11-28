@@ -56,4 +56,5 @@
     <string name="description_image_file">image file</string>
     <string name="label_testing_message">testing message</string>
     <string name="label_seen">seen</string>
+    <string name="label_send_message">Send Message</string>
 </resources>

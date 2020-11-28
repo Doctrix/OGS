@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/coordinatorLayout"
+    android:id="@+id/coordinatorLayout_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -11,11 +11,11 @@
     tools:ignore="MergeRootFrame">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+        android:id="@+id/appBarLayout_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/Theme.OxyGameS.AppBarOverlay"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout_main"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -32,39 +32,39 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/linearLayout_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#161A30"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout_main">
 
         <ImageView
-            android:id="@+id/cover"
+            android:id="@+id/cover_main"
             android:layout_width="381dp"
             android:layout_height="147dp"
             android:contentDescription="@string/label_todo"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_cover"
-            app:layout_constraintBottom_toTopOf="@+id/status_profil"
+            app:layout_constraintBottom_toTopOf="@+id/status_profil_main"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/image_profil"
+            android:id="@+id/image_profil_main"
             android:layout_width="115dp"
             android:layout_height="99dp"
             android:contentDescription="@string/label_todo"
             android:foregroundGravity="clip_horizontal|center"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/cover"
+            app:layout_constraintStart_toStartOf="@+id/cover_main"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_person" />
 
         <TextView
-            android:id="@+id/status_profil"
+            android:id="@+id/status_profil_main"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="23dp"
@@ -76,13 +76,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_profil"
+            app:layout_constraintTop_toBottomOf="@+id/image_profil_main"
             app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
-        android:id="@+id/scrollView"
+        android:id="@+id/scrollView_main"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:layout_marginStart="20dp"
@@ -92,7 +92,7 @@
         app:layout_constraintBottom_toTopOf="@+id/linearLayout_button_page_main"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_main">
 
         <include layout="@layout/content_main" />
 
@@ -109,10 +109,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView">
+        app:layout_constraintTop_toBottomOf="@+id/scrollView_main">
 
         <Button
-            android:id="@+id/button_home"
+            android:id="@+id/button_home_main"
             style="@style/Widget.AppCompat.Button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -125,7 +125,7 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/button_logout"
+            android:id="@+id/button_logout_main"
             style="@style/Widget.AppCompat.Button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
