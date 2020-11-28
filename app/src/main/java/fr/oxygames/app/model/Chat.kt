@@ -8,7 +8,7 @@ class Chat {
     private var url: String = ""
     private var messageId: String = ""
 
-    constructor()
+    constructor(){}
 
     constructor(
         sender: String,

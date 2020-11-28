@@ -3,7 +3,7 @@ package fr.oxygames.app.model
 class ChatList {
     private var id: String = ""
 
-    constructor()
+    constructor(){}
 
     constructor(id: String) {
         this.id = id

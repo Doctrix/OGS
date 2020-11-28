@@ -11,7 +11,7 @@ class Users {
     private var instagram: String = ""
     private var website: String = ""
 
-    constructor()
+    constructor(){}
 
     constructor(
         uid: String,

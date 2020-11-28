@@ -17,6 +17,8 @@ import fr.oxygames.app.R
 import fr.oxygames.app.adapter.UserAdapter
 import fr.oxygames.app.model.ChatList
 import fr.oxygames.app.model.Users
+import com.google.firebase.iid.*
+import fr.oxygames.app.notifications.Token
 
 class ChatsFragment : Fragment() {
     private var userAdapter: UserAdapter? = null
@@ -42,15 +44,16 @@ class ChatsFragment : Fragment() {
         usersChatList = ArrayList()
 
         val ref = FirebaseDatabase.getInstance().reference.child("ChatList").child(firebaseUser!!.uid)
-        ref!!.addValueEventListener(object : ValueEventListener {
+        ref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot)
             {
                 (usersChatList as ArrayList).clear()
 
                 for (dataSnapshot in snapshot.children){
                     val chatList = dataSnapshot.getValue(ChatList::class.java)
-                    (usersChatList as ArrayList)
+                    (usersChatList as ArrayList).add(chatList!!)
                 }
+                retrieveChatList()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -58,11 +61,22 @@ class ChatsFragment : Fragment() {
             }
         })
 
+        updateToken(FirebaseInstanceId.getInstance().token)
+
         return view
     }
 
-    private fun retrieveChatList(){
+    private fun updateToken(token: String?)
+    {
+        val ref = FirebaseDatabase.getInstance().reference.child("Tokens")
+        val token1 = Token(token!!)
+        ref.child(firebaseUser!!.uid).setValue(token1)
+    }
+
+    private fun retrieveChatList()
+    {
         mUsers = ArrayList()
+
         val ref = FirebaseDatabase.getInstance().reference.child("Users")
         ref!!.addValueEventListener(object : ValueEventListener
         {
@@ -81,11 +95,11 @@ class ChatsFragment : Fragment() {
                     }
                 }
                 userAdapter = UserAdapter(context!!, (mUsers as ArrayList<Users>), true)
+                recycler_view_chatList.adapter = userAdapter
             }
             override fun onCancelled(error: DatabaseError) {
 
             }
         })
-
     }
 }
