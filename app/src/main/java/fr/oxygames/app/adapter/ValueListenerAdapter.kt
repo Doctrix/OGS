@@ -1,4 +1,4 @@
-package fr.oxygames.app.util
+package fr.oxygames.app.adapter
 
 import android.util.Log
 import com.google.firebase.database.DataSnapshot

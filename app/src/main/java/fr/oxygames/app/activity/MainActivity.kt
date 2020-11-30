@@ -16,8 +16,8 @@ import com.squareup.picasso.Picasso
 import fr.oxygames.app.R
 import fr.oxygames.app.model.Users
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_visit_user_profile.*
 import kotlinx.android.synthetic.main.activity_view_full_image.*
+import kotlinx.android.synthetic.main.activity_visit_user_profile.*
 import kotlinx.android.synthetic.main.content_main.*
 import org.jetbrains.anko.longToast
 
@@ -26,12 +26,12 @@ class MainActivity : AppCompatActivity() {
     var firebaseUser: FirebaseUser? = null
     var user: Users? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar_main)
-        firebaseUser = FirebaseAuth.getInstance().currentUser
-        refUsers = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
+        //setContentView(R.layout.activity_main)
+        //setSupportActionBar(toolbar_main)
+
         val toolbar: Toolbar = findViewById(R.id.toolbar_main)
         setSupportActionBar(toolbar)
         supportActionBar!!.title = "My account"
@@ -41,6 +41,10 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
 
+        firebaseUser = FirebaseAuth.getInstance().currentUser
+        refUsers = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
+
+        // data user
         refUsers!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists())
@@ -104,7 +108,6 @@ class MainActivity : AppCompatActivity() {
             // button home
             R.id.action_home -> {
                 val intent = Intent(this@MainActivity, HomeActivity::class.java)
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
                 finish()
                 longToast("Loading ...")
@@ -124,7 +127,6 @@ class MainActivity : AppCompatActivity() {
             R.id.action_logout -> {
                 FirebaseAuth.getInstance().signOut()
                 val intent = Intent (this@MainActivity, WelcomeActivity::class.java)
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
                 finish()
                 longToast("deco ...")

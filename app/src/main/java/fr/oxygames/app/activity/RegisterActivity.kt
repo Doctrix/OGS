@@ -10,6 +10,8 @@ import com.google.firebase.database.FirebaseDatabase
 import fr.oxygames.app.R
 import kotlinx.android.synthetic.main.activity_register.*
 import org.jetbrains.anko.longToast
+import java.util.*
+import kotlin.collections.HashMap
 
 class RegisterActivity : AppCompatActivity()
 {
@@ -21,7 +23,7 @@ class RegisterActivity : AppCompatActivity()
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-        mAuth = FirebaseAuth.getInstance()
+
         val toolbar: Toolbar = findViewById(R.id.toolbar_register)
         setSupportActionBar(toolbar)
         supportActionBar!!.title = "Register"
@@ -32,8 +34,10 @@ class RegisterActivity : AppCompatActivity()
             finish()
         }
 
+        mAuth = FirebaseAuth.getInstance()
+
         button_register.setOnClickListener {
-            RegisterUser()
+            registerUser()
         }
 
         text_login.setOnClickListener {
@@ -45,7 +49,7 @@ class RegisterActivity : AppCompatActivity()
         }
     }
 
-    private fun RegisterUser() {
+    private fun registerUser() {
         val username: String = username_register.text.toString()
         val email: String = email_register.text.toString()
         val password: String = password_register.text.toString()
@@ -53,19 +57,23 @@ class RegisterActivity : AppCompatActivity()
 
         when {
             username == "" -> {
-                longToast("Input Username")
+                longToast("Please write Username")
             }
             email == "" -> {
-                longToast("Input Email")
+                longToast("Please write Email")
             }
             password == "" -> {
-                longToast("Input Password")
+                longToast("Please write Password")
             }
             passwordValidate == "" -> {
-                longToast("Input Password Confirm")
+                longToast("Please write Password Confirmation")
+            }
+            passwordValidate == password -> {
+                longToast("The password is not the same")
             }
             else -> {
-                mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+                mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener { task ->
                     if(task.isSuccessful){
                         firebaseUserID = mAuth.currentUser!!.uid
                         refUsers = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUserID)
@@ -76,22 +84,29 @@ class RegisterActivity : AppCompatActivity()
                         userHashMap["image_profile"] = "https://firebasestorage.googleapis.com/v0/b/oxygene-studio.appspot.com/o/ic_profile.jpg?alt=media&token=fca47cd7-050e-454d-8344-3908a7e77acf"
                         userHashMap["cover"] = "https://firebasestorage.googleapis.com/v0/b/oxygene-studio.appspot.com/o/ic_cover.png?alt=media&token=f23b6712-faf7-4bdc-af3e-4195c894f7a9"
                         userHashMap["status"] = "offline"
-                        userHashMap["search"] = username.toLowerCase()
+                        userHashMap["search"] = username.toLowerCase(locale = Locale.ROOT)
                         userHashMap["facebook"] = "https://m.facebook.com"
                         userHashMap["instagram"] = "https://m.instagram.com"
                         userHashMap["website"] = "https://oxygames.fr"
 
                         refUsers.updateChildren(userHashMap)
-                                .addOnCompleteListener { task ->
-                                    if (task.isSuccessful) {
-                                        longToast("Inscription ok !!!")
-                                        val intent = Intent (this@RegisterActivity, LoginActivity::class.java)
-//                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                                        startActivity(intent)
-                                        finish()
-                                    }
-                                }
-                    } else {
+                            .addOnCompleteListener {
+                            if (task.isSuccessful)
+                            {
+                                val intent = Intent (this@RegisterActivity, LoginActivity::class.java)
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                                startActivity(intent)
+                                finish()
+                                longToast("Inscription ok !!!")
+                            }
+                            else
+                            {
+                                longToast("Error Message")
+                            }
+                        }
+                    }
+                    else
+                    {
                         longToast("Error")
                     }
                 }

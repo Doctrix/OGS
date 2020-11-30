@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,7 +18,8 @@ import com.google.firebase.database.ValueEventListener
 import fr.oxygames.app.R
 import fr.oxygames.app.adapter.UserAdapter
 import fr.oxygames.app.model.Users
-import org.jetbrains.anko.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class SearchFragment : Fragment() {
     private var userAdapter: UserAdapter? = null
@@ -47,7 +47,7 @@ class SearchFragment : Fragment() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
             override fun onTextChanged(cs: CharSequence?, start: Int, before: Int, count: Int) {
-                searchForUsers(cs.toString().toLowerCase())
+                searchForUsers(cs.toString().toLowerCase(locale = Locale.ROOT))
             }
             override fun afterTextChanged(s: Editable?) {
             }

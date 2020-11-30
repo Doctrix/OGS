@@ -1,101 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/coordinatorLayout_main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     tools:context=".activity.MainActivity"
     tools:ignore="MergeRootFrame">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout_main"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/Theme.OxyGameS.AppBarOverlay"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout_main"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <data>
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_main"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/Theme.OxyGameS.PopupOverlay">
+        <import type="android.view.View" />
 
-        </androidx.appcompat.widget.Toolbar>
-
-    </com.google.android.material.appbar.AppBarLayout>
+        <variable
+            name="DataUser"
+            type="fr.oxygames.app.binding.DataUser" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout_main"
+        android:id="@+id/coordinatorLayout_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#161A30"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout_main">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        tools:viewBindingIgnore="true">
 
-        <ImageView
-            android:id="@+id/cover_main"
-            android:layout_width="381dp"
-            android:layout_height="147dp"
-            android:contentDescription="@string/label_todo"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_cover"
-            app:layout_constraintBottom_toTopOf="@+id/status_profil_main"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/image_profil_main"
-            android:layout_width="115dp"
-            android:layout_height="99dp"
-            android:contentDescription="@string/label_todo"
-            android:foregroundGravity="clip_horizontal|center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/cover_main"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_person" />
-
-        <TextView
-            android:id="@+id/status_profil_main"
-            android:layout_width="0dp"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout_main"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="23dp"
-            android:text="@string/label_status"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp"
+            android:theme="@style/Theme.OxyGameS.AppBarOverlay"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout_main"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/Theme.OxyGameS.PopupOverlay">
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#161A30"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout_main">
+
+            <ImageView
+                android:id="@+id/cover_main"
+                android:layout_width="381dp"
+                android:layout_height="147dp"
+                android:contentDescription="@string/label_todo"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_cover"
+                app:layout_constraintBottom_toTopOf="@+id/status_profil_main"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/image_profil_main"
+                android:layout_width="115dp"
+                android:layout_height="99dp"
+                android:contentDescription="@string/label_todo"
+                android:foregroundGravity="clip_horizontal|center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/cover_main"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_person" />
+
+            <TextView
+                android:id="@+id/status_profil_main"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="23dp"
+                android:gravity="center_horizontal"
+                android:text="@string/label_status"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image_profil_main"
+                app:layout_constraintVertical_bias="0.0" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <include
+            layout="@layout/content_main"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_profil_main"
-            app:layout_constraintVertical_bias="0.0"
-            android:gravity="center_horizontal" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout_main"
+            app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <include
-        layout="@layout/content_main"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout_main"
-        app:layout_constraintVertical_bias="0.0" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

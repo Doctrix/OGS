@@ -13,64 +13,61 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var mAuth: FirebaseAuth
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        mAuth = FirebaseAuth.getInstance()
+
         val toolbar: Toolbar = findViewById(R.id.toolbar_login)
         setSupportActionBar(toolbar)
         supportActionBar!!.title = "Login"
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-
         toolbar.setNavigationOnClickListener {
             val intent = Intent (this@LoginActivity, WelcomeActivity::class.java)
-//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
             finish()
         }
+
+        mAuth = FirebaseAuth.getInstance()
 
         button_login.setOnClickListener {
             loginUser()
         }
 
         text_register.setOnClickListener {
-
             longToast("Input provided")
-
-            val intent = Intent(this, RegisterActivity::class.java)
-            //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            val intent = Intent(this, RegisterActivity::class.java) //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
             finish()
         }
     }
 
     private fun loginUser() {
-
         val email: String = email_login.text.toString()
         val password: String = password_login.text.toString()
 
-        if (email == ""){
-            longToast("Input email")
-        }
-        else if (password == "") {
-            longToast("Input password")
-        }
-        else
-        {
-            mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener { task ->
-                if (task.isSuccessful)
-                {
-                    longToast("Loading ...")
-
-                    val intent = Intent(this,MainActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                    startActivity(intent)
-                    finish()
-                }
-                else
-                {
-                    longToast("Error Message")
+        when {
+            email == "" -> {
+            longToast("Please write Email")
+            }
+            password == "" -> {
+                longToast("Please write Password")
+            }
+            else -> {
+                mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener { task ->
+                    if (task.isSuccessful)
+                    {
+                        val intent = Intent(this,MainActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(intent)
+                        finish()
+                        longToast("Loading ...")
+                    }
+                    else
+                    {
+                        longToast("Error Message")
+                    }
                 }
             }
         }
