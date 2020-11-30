@@ -21,19 +21,20 @@ class RegisterActivity : AppCompatActivity()
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-
+        mAuth = FirebaseAuth.getInstance()
         val toolbar: Toolbar = findViewById(R.id.toolbar_register)
         setSupportActionBar(toolbar)
         supportActionBar!!.title = "Register"
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener {
             val intent = Intent (this@RegisterActivity, WelcomeActivity::class.java)
-//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
             finish()
         }
 
-        mAuth = FirebaseAuth.getInstance()
+        button_register.setOnClickListener {
+            RegisterUser()
+        }
 
         text_login.setOnClickListener {
             longToast("Input provided")
@@ -41,10 +42,6 @@ class RegisterActivity : AppCompatActivity()
 //            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
             finish()
-        }
-
-        button_register.setOnClickListener {
-            RegisterUser()
         }
     }
 

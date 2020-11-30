@@ -2,8 +2,6 @@ package fr.oxygames.app.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.google.firebase.auth.FirebaseAuth
@@ -18,20 +16,21 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
+        mAuth = FirebaseAuth.getInstance()
         val toolbar: Toolbar = findViewById(R.id.toolbar_login)
         setSupportActionBar(toolbar)
         supportActionBar!!.title = "Login"
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        mAuth = FirebaseAuth.getInstance()
-
         toolbar.setNavigationOnClickListener {
-
-            val intent = Intent (this, WelcomeActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            val intent = Intent (this@LoginActivity, WelcomeActivity::class.java)
+//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
             finish()
+        }
+
+        button_login.setOnClickListener {
+            loginUser()
         }
 
         text_register.setOnClickListener {
@@ -39,49 +38,10 @@ class LoginActivity : AppCompatActivity() {
             longToast("Input provided")
 
             val intent = Intent(this, RegisterActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
             finish()
         }
-
-        button_login.setOnClickListener {
-                loginUser()
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId)
-        {
-            R.id.action_home -> {
-
-                longToast("Loading ...")
-
-                val intent = Intent(this, HomeActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
-                finish()
-
-                return true
-            }
-
-            R.id.action_profile -> {
-
-                longToast("Loading ...")
-
-                val intent = Intent(this, MainActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
-                finish()
-
-                return true
-            }
-        }
-        return false
     }
 
     private fun loginUser() {

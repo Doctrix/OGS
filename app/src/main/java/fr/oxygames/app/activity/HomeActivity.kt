@@ -109,7 +109,7 @@ class HomeActivity : AppCompatActivity() {
 
     // <-- menu
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
+        menuInflater.inflate(R.menu.menu_home, menu)
         return true
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

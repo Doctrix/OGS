@@ -77,28 +77,28 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_profil_main"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.0"
+            android:gravity="center_horizontal" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ScrollView
-        android:id="@+id/scrollView_main"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
+    <include
+        layout="@layout/content_main"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout_button_page_main"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout_main">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_main"
+        app:layout_constraintVertical_bias="0.0" />
 
-        <include layout="@layout/content_main" />
-
-    </ScrollView>
-
-    <LinearLayout
+    <!--<LinearLayout
         android:id="@+id/linearLayout_button_page_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -139,6 +139,6 @@
             android:textStyle="bold"
             tools:targetApi="lollipop" />
 
-    </LinearLayout>
+    </LinearLayout>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
