@@ -24,7 +24,7 @@
             android:id="@+id/toolbar_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="?attr/colorPrimaryDark"
+            android:background="?attr/colorPrimary"
             app:popupTheme="@style/Theme.OxyGameS.PopupOverlay">
 
         </androidx.appcompat.widget.Toolbar>

@@ -28,7 +28,6 @@ import fr.oxygames.app.model.Users
 import kotlinx.android.synthetic.main.fragment_settings.*
 import kotlinx.android.synthetic.main.fragment_settings.view.*
 
-
 class SettingsFragment : Fragment() {
 
     private var usersReference: DatabaseReference? = null

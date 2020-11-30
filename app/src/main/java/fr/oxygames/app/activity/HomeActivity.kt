@@ -13,7 +13,6 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.FirebaseUserMetadata
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import fr.oxygames.app.R
@@ -23,16 +22,19 @@ import fr.oxygames.app.fragment.SettingsFragment
 import fr.oxygames.app.model.Chat
 import fr.oxygames.app.model.Users
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.content_home.*
 import org.jetbrains.anko.longToast
 
 class HomeActivity : AppCompatActivity() {
 
-    private var refUsers: DatabaseReference? = null
-    private var firebaseUser: FirebaseUser? = null
+    var refUsers: DatabaseReference? = null
+    var firebaseUser: FirebaseUser? = null
+    var user: Users? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        setSupportActionBar(toolbar_home)
 
         firebaseUser = FirebaseAuth.getInstance().currentUser
         refUsers = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
@@ -40,9 +42,9 @@ class HomeActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar_home)
         setSupportActionBar(toolbar)
         supportActionBar!!.title = "Home"
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+//        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        // back button
+        // button back
         toolbar.setNavigationOnClickListener {
             val intent = Intent (this@HomeActivity, MainActivity::class.java)
 //            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -50,8 +52,25 @@ class HomeActivity : AppCompatActivity() {
             finish()
         }
 
-        val tabLayout: TabLayout = findViewById(R.id.tab_layout)
-        val viewPager: ViewPager = findViewById(R.id.view_pager)
+        // username and profile picture
+        refUsers!!.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.exists())
+                {
+                    user = p0.getValue(Users::class.java)
+
+                    username_home.text = user!!.getUsername()
+                    Picasso.get().load(user!!.getAvatar()).placeholder(R.drawable.ic_avatar).into(profile_image_home)
+                }
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+                longToast("error")
+            }
+        })
+
+        val tabLayout: TabLayout = findViewById(R.id.tab_layout_home)
+        val viewPager: ViewPager = findViewById(R.id.view_pager_home)
 
         val ref = FirebaseDatabase.getInstance().reference.child("Chats")
 
@@ -77,7 +96,7 @@ class HomeActivity : AppCompatActivity() {
                     viewPagerAdapter.addFragment(ChatsFragment(), "($countUnreadMessages) Chats")
                 }
 
-                /*viewPagerAdapter.addFragment(SearchFragment(), "Search")*/
+                viewPagerAdapter.addFragment(SearchFragment(), "Search")
                 viewPagerAdapter.addFragment(SettingsFragment(), "Settings")
                 viewPager.adapter = viewPagerAdapter
                 tabLayout.setupWithViewPager(viewPager)
@@ -85,23 +104,6 @@ class HomeActivity : AppCompatActivity() {
 
             override fun onCancelled(p0: DatabaseError) {
 
-            }
-        })
-
-        // username and profile picture
-        refUsers!!.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(p0: DataSnapshot) {
-                if (p0.exists())
-                {
-                    val user: Users? = p0.getValue(Users::class.java)
-
-                    user_name.text = user!!.getUsername()
-                    Picasso.get().load(user.getAvatar()).placeholder(R.drawable.ic_avatar).into(profile_image_home)
-                }
-            }
-
-            override fun onCancelled(p0: DatabaseError) {
-                longToast("error")
             }
         })
     }
@@ -150,8 +152,7 @@ class HomeActivity : AppCompatActivity() {
     // menu -->
 
     internal class ViewPagerAdapter(fragmentManager: FragmentManager) :
-            FragmentPagerAdapter(fragmentManager)
-    {
+            FragmentPagerAdapter(fragmentManager) {
         private val fragments: ArrayList<Fragment>
         private val titles: ArrayList<String>
 
@@ -178,8 +179,7 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateStatus(status : String)
-    {
+    private fun updateStatus(status : String) {
         val ref = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
         val hashMap = HashMap<String, Any>()
         hashMap["status"] = status

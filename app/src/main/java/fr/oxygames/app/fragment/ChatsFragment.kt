@@ -31,8 +31,7 @@ class ChatsFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View?
-    {
+    ): View? {
         val view = inflater.inflate(R.layout.fragment_chats, container, false)
 
         recycler_view_chatList = view.findViewById(R.id.recycler_view_chats)

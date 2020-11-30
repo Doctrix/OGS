@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(toolbar_main)
 
         firebaseUser = FirebaseAuth.getInstance().currentUser
         refUsers = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
@@ -35,11 +36,13 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar!!.title = "My account"
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
+        // button back
         toolbar.setNavigationOnClickListener {
             finish()
         }
 
-        refUsers!!.addValueEventListener(object : ValueEventListener{
+        refUsers!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists())
                 {
@@ -60,7 +63,6 @@ class MainActivity : AppCompatActivity() {
                 longToast("error")
             }
         })
-
 
         // open website
         website_main.setOnClickListener {
@@ -105,8 +107,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateStatus(status : String)
-    {
+    private fun updateStatus(status : String) {
         val ref = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
 
         val hashMap = HashMap<String, Any>()

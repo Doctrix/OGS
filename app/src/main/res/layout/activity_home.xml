@@ -11,7 +11,7 @@
     tools:context=".activity.HomeActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+        android:id="@+id/appBarLayout_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/Theme.OxyGameS.AppBarOverlay">
@@ -20,9 +20,9 @@
             android:id="@+id/toolbar_home"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimaryDark"
-            app:popupTheme="@style/Theme.OxyGameS.PopupOverlay">
-
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/Theme.OxyGameS.PopupOverlay"
+            >
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_image_home"
                 android:layout_width="32dp"
@@ -33,21 +33,22 @@
             </de.hdodenhof.circleimageview.CircleImageView>
 
             <TextView
-                android:id="@+id/user_name"
+                android:id="@+id/username_home"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/label_username"
                 android:textSize="18sp"
-                android:layout_marginStart="26dp"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
+                android:layout_marginLeft="26dp"
+                android:layout_marginStart="26dp"
                 >
             </TextView>
 
         </androidx.appcompat.widget.Toolbar>
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
+            android:id="@+id/tab_layout_home"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimaryDark"
@@ -58,14 +59,12 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/view_pager"
+        android:id="@+id/view_pager_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
     </androidx.viewpager.widget.ViewPager>
 
-<!--
-    <include layout="@layout/content_main" />
--->
+    <include layout="@layout/content_home" />
 
 </LinearLayout>

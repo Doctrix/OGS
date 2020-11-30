@@ -21,7 +21,6 @@ import fr.oxygames.app.adapter.UserAdapter
 import fr.oxygames.app.model.Users
 import org.jetbrains.anko.*
 
-
 class SearchFragment : Fragment() {
     private var userAdapter: UserAdapter? = null
     private var mUsers: List<Users>? = null
@@ -29,10 +28,10 @@ class SearchFragment : Fragment() {
     private var searchEditText: EditText? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         val view: View = inflater.inflate(R.layout.fragment_search, container, false)
 
         recyclerView = view.findViewById(R.id.searchList)
