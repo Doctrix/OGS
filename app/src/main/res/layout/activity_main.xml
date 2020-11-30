@@ -98,47 +98,4 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout_main"
         app:layout_constraintVertical_bias="0.0" />
 
-    <!--<LinearLayout
-        android:id="@+id/linearLayout_button_page_main"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="10dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView_main">
-
-        <Button
-            android:id="@+id/button_home_main"
-            style="@style/Widget.AppCompat.Button"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:backgroundTint="@color/black_overlay"
-            android:drawableStart="@drawable/abc_vector_test"
-            android:text="@string/label_home"
-            android:textAlignment="center"
-            android:textColor="@color/colorAccent"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            tools:targetApi="lollipop" />
-
-        <Button
-            android:id="@+id/button_logout_main"
-            style="@style/Widget.AppCompat.Button"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:drawableStart="@drawable/common_full_open_on_phone"
-            android:text="@string/label_logout"
-            android:textAlignment="center"
-            android:textColor="@color/purple_200"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            tools:targetApi="lollipop" />
-
-    </LinearLayout>-->
-
 </androidx.constraintlayout.widget.ConstraintLayout>

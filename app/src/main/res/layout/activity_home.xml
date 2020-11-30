@@ -65,6 +65,6 @@
         >
     </androidx.viewpager.widget.ViewPager>
 
-    <include layout="@layout/content_home" />
+    <!--<include layout="@layout/content_home" />-->
 
 </LinearLayout>
