@@ -61,6 +61,13 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        username_main.setOnClickListener {
+            val intent = Intent(this@MainActivity, HomeActivity::class.java)
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+            longToast("Loading ...")
+        }
+
         // open website
         website_main.setOnClickListener {
             val uri = Uri.parse(user!!.getWebsite())
@@ -84,24 +91,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             longToast("Page Facebook")
         }
-
-/*        // button HOME
-        button_home_main.setOnClickListener {
-            val intent = Intent (this@MainActivity, HomeActivity::class.java)
-            //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-            finish()
-        }
-
-        // button LOGOUT
-        button_logout_main.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
-            val intent = Intent (this@MainActivity, WelcomeActivity::class.java)
-            //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-            finish()
-            longToast("deconnexion")
-        }*/
     }
 
     // <-- menu
