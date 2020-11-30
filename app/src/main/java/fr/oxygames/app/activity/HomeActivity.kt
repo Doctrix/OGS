@@ -41,9 +41,9 @@ class HomeActivity : AppCompatActivity() {
 
         val toolbar: Toolbar = findViewById(R.id.toolbar_home)
         setSupportActionBar(toolbar)
-        supportActionBar!!.title = "Home"
-//        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.title = ""
 
+//        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         // button back
         toolbar.setNavigationOnClickListener {
             val intent = Intent (this@HomeActivity, MainActivity::class.java)
@@ -73,12 +73,10 @@ class HomeActivity : AppCompatActivity() {
         val viewPager: ViewPager = findViewById(R.id.view_pager_home)
 
         val ref = FirebaseDatabase.getInstance().reference.child("Chats")
-
         ref!!.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(p0: DataSnapshot)
             {
                 val viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
-
                 var countUnreadMessages = 0
 
                 for (dataSnapShot in p0.children)
@@ -98,6 +96,7 @@ class HomeActivity : AppCompatActivity() {
 
                 viewPagerAdapter.addFragment(SearchFragment(), "Search")
                 viewPagerAdapter.addFragment(SettingsFragment(), "Settings")
+
                 viewPager.adapter = viewPagerAdapter
                 tabLayout.setupWithViewPager(viewPager)
             }
@@ -152,7 +151,8 @@ class HomeActivity : AppCompatActivity() {
     // menu -->
 
     internal class ViewPagerAdapter(fragmentManager: FragmentManager) :
-            FragmentPagerAdapter(fragmentManager) {
+        FragmentPagerAdapter(fragmentManager)
+    {
         private val fragments: ArrayList<Fragment>
         private val titles: ArrayList<String>
 
@@ -169,12 +169,13 @@ class HomeActivity : AppCompatActivity() {
             return fragments.size
         }
 
-        fun addFragment(fragment: Fragment, title: String) {
+        fun addFragment(fragment: Fragment, title: String)
+        {
             fragments.add(fragment)
             titles.add(title)
         }
 
-        override fun getPageTitle(i: Int): CharSequence {
+        override fun getPageTitle(i: Int): CharSequence? {
             return titles[i]
         }
     }

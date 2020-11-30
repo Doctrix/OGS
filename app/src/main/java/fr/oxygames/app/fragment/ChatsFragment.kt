@@ -24,7 +24,7 @@ class ChatsFragment : Fragment() {
     private var userAdapter: UserAdapter? = null
     private var mUsers: List<Users>? = null
     private var usersChatList: List<ChatList>? = null
-    lateinit var recycler_view_chatList: RecyclerView
+    private var recycler_view_chatList: RecyclerView? = null
     private var firebaseUser: FirebaseUser? = null
 
     override fun onCreateView(
@@ -35,8 +35,8 @@ class ChatsFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_chats, container, false)
 
         recycler_view_chatList = view.findViewById(R.id.recycler_view_chats)
-        recycler_view_chatList.setHasFixedSize(true)
-        recycler_view_chatList.layoutManager = LinearLayoutManager(context)
+        recycler_view_chatList!!.setHasFixedSize(true)
+        recycler_view_chatList!!.layoutManager = LinearLayoutManager(context)
 
         firebaseUser = FirebaseAuth.getInstance().currentUser
 
@@ -94,7 +94,7 @@ class ChatsFragment : Fragment() {
                     }
                 }
                 userAdapter = UserAdapter(context!!, (mUsers as ArrayList<Users>), true)
-                recycler_view_chatList.adapter = userAdapter
+                recycler_view_chatList!!.adapter = userAdapter
             }
             override fun onCancelled(error: DatabaseError) {
 
