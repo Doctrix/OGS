@@ -35,7 +35,7 @@ import retrofit2.*
 
 class MessageChatActivity : AppCompatActivity()
 {
-    //private lateinit var binding: ActivityMessageChatBinding
+    private lateinit var binding: ActivityMessageChatBinding
     var userIdVisit: String = ""
     var firebaseUser: FirebaseUser? = null
     var chatsAdapter: ChatsAdapter? = null
@@ -45,7 +45,8 @@ class MessageChatActivity : AppCompatActivity()
     var notify = false
     var apiService: APIService? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
         super.onCreate(savedInstanceState)
 
         val binding = ActivityMessageChatBinding.inflate(layoutInflater)

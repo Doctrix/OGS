@@ -15,7 +15,6 @@ import kotlin.collections.HashMap
 class RegisterActivity : AppCompatActivity()
 {
     private lateinit var binding: ActivityRegisterBinding
-
     private lateinit var mAuth: FirebaseAuth
     private lateinit var refUsers: DatabaseReference
     private var firebaseUserID: String = ""
@@ -27,9 +26,11 @@ class RegisterActivity : AppCompatActivity()
         val binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // toolbar
         val toolbar: Toolbar = binding.toolbarRegister
-        binding.toolbarRegister.title = "Register"
-
+        toolbar.title = "Register"
+        setSupportActionBar(toolbar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener {
             val intent = Intent (this@RegisterActivity, WelcomeActivity::class.java)
             startActivity(intent)
@@ -45,7 +46,6 @@ class RegisterActivity : AppCompatActivity()
         binding.textLogin.setOnClickListener {
             longToast("Input provided")
             val intent = Intent (this@RegisterActivity, LoginActivity::class.java)
-//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
             finish()
         }

@@ -3,13 +3,14 @@ package fr.oxygames.app.activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.google.firebase.auth.FirebaseAuth
 import fr.oxygames.app.databinding.ActivityLoginBinding
 import org.jetbrains.anko.longToast
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity()
+{
     private lateinit var binding: ActivityLoginBinding
-
     private lateinit var mAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?)
@@ -19,10 +20,12 @@ class LoginActivity : AppCompatActivity() {
         val binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbarLogin)
+        // toolbar
+        val toolbar: Toolbar = binding.toolbarLogin
         binding.toolbarLogin.title = "Login"
-
-        binding.toolbarLogin.setNavigationOnClickListener {
+        setSupportActionBar(toolbar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        toolbar.setNavigationOnClickListener {
             val intent = Intent (this@LoginActivity, WelcomeActivity::class.java)
             startActivity(intent)
             finish()

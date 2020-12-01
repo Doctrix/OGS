@@ -5,42 +5,39 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import fr.oxygames.app.databinding.ActivityWelcomeBinding
-import fr.oxygames.app.databinding.ContentWelcomeBinding
 import org.jetbrains.anko.longToast
 
-class WelcomeActivity : AppCompatActivity() {
-    private lateinit var bindingContent: ContentWelcomeBinding
+class WelcomeActivity : AppCompatActivity()
+{
     private lateinit var bindingActivity: ActivityWelcomeBinding
-
     var firebaseUser: FirebaseUser? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
         super.onCreate(savedInstanceState)
 
-        val bindingContent  = ContentWelcomeBinding.inflate(layoutInflater)
-        val bindingActivity = ActivityWelcomeBinding.inflate(layoutInflater)
-        val viewContent = bindingContent.root
-        val viewActivity = bindingActivity.root
-        setContentView(viewContent)
-        setContentView(viewActivity)
+        val binding = ActivityWelcomeBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        bindingActivity.toolbarWelcome.title = "WELCOME"
-        bindingContent.titleWelcome.text = "hello"
-        bindingActivity.fab.setOnClickListener { view ->
+        binding.toolbarWelcome.title = "WELCOME"
+        binding.titleWelcome.text = "OxyGameS"
+        binding.fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
 
-        bindingContent.buttonPageLogin.setOnClickListener{
-            bindingContent.apply {
+        binding.buttonPageLogin.setOnClickListener{
+            binding.apply {
                 val intent = Intent(this@WelcomeActivity, LoginActivity::class.java)
                 startActivity(intent)
             }
         }
 
-        bindingContent.buttonPageRegister.setOnClickListener {
+        binding.buttonPageRegister.setOnClickListener {
             intent = Intent(this@WelcomeActivity, RegisterActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
@@ -48,7 +45,7 @@ class WelcomeActivity : AppCompatActivity() {
             longToast("loading page register ...")
         }
 
-        bindingContent.buttonPageHelp.setOnClickListener() {
+        binding.buttonPageHelp.setOnClickListener() {
             val uri = Uri.parse("https://oxygames.fr")
             val intent= Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
@@ -56,13 +53,13 @@ class WelcomeActivity : AppCompatActivity() {
         }
     }
 
-//     override fun onStart() {
-//         super.onStart()
-//         firebaseUser = FirebaseAuth.getInstance().currentUser
-//         if (firebaseUser != null) {
-//             val intent = Intent(this@WelcomeActivity, MainActivity::class.java)
-//             startActivity(intent)
-//             finish()
-//         }
-//     }
+     override fun onStart() {
+         super.onStart()
+         firebaseUser = FirebaseAuth.getInstance().currentUser
+         if (firebaseUser != null) {
+             val intent = Intent(this@WelcomeActivity, MainActivity::class.java)
+             startActivity(intent)
+             finish()
+         }
+     }
 }

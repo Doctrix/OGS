@@ -15,7 +15,6 @@ import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import fr.oxygames.app.R
 import fr.oxygames.app.databinding.ActivityMainBinding
-import fr.oxygames.app.databinding.ContentMainBinding
 import fr.oxygames.app.model.Users
 import org.jetbrains.anko.longToast
 
@@ -30,16 +29,14 @@ class MainActivity : AppCompatActivity() {
     {
         super.onCreate(savedInstanceState)
 
-        val bindingActivity = ActivityMainBinding.inflate(layoutInflater)
-        val bindingContent = ContentMainBinding.inflate(layoutInflater)
+        val binding = ActivityMainBinding.inflate(layoutInflater)
 
-        setContentView(bindingActivity.root)
-        setContentView(bindingContent.root)
+        setContentView(binding.root)
 
-        val toolbar: Toolbar = bindingActivity.toolbarMain
+        val toolbar: Toolbar = binding.toolbarMain
 
-        setSupportActionBar(bindingActivity.toolbarMain)
-        bindingActivity.toolbarMain.title = "My account"
+        setSupportActionBar(binding.toolbarMain)
+        binding.toolbarMain.title = "My account"
 
         // button back
         toolbar.setNavigationOnClickListener {
@@ -55,13 +52,13 @@ class MainActivity : AppCompatActivity() {
                 if (snapshot.exists())
                 {
                     user = snapshot.getValue(Users::class.java)
-                    bindingContent.usernameMain.text = user!!.getUsername()
-                    bindingContent.facebookMain.text = user!!.getFacebook()
-                    bindingContent.instMain.text = user!!.getInstagram()
-                    bindingContent.websiteMain.text = user!!.getWebsite()
-                    bindingActivity.statusProfilMain.text = user!!.getStatus()
-                    Picasso.get().load(user!!.getCover()).placeholder(R.drawable.ic_cover).into(bindingActivity.coverMain)
-                    Picasso.get().load(user!!.getAvatar()).placeholder(R.drawable.ic_profile).into(bindingActivity.imageProfilMain)
+                    binding.usernameMain.text = user!!.getUsername()
+                    binding.facebookMain.text = user!!.getFacebook()
+                    binding.instMain.text = user!!.getInstagram()
+                    binding.websiteMain.text = user!!.getWebsite()
+                    binding.statusProfilMain.text = user!!.getStatus()
+                    Picasso.get().load(user!!.getCover()).placeholder(R.drawable.ic_cover).into(binding.coverMain)
+                    Picasso.get().load(user!!.getAvatar()).placeholder(R.drawable.ic_profile).into(binding.imageProfilMain)
                 }
             }
 
@@ -70,15 +67,14 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        bindingContent.usernameMain.setOnClickListener {
+        binding.usernameMain.setOnClickListener {
             val intent = Intent(this@MainActivity, HomeActivity::class.java)
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
             longToast("Loading ...")
         }
 
         // open website
-        bindingContent.websiteMain.setOnClickListener {
+        binding.websiteMain.setOnClickListener {
             val uri = Uri.parse(user!!.getWebsite())
             val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
@@ -86,7 +82,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // open page instagram
-        bindingContent.instMain.setOnClickListener {
+        binding.instMain.setOnClickListener {
             val uri = Uri.parse(user!!.getInstagram())
             val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
@@ -94,7 +90,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // open page facebook
-        bindingContent.facebookMain.setOnClickListener {
+        binding.facebookMain.setOnClickListener {
             val uri = Uri.parse(user!!.getFacebook())
             val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
