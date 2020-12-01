@@ -4,8 +4,8 @@
     <data>
 
         <variable
-            name="DataUser"
-            type="fr.oxygames.app.binding.DataUser" />
+            name="user"
+            type="fr.oxygames.app.model.Data" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

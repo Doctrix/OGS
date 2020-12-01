@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <import type="android.view.View" />
-
-        <variable
-            name="DataUser"
-            type="fr.oxygames.app.binding.DataUser" />
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/coordinatorLayout_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -82,7 +73,7 @@
                 android:gravity="center_horizontal"
                 android:text="@string/label_status"
                 android:textAlignment="center"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/green"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -97,11 +88,11 @@
             android:id="@+id/scrollView_main"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
             android:layout_marginBottom="20dp"
             android:background="@color/colorPrimary"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -135,8 +126,10 @@
                     android:paddingRight="10dp"
                     android:paddingBottom="10dp"
                     android:text="@string/label_username"
+                    android:textColor="@color/colorAccent"
                     android:textSize="24sp"
-                    app:drawableLeftCompat="@drawable/ic_person" />
+                    app:drawableLeftCompat="@drawable/ic_person"
+                    app:drawableTint="#FFFFFF" />
 
                 <TextView
                     android:id="@+id/website_main"
@@ -150,8 +143,10 @@
                     android:paddingRight="10dp"
                     android:paddingBottom="10dp"
                     android:text="@string/label_website"
+                    android:textColor="@color/white"
                     android:textSize="24sp"
-                    app:drawableLeftCompat="@drawable/ic_website" />
+                    app:drawableLeftCompat="@drawable/ic_website"
+                    app:drawableTint="#00B8D4" />
 
                 <TextView
                     android:id="@+id/inst_main"
@@ -165,8 +160,10 @@
                     android:paddingRight="10dp"
                     android:paddingBottom="10dp"
                     android:text="@string/label_instagram"
+                    android:textColor="@color/white"
                     android:textSize="24sp"
-                    app:drawableLeftCompat="@drawable/ic_inst" />
+                    app:drawableLeftCompat="@drawable/ic_inst"
+                    app:drawableTint="#AA00FF" />
 
                 <TextView
                     android:id="@+id/facebook_main"
@@ -180,8 +177,10 @@
                     android:paddingRight="10dp"
                     android:paddingBottom="10dp"
                     android:text="@string/label_facebook"
+                    android:textColor="@color/white"
                     android:textSize="24sp"
-                    app:drawableLeftCompat="@drawable/ic_fb" />
+                    app:drawableLeftCompat="@drawable/ic_fb"
+                    app:drawableTint="#2962FF" />
 
             </LinearLayout>
 

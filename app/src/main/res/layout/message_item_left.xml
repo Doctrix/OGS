@@ -27,7 +27,9 @@
         android:background="@drawable/ic_msg_left_background"
         android:textColor="@color/white"
         android:textStyle="normal"
-        >
+        android:layout_toRightOf="@+id/profile_image"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="30dp">
     </TextView>
 
     <ImageView

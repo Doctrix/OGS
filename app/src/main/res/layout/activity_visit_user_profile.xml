@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activity.VisitUserProfileActivity">
+<layout>
 
     <data>
 
         <variable
-            name="DataUser"
-            type="fr.oxygames.app.binding.DataUser" />
+            name="user"
+            type="fr.oxygames.app.model.Data" />
     </data>
 
-    <RelativeLayout
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="20dp">
+        android:padding="20dp"
+        tools:context=".activity.VisitUserProfileActivity">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cv1"
@@ -85,6 +85,7 @@
                 android:layout_height="60dp"
                 android:layout_gravity="center"
                 android:layout_marginEnd="35dp"
+                android:layout_marginRight="35dp"
                 android:contentDescription="@string/label_todo"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_fb">
@@ -97,6 +98,7 @@
                 android:layout_height="60dp"
                 android:layout_gravity="center"
                 android:layout_marginEnd="35dp"
+                android:layout_marginRight="35dp"
                 android:contentDescription="@string/label_todo"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_inst">

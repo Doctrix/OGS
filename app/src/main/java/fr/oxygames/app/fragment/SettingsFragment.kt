@@ -28,7 +28,7 @@ import fr.oxygames.app.databinding.FragmentSettingsBinding
 import fr.oxygames.app.model.Users
 
 class SettingsFragment : Fragment() {
-    private var fragmentSettingsBinding: FragmentSettingsBinding? = null
+    private lateinit var binding: FragmentSettingsBinding
     private var usersReference: DatabaseReference? = null
     private var firebaseUser: FirebaseUser? = null
     private val RequestCode = 438
@@ -36,29 +36,29 @@ class SettingsFragment : Fragment() {
     private var storageRef: StorageReference? = null
     private var coverChecker: String? = ""
     private var socialChecker: String? = ""
+    private var user: Users? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentSettingsBinding.inflate(inflater, container, false)
-        fragmentSettingsBinding = binding
 
-        // firebase
+        binding = FragmentSettingsBinding.inflate(layoutInflater)
+
+        // firebase - data user
         firebaseUser = FirebaseAuth.getInstance().currentUser
         usersReference = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
         storageRef = FirebaseStorage.getInstance().reference.child("User Images")
-
         usersReference!!.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(p0: DataSnapshot) {
                 if (p0.exists()){
-                    val user: Users? = p0.getValue(Users::class.java)
+                    user = p0.getValue(Users::class.java)
 
                     if (context != null) {
                         binding.usernameSettings.text = user!!.getUsername()
-                        Picasso.get().load(user.getCover()).placeholder(R.drawable.ic_cover).into(binding.coverImageSettings)
-                        Picasso.get().load(user.getAvatar()).placeholder(R.drawable.ic_avatar).into(binding.profileImageSettings)
+                        Picasso.get().load(user!!.getCover()).placeholder(R.drawable.ic_cover).into(binding.coverImageSettings)
+                        Picasso.get().load(user!!.getAvatar()).placeholder(R.drawable.ic_avatar).into(binding.profileImageSettings)
                     }
                 }
             }
@@ -67,17 +67,14 @@ class SettingsFragment : Fragment() {
 
             }
         })
-
         binding.profileImageSettings.setOnClickListener {
             coverChecker = "profile"
             pickImage()
         }
-
         binding.coverImageSettings.setOnClickListener {
             coverChecker = "cover"
             pickImage()
         }
-
         binding.setFacebook.setOnClickListener {
             socialChecker = "facebook"
             setSocialLinks()
@@ -91,11 +88,10 @@ class SettingsFragment : Fragment() {
             setSocialLinks()
         }
 
-        return view
+        return binding.root
     }
 
-    private fun setSocialLinks()
-    {
+    private fun setSocialLinks() {
         val builder: AlertDialog.Builder =
             AlertDialog.Builder(context, R.style.ThemeOverlay_AppCompat_Dialog_Alert)
         if (socialChecker == "website")

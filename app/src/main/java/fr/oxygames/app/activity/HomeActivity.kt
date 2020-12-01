@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -17,10 +18,8 @@ import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import fr.oxygames.app.R
 import fr.oxygames.app.databinding.ActivityHomeBinding
-import fr.oxygames.app.fragment.ChatsFragment
 import fr.oxygames.app.fragment.SearchFragment
 import fr.oxygames.app.fragment.SettingsFragment
-import fr.oxygames.app.model.Chat
 import fr.oxygames.app.model.Users
 import org.jetbrains.anko.longToast
 
@@ -29,22 +28,21 @@ class HomeActivity : AppCompatActivity() {
 
     var refUsers: DatabaseReference? = null
     var firebaseUser: FirebaseUser? = null
-    var user: Users? = null
+    lateinit var user: Users
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
+
         val binding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-//        setContentView(R.layout.activity_home)
-//        setSupportActionBar(toolbar_home)
-//        val toolbar: Toolbar = findViewById(R.id.toolbar_home)
-//        setSupportActionBar(toolbar)
-
-        supportActionBar!!.title = ""
+        // toolbar
+        val toolbar: Toolbar = binding.toolbarHome
+        binding.toolbarHome.title = ""
+        setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        // button back
-        binding.toolbarHome.setNavigationOnClickListener {
+        toolbar.setNavigationOnClickListener {
             val intent = Intent (this@HomeActivity, MainActivity::class.java)
             startActivity(intent)
             finish()
@@ -58,10 +56,10 @@ class HomeActivity : AppCompatActivity() {
             override fun onDataChange(p0: DataSnapshot) {
                 if (p0.exists())
                 {
-                    user = p0.getValue(Users::class.java)
+                    user = p0.getValue(Users::class.java)!!
 
-                    binding.usernameHome.text = user!!.getUsername()
-                    Picasso.get().load(user!!.getAvatar()).placeholder(R.drawable.ic_avatar).into(binding.profileImageHome)
+                    binding.usernameHome.text = user.getUsername()
+                    Picasso.get().load(user.getAvatar()).placeholder(R.drawable.ic_avatar).into(binding.profileImageHome)
                 }
             }
 
@@ -74,10 +72,10 @@ class HomeActivity : AppCompatActivity() {
         val viewPager: ViewPager = binding.viewPagerHome
 
         val ref = FirebaseDatabase.getInstance().reference.child("Chats")
-        ref!!.addValueEventListener(object : ValueEventListener{
+        ref.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(p0: DataSnapshot) {
                 val viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
-                var countUnreadMessages = 0
+                /*var countUnreadMessages = 0
 
                 for (dataSnapShot in p0.children)
                 {
@@ -92,8 +90,7 @@ class HomeActivity : AppCompatActivity() {
                 else
                 {
                     viewPagerAdapter.addFragment(ChatsFragment(), "($countUnreadMessages) Chats")
-                }
-
+                }*/
                 viewPagerAdapter.addFragment(SearchFragment(), "Search")
                 viewPagerAdapter.addFragment(SettingsFragment(), "Settings")
 
@@ -106,7 +103,6 @@ class HomeActivity : AppCompatActivity() {
             }
         })
 
-        setContentView(binding.root)
     }
 
     // <-- menu
@@ -121,7 +117,6 @@ class HomeActivity : AppCompatActivity() {
             R.id.action_home -> {
                 longToast("Loading ...")
                 val intent = Intent(this@HomeActivity, HomeActivity::class.java)
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
                 finish()
                 return true
@@ -131,7 +126,6 @@ class HomeActivity : AppCompatActivity() {
             R.id.action_profile -> {
                 longToast("Loading ...")
                 val intent = Intent(this@HomeActivity, MainActivity::class.java)
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
                 finish()
                 return true
@@ -142,7 +136,6 @@ class HomeActivity : AppCompatActivity() {
                 FirebaseAuth.getInstance().signOut()
                 longToast("deco ...")
                 val intent = Intent (this@HomeActivity, WelcomeActivity::class.java)
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
                 finish()
                 return true
@@ -176,7 +169,7 @@ class HomeActivity : AppCompatActivity() {
             titles.add(title)
         }
 
-        override fun getPageTitle(i: Int): CharSequence? {
+        override fun getPageTitle(i: Int): CharSequence {
             return titles[i]
         }
     }
@@ -185,12 +178,11 @@ class HomeActivity : AppCompatActivity() {
         val ref = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
         val hashMap = HashMap<String, Any>()
         hashMap["status"] = status
-        ref!!.updateChildren(hashMap)
+        ref.updateChildren(hashMap)
     }
 
     override fun onResume() {
         super.onResume()
-
         updateStatus("Online")
     }
 

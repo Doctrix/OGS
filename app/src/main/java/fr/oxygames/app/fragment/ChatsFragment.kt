@@ -1,10 +1,10 @@
 package fr.oxygames.app.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -13,11 +13,11 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.iid.FirebaseInstanceId
 import fr.oxygames.app.R
 import fr.oxygames.app.adapter.UserAdapter
 import fr.oxygames.app.model.ChatList
 import fr.oxygames.app.model.Users
-import com.google.firebase.iid.*
 import fr.oxygames.app.notifications.Token
 
 class ChatsFragment : Fragment() {
@@ -77,7 +77,7 @@ class ChatsFragment : Fragment() {
         mUsers = ArrayList()
 
         val ref = FirebaseDatabase.getInstance().reference.child("Users")
-        ref!!.addValueEventListener(object : ValueEventListener
+        ref.addValueEventListener(object : ValueEventListener
         {
             override fun onDataChange(snapshot: DataSnapshot)
             {
@@ -89,7 +89,7 @@ class ChatsFragment : Fragment() {
                     {
                         if (user!!.getUID().equals(eachChatList.getId()))
                         {
-                            (mUsers as ArrayList).add(user!!)
+                            (mUsers as ArrayList).add(user)
                         }
                     }
                 }

@@ -1,12 +1,10 @@
 package fr.oxygames.app.activity
 
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.google.firebase.auth.FirebaseAuth
@@ -17,28 +15,26 @@ import fr.oxygames.app.R
 import fr.oxygames.app.databinding.ActivityMainBinding
 import fr.oxygames.app.model.Users
 import org.jetbrains.anko.longToast
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var bindingActivity: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
     var refUsers: DatabaseReference? = null
     var firebaseUser: FirebaseUser? = null
-    var user: Users? = null
+    lateinit var user: Users
 
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val binding = ActivityMainBinding.inflate(layoutInflater)
-
         setContentView(binding.root)
 
+        // toolbar
         val toolbar: Toolbar = binding.toolbarMain
-
-        setSupportActionBar(binding.toolbarMain)
         binding.toolbarMain.title = "My account"
-
-        // button back
+        setSupportActionBar(toolbar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener {
             finish()
         }
@@ -51,14 +47,14 @@ class MainActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists())
                 {
-                    user = snapshot.getValue(Users::class.java)
-                    binding.usernameMain.text = user!!.getUsername()
-                    binding.facebookMain.text = user!!.getFacebook()
-                    binding.instMain.text = user!!.getInstagram()
-                    binding.websiteMain.text = user!!.getWebsite()
-                    binding.statusProfilMain.text = user!!.getStatus()
-                    Picasso.get().load(user!!.getCover()).placeholder(R.drawable.ic_cover).into(binding.coverMain)
-                    Picasso.get().load(user!!.getAvatar()).placeholder(R.drawable.ic_profile).into(binding.imageProfilMain)
+                    user = snapshot.getValue(Users::class.java)!!
+                    binding.usernameMain.text = user.getUsername()
+                    binding.facebookMain.text = user.getFacebook()
+                    binding.instMain.text = user.getInstagram()
+                    binding.websiteMain.text = user.getWebsite()
+                    binding.statusProfilMain.text = user.getStatus()
+                    Picasso.get().load(user.getCover()).placeholder(R.drawable.ic_cover).into(binding.coverMain)
+                    Picasso.get().load(user.getAvatar()).placeholder(R.drawable.ic_profile).into(binding.imageProfilMain)
                 }
             }
 
@@ -67,6 +63,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        // open page profile
         binding.usernameMain.setOnClickListener {
             val intent = Intent(this@MainActivity, HomeActivity::class.java)
             startActivity(intent)
@@ -75,15 +72,15 @@ class MainActivity : AppCompatActivity() {
 
         // open website
         binding.websiteMain.setOnClickListener {
-            val uri = Uri.parse(user!!.getWebsite())
+            val uri = Uri.parse(user.getWebsite())
             val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
             longToast("Website : $uri")
         }
 
-        // open page instagram
+        // open page ingram
         binding.instMain.setOnClickListener {
-            val uri = Uri.parse(user!!.getInstagram())
+            val uri = Uri.parse(user.getInstagram())
             val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
             longToast("Page Instagram")
@@ -91,11 +88,29 @@ class MainActivity : AppCompatActivity() {
 
         // open page facebook
         binding.facebookMain.setOnClickListener {
-            val uri = Uri.parse(user!!.getFacebook())
+            val uri = Uri.parse(user.getFacebook())
             val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
             longToast("Page Facebook")
         }
+    }
+
+    private fun updateStatus(status : String) {
+        val ref = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
+
+        val hashMap = HashMap<String, Any>()
+        hashMap["status"] = status
+        ref.updateChildren(hashMap)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateStatus("Online")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        updateStatus("offline")
     }
 
     // <-- menu
@@ -103,6 +118,7 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId)
         {
@@ -137,25 +153,4 @@ class MainActivity : AppCompatActivity() {
         return false
     }
     // menu -->
-
-    private fun updateStatus(status : String) {
-        val ref = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
-        val hashMap = HashMap<String, Any>()
-        hashMap["status"] = status
-        ref!!.updateChildren(hashMap)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        updateStatus("Online")
-        val textViewColor = bindingActivity.statusProfilMain.findViewById(R.id.status_profil_main) as TextView
-        textViewColor.setTextColor(Color.parseColor("green"))
-    }
-
-    override fun onPause() {
-        super.onPause()
-        updateStatus("offline")
-        val textViewColor = bindingActivity.statusProfilMain.findViewById(R.id.status_profil_main) as TextView
-        textViewColor.setTextColor(Color.parseColor("white"))
-    }
 }

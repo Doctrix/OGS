@@ -11,7 +11,8 @@
         android:id="@+id/Rl_content"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true">
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"
@@ -31,7 +32,8 @@
             android:textSize="18sp"
             android:padding="8dp"
             android:textColor="@android:color/white"
-            android:background="@drawable/ic_msg_right_content_background">
+            android:background="@drawable/ic_msg_right_content_background"
+            android:layout_alignParentRight="true">
         </TextView>
 
         <ImageView
@@ -41,7 +43,7 @@
             android:layout_alignParentEnd="true"
             android:visibility="gone"
             android:contentDescription="@string/label_todo"
-            >
+            android:layout_alignParentRight="true">
         </ImageView>
 
         <TextView
@@ -50,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/show_text_message"
-            >
+            android:layout_alignParentRight="true">
         </TextView>
 
     </RelativeLayout>
