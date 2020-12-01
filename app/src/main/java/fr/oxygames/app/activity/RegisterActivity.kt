@@ -7,14 +7,15 @@ import androidx.appcompat.widget.Toolbar
 import com.google.firebase.auth.*
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import fr.oxygames.app.R
-import kotlinx.android.synthetic.main.activity_register.*
+import fr.oxygames.app.databinding.ActivityRegisterBinding
 import org.jetbrains.anko.longToast
 import java.util.*
 import kotlin.collections.HashMap
 
 class RegisterActivity : AppCompatActivity()
 {
+    private lateinit var binding: ActivityRegisterBinding
+
     private lateinit var mAuth: FirebaseAuth
     private lateinit var refUsers: DatabaseReference
     private var firebaseUserID: String = ""
@@ -22,12 +23,13 @@ class RegisterActivity : AppCompatActivity()
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register)
 
-        val toolbar: Toolbar = findViewById(R.id.toolbar_register)
-        setSupportActionBar(toolbar)
-        supportActionBar!!.title = "Register"
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        val binding = ActivityRegisterBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val toolbar: Toolbar = binding.toolbarRegister
+        binding.toolbarRegister.title = "Register"
+
         toolbar.setNavigationOnClickListener {
             val intent = Intent (this@RegisterActivity, WelcomeActivity::class.java)
             startActivity(intent)
@@ -36,11 +38,11 @@ class RegisterActivity : AppCompatActivity()
 
         mAuth = FirebaseAuth.getInstance()
 
-        button_register.setOnClickListener {
+        binding.buttonRegister.setOnClickListener {
             registerUser()
         }
 
-        text_login.setOnClickListener {
+        binding.textLogin.setOnClickListener {
             longToast("Input provided")
             val intent = Intent (this@RegisterActivity, LoginActivity::class.java)
 //            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -50,10 +52,10 @@ class RegisterActivity : AppCompatActivity()
     }
 
     private fun registerUser() {
-        val username: String = username_register.text.toString()
-        val email: String = email_register.text.toString()
-        val password: String = password_register.text.toString()
-        val passwordValidate: String = passwordConfirm_register.text.toString()
+        val username: String = binding.usernameRegister.text.toString()
+        val email: String = binding.emailRegister.text.toString()
+        val password: String = binding.passwordRegister.text.toString()
+        val passwordValidate: String = binding.passwordConfirmRegister.text.toString()
 
         when {
             username == "" -> {

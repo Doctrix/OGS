@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="fr.oxygames.app"
     android:versionCode="1"
     android:versionName="1.0">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.OxyGameS"
-        android:fullBackupContent="@xml/backup_descriptor">
-        <activity android:name=".activity.VisitUserProfileActivity"/>
+        android:theme="@style/Theme.OxyGameS">
+        <activity android:name=".activity.VisitUserProfileActivity" />
         <activity android:name=".activity.ViewFullImageActivity" />
         <activity android:name=".activity.MessageChatActivity" />
         <activity
@@ -32,13 +33,13 @@
             android:theme="@style/Theme.OxyGameS.NoActionBar" />
         <activity
             android:name=".activity.WelcomeActivity"
-            android:label="@string/app_name"
             android:theme="@style/Theme.OxyGameS.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service
             android:name=".notifications.FirebaseMessaging"
             android:enabled="true"

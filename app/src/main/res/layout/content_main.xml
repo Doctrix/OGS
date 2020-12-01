@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    android:id="@+id/scrollView_main"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorPrimary"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+<layout>
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="DataUser"
+            type="fr.oxygames.app.binding.DataUser" />
+    </data>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/scrollView_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:context=".activity.MainActivity"
+        tools:ignore="MergeRootFrame">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,66 +33,67 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:id="@+id/username_main"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="10dp"
-                    android:paddingStart="20dp"
-                    android:paddingTop="10dp"
-                    android:paddingEnd="10dp"
-                    android:paddingBottom="10dp"
-                    android:text="@string/label_username"
-                    android:textSize="24sp"
-                    app:drawableLeftCompat="@drawable/ic_person"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="10dp" />
+            <TextView
+                android:id="@+id/username_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="10dp"
+                android:paddingStart="20dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:text="@string/label_username"
+                android:textSize="24sp"
+                app:drawableLeftCompat="@drawable/ic_person" />
 
-                <TextView
-                    android:id="@+id/website_main"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="10dp"
-                    android:paddingStart="20dp"
-                    android:paddingTop="10dp"
-                    android:paddingEnd="10dp"
-                    android:paddingBottom="10dp"
-                    android:text="@string/label_website"
-                    android:textSize="24sp"
-                    app:drawableLeftCompat="@drawable/ic_website"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="10dp" />
+            <TextView
+                android:id="@+id/website_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="10dp"
+                android:paddingStart="20dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:text="@string/label_website"
+                android:textSize="24sp"
+                app:drawableLeftCompat="@drawable/ic_website" />
 
-                <TextView
-                    android:id="@+id/inst_main"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="10dp"
-                    android:paddingStart="20dp"
-                    android:paddingTop="10dp"
-                    android:paddingEnd="10dp"
-                    android:paddingBottom="10dp"
-                    android:text="@string/label_instagram"
-                    android:textSize="24sp"
-                    app:drawableLeftCompat="@drawable/ic_inst"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="10dp" />
+            <TextView
+                android:id="@+id/inst_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="10dp"
+                android:paddingStart="20dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:text="@string/label_instagram"
+                android:textSize="24sp"
+                app:drawableLeftCompat="@drawable/ic_inst" />
 
-                <TextView
-                    android:id="@+id/facebook_main"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="10dp"
-                    android:paddingStart="20dp"
-                    android:paddingTop="10dp"
-                    android:paddingEnd="10dp"
-                    android:paddingBottom="10dp"
-                    android:text="@string/label_facebook"
-                    android:textSize="24sp"
-                    app:drawableLeftCompat="@drawable/ic_fb"
-                    android:paddingRight="10dp"
-                    android:paddingLeft="20dp" />
+            <TextView
+                android:id="@+id/facebook_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="10dp"
+                android:paddingStart="20dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:text="@string/label_facebook"
+                android:textSize="24sp"
+                app:drawableLeftCompat="@drawable/ic_fb" />
 
         </LinearLayout>
 
-</ScrollView>
+    </ScrollView>
+</layout>

@@ -14,14 +14,14 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import fr.oxygames.app.R
+import fr.oxygames.app.databinding.ActivityMainBinding
+import fr.oxygames.app.databinding.ContentMainBinding
 import fr.oxygames.app.model.Users
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_view_full_image.*
-import kotlinx.android.synthetic.main.activity_visit_user_profile.*
-import kotlinx.android.synthetic.main.content_main.*
 import org.jetbrains.anko.longToast
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var bindingActivity: ActivityMainBinding
+
     var refUsers: DatabaseReference? = null
     var firebaseUser: FirebaseUser? = null
     var user: Users? = null
@@ -29,13 +29,18 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_main)
-        //setSupportActionBar(toolbar_main)
 
-        val toolbar: Toolbar = findViewById(R.id.toolbar_main)
-        setSupportActionBar(toolbar)
-        supportActionBar!!.title = "My account"
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        val bindingActivity = ActivityMainBinding.inflate(layoutInflater)
+        val bindingContent = ContentMainBinding.inflate(layoutInflater)
+
+        setContentView(bindingActivity.root)
+        setContentView(bindingContent.root)
+
+        val toolbar: Toolbar = bindingActivity.toolbarMain
+
+        setSupportActionBar(bindingActivity.toolbarMain)
+        bindingActivity.toolbarMain.title = "My account"
+
         // button back
         toolbar.setNavigationOnClickListener {
             finish()
@@ -50,13 +55,13 @@ class MainActivity : AppCompatActivity() {
                 if (snapshot.exists())
                 {
                     user = snapshot.getValue(Users::class.java)
-                    username_main.text = user!!.getUsername()
-                    facebook_main.text = user!!.getFacebook()
-                    inst_main.text = user!!.getInstagram()
-                    website_main.text = user!!.getWebsite()
-                    status_profil_main.text = user!!.getStatus()
-                    Picasso.get().load(user!!.getCover()).placeholder(R.drawable.ic_cover).into(cover_main)
-                    Picasso.get().load(user!!.getAvatar()).placeholder(R.drawable.ic_profile).into(image_profil_main)
+                    bindingContent.usernameMain.text = user!!.getUsername()
+                    bindingContent.facebookMain.text = user!!.getFacebook()
+                    bindingContent.instMain.text = user!!.getInstagram()
+                    bindingContent.websiteMain.text = user!!.getWebsite()
+                    bindingActivity.statusProfilMain.text = user!!.getStatus()
+                    Picasso.get().load(user!!.getCover()).placeholder(R.drawable.ic_cover).into(bindingActivity.coverMain)
+                    Picasso.get().load(user!!.getAvatar()).placeholder(R.drawable.ic_profile).into(bindingActivity.imageProfilMain)
                 }
             }
 
@@ -65,7 +70,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        username_main.setOnClickListener {
+        bindingContent.usernameMain.setOnClickListener {
             val intent = Intent(this@MainActivity, HomeActivity::class.java)
 //                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
@@ -73,7 +78,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // open website
-        website_main.setOnClickListener {
+        bindingContent.websiteMain.setOnClickListener {
             val uri = Uri.parse(user!!.getWebsite())
             val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
@@ -81,7 +86,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // open page instagram
-        inst_main.setOnClickListener {
+        bindingContent.instMain.setOnClickListener {
             val uri = Uri.parse(user!!.getInstagram())
             val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
@@ -89,7 +94,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // open page facebook
-        facebook_main.setOnClickListener {
+        bindingContent.facebookMain.setOnClickListener {
             val uri = Uri.parse(user!!.getFacebook())
             val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
@@ -147,14 +152,14 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         updateStatus("Online")
-        val textViewColor = status_profil_main.findViewById(R.id.status_profil_main) as TextView
+        val textViewColor = bindingActivity.statusProfilMain.findViewById(R.id.status_profil_main) as TextView
         textViewColor.setTextColor(Color.parseColor("green"))
     }
 
     override fun onPause() {
         super.onPause()
         updateStatus("offline")
-        val textViewColor = status_profil_main.findViewById(R.id.status_profil_main) as TextView
+        val textViewColor = bindingActivity.statusProfilMain.findViewById(R.id.status_profil_main) as TextView
         textViewColor.setTextColor(Color.parseColor("white"))
     }
 }

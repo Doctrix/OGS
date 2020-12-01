@@ -24,12 +24,11 @@ import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
 import com.squareup.picasso.Picasso
 import fr.oxygames.app.R
+import fr.oxygames.app.databinding.FragmentSettingsBinding
 import fr.oxygames.app.model.Users
-import kotlinx.android.synthetic.main.fragment_settings.*
-import kotlinx.android.synthetic.main.fragment_settings.view.*
 
 class SettingsFragment : Fragment() {
-
+    private var fragmentSettingsBinding: FragmentSettingsBinding? = null
     private var usersReference: DatabaseReference? = null
     private var firebaseUser: FirebaseUser? = null
     private val RequestCode = 438
@@ -43,7 +42,8 @@ class SettingsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view =  inflater.inflate(R.layout.fragment_settings, container, false)
+        val binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        fragmentSettingsBinding = binding
 
         // firebase
         firebaseUser = FirebaseAuth.getInstance().currentUser
@@ -56,9 +56,9 @@ class SettingsFragment : Fragment() {
                     val user: Users? = p0.getValue(Users::class.java)
 
                     if (context != null) {
-                        view.username_settings.text = user!!.getUsername()
-                        Picasso.get().load(user.getCover()).placeholder(R.drawable.ic_cover).into(cover_image_settings)
-                        Picasso.get().load(user.getAvatar()).placeholder(R.drawable.ic_avatar).into(profile_image_settings)
+                        binding.usernameSettings.text = user!!.getUsername()
+                        Picasso.get().load(user.getCover()).placeholder(R.drawable.ic_cover).into(binding.coverImageSettings)
+                        Picasso.get().load(user.getAvatar()).placeholder(R.drawable.ic_avatar).into(binding.profileImageSettings)
                     }
                 }
             }
@@ -68,25 +68,25 @@ class SettingsFragment : Fragment() {
             }
         })
 
-        view.profile_image_settings.setOnClickListener {
+        binding.profileImageSettings.setOnClickListener {
             coverChecker = "profile"
             pickImage()
         }
 
-        view.cover_image_settings.setOnClickListener {
+        binding.coverImageSettings.setOnClickListener {
             coverChecker = "cover"
             pickImage()
         }
 
-        view.set_facebook.setOnClickListener {
+        binding.setFacebook.setOnClickListener {
             socialChecker = "facebook"
             setSocialLinks()
         }
-        view.set_inst.setOnClickListener {
+        binding.setInst.setOnClickListener {
             socialChecker = "instagram"
             setSocialLinks()
         }
-        view.set_website.setOnClickListener {
+        binding.setWebsite.setOnClickListener {
             socialChecker = "website"
             setSocialLinks()
         }
@@ -226,4 +226,3 @@ class SettingsFragment : Fragment() {
         }
     }
 }
-

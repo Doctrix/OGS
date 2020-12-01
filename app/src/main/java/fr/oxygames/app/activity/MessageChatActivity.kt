@@ -21,6 +21,7 @@ import com.google.firebase.storage.UploadTask
 import com.squareup.picasso.Picasso
 import fr.oxygames.app.R
 import fr.oxygames.app.adapter.ChatsAdapter
+import fr.oxygames.app.databinding.ActivityMessageChatBinding
 import fr.oxygames.app.fragment.APIService
 import fr.oxygames.app.model.Chat
 import fr.oxygames.app.model.Data
@@ -29,12 +30,12 @@ import fr.oxygames.app.notifications.Client
 import fr.oxygames.app.notifications.MyResponse
 import fr.oxygames.app.notifications.Sender
 import fr.oxygames.app.notifications.Token
-import kotlinx.android.synthetic.main.activity_message_chat.*
 import org.jetbrains.anko.longToast
 import retrofit2.*
 
 class MessageChatActivity : AppCompatActivity()
 {
+    //private lateinit var binding: ActivityMessageChatBinding
     var userIdVisit: String = ""
     var firebaseUser: FirebaseUser? = null
     var chatsAdapter: ChatsAdapter? = null
@@ -44,15 +45,17 @@ class MessageChatActivity : AppCompatActivity()
     var notify = false
     var apiService: APIService? = null
 
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_message_chat)
 
-        val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbar_message_chat)
-        setSupportActionBar(toolbar)
-        supportActionBar!!.title = ""
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        val binding = ActivityMessageChatBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val toolbar: androidx.appcompat.widget.Toolbar = binding.toolbarMessageChat
+
+        setSupportActionBar(binding.toolbarMessageChat)
+        binding.toolbarMessageChat.title = ""
+
         toolbar.setNavigationOnClickListener {
             finish()
         }
@@ -77,8 +80,8 @@ class MessageChatActivity : AppCompatActivity()
             {
                 val user: Users? = snapshot.getValue(Users::class.java)
 
-                username_chat.text = user!!.getUsername()
-                Picasso.get().load(user.getAvatar()).into(profile_image_chat)
+                binding.usernameChat.text = user!!.getUsername()
+                Picasso.get().load(user.getAvatar()).into(binding.profileImageChat)
 
                 retrieveMessages(firebaseUser!!.uid, userIdVisit, user.getAvatar())
             }
@@ -89,9 +92,9 @@ class MessageChatActivity : AppCompatActivity()
             }
         })
 
-        send_message_btn.setOnClickListener {
+        binding.sendMessageBtn.setOnClickListener {
             notify = true
-            val message = text_message_chat.text.toString()
+            val message = binding.textMessageChat.text.toString()
             if (message == "")
             {
                 longToast("Please write a message, first...")
@@ -100,10 +103,10 @@ class MessageChatActivity : AppCompatActivity()
             {
              sendMessageToUser(firebaseUser!!.uid, userIdVisit, message)
             }
-            text_message_chat.setText("")
+            binding.textMessageChat.setText("")
         }
 
-        attach_image_file_btn.setOnClickListener {
+       binding.attachImageFileBtn.setOnClickListener {
             notify = true
             val intent = Intent()
             intent.action = Intent.ACTION_GET_CONTENT

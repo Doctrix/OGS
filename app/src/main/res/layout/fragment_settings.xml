@@ -1,109 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="30dp"
+    android:theme="@style/Theme.OxyGameS.AppBarOverlay"
     tools:context=".fragment.SettingsFragment">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        >
+    <data>
 
-        <RelativeLayout
+        <variable
+            name="DataUser"
+            type="fr.oxygames.app.binding.DataUser" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="30dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            >
+            android:layout_marginTop="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/cover_image_settings"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:contentDescription="@string/label_todo"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_cover">
+
+                </ImageView>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_image_settings"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="140dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_avatar"
+                    app:civ_circle_background_color="@color/colorProfile">
+
+                </de.hdodenhof.circleimageview.CircleImageView>
+
+                <TextView
+                    android:id="@+id/username_settings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/profile_image_settings"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="@string/label_username"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="20sp"
+                    android:textStyle="bold">
+
+                </TextView>
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cv1"
+            android:layout_marginTop="40dp"
+            android:background="@color/colorProfile"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="6dp">
 
             <ImageView
-                android:id="@+id/cover_image_settings"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:src="@drawable/ic_cover"
+                android:id="@+id/set_facebook"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="35dp"
+                android:contentDescription="@string/label_todo"
                 android:scaleType="centerCrop"
-                android:contentDescription="@string/label_todo">
+                android:src="@drawable/ic_fb">
+
             </ImageView>
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profile_image_settings"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="140dp"
+            <ImageView
+                android:id="@+id/set_inst"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="35dp"
+                android:contentDescription="@string/label_todo"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_avatar"
-                app:civ_circle_background_color="@color/colorProfile"
-                >
-            </de.hdodenhof.circleimageview.CircleImageView>
+                android:src="@drawable/ic_inst">
 
-            <TextView
-                android:id="@+id/username_settings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_username"
-                android:layout_below="@+id/profile_image_settings"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="15dp"
-                android:textColor="@color/colorPrimaryDark"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:layout_marginBottom="20dp"
-                >
-            </TextView>
+            </ImageView>
 
-        </RelativeLayout>
+            <ImageView
+                android:id="@+id/set_website"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/label_todo"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_website">
 
-    </androidx.cardview.widget.CardView>
+            </ImageView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/cv1"
-        android:gravity="center"
-        android:background="@color/colorProfile"
-        android:layout_marginTop="40dp"
-        android:orientation="horizontal"
-        android:padding="6dp"
-        >
+        </LinearLayout>
 
-        <ImageView
-            android:id="@+id/set_facebook"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/ic_fb"
-            android:scaleType="centerCrop"
-            android:layout_marginEnd="35dp"
-            android:layout_gravity="center"
-            android:contentDescription="@string/label_todo">
-        </ImageView>
-
-        <ImageView
-            android:id="@+id/set_inst"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/ic_inst"
-            android:scaleType="centerCrop"
-            android:layout_marginEnd="35dp"
-            android:layout_gravity="center"
-            android:contentDescription="@string/label_todo">
-        </ImageView>
-
-        <ImageView
-            android:id="@+id/set_website"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/ic_website"
-            android:scaleType="centerCrop"
-            android:layout_gravity="center"
-            android:contentDescription="@string/label_todo">
-        </ImageView>
-
-    </LinearLayout>
-
-</RelativeLayout>
+    </RelativeLayout>
+</layout>
