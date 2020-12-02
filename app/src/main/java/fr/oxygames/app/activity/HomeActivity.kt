@@ -18,22 +18,23 @@ import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import fr.oxygames.app.R
 import fr.oxygames.app.databinding.ActivityHomeBinding
+import fr.oxygames.app.fragment.ChatsFragment
 import fr.oxygames.app.fragment.SearchFragment
 import fr.oxygames.app.fragment.SettingsFragment
+import fr.oxygames.app.model.Chat
 import fr.oxygames.app.model.Users
 import org.jetbrains.anko.longToast
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
+    lateinit var chat: Chat
+    lateinit var user: Users
 
     var refUsers: DatabaseReference? = null
     var firebaseUser: FirebaseUser? = null
-    lateinit var user: Users
 
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         val binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -47,9 +48,12 @@ class HomeActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+        val tabLayout: TabLayout = binding.tabLayoutHome
+        val viewPager: ViewPager = binding.viewPagerHome
 
         firebaseUser = FirebaseAuth.getInstance().currentUser
         refUsers = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
+        val ref = FirebaseDatabase.getInstance().reference.child("Chats")
 
         // username and profile picture
         refUsers!!.addValueEventListener(object : ValueEventListener {
@@ -67,20 +71,15 @@ class HomeActivity : AppCompatActivity() {
                 longToast("error")
             }
         })
-
-        val tabLayout: TabLayout = binding.tabLayoutHome
-        val viewPager: ViewPager = binding.viewPagerHome
-
-        val ref = FirebaseDatabase.getInstance().reference.child("Chats")
         ref.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(p0: DataSnapshot) {
                 val viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
-                /*var countUnreadMessages = 0
+                var countUnreadMessages = 0
 
                 for (dataSnapShot in p0.children)
                 {
-                    val chat = dataSnapShot.getValue(Chat::class.java)
-                    if (chat!!.getReceiver().equals(firebaseUser!!.uid) && !chat.getIsSeen()){
+                    chat = dataSnapShot.getValue(Chat::class.java)!!
+                    if (chat.getReceiver().equals(firebaseUser!!.uid) && !chat.getIsSeen()){
                         countUnreadMessages += 1
                     }
                 }
@@ -90,7 +89,7 @@ class HomeActivity : AppCompatActivity() {
                 else
                 {
                     viewPagerAdapter.addFragment(ChatsFragment(), "($countUnreadMessages) Chats")
-                }*/
+                }
                 viewPagerAdapter.addFragment(SearchFragment(), "Search")
                 viewPagerAdapter.addFragment(SettingsFragment(), "Settings")
 
@@ -102,7 +101,6 @@ class HomeActivity : AppCompatActivity() {
 
             }
         })
-
     }
 
     // <-- menu
@@ -116,7 +114,7 @@ class HomeActivity : AppCompatActivity() {
             // button home
             R.id.action_home -> {
                 longToast("Loading ...")
-                val intent = Intent(this@HomeActivity, HomeActivity::class.java)
+                val intent = Intent(this@HomeActivity, MainActivity::class.java)
                 startActivity(intent)
                 finish()
                 return true
@@ -125,7 +123,7 @@ class HomeActivity : AppCompatActivity() {
             // button profile
             R.id.action_profile -> {
                 longToast("Loading ...")
-                val intent = Intent(this@HomeActivity, MainActivity::class.java)
+                val intent = Intent(this@HomeActivity, VisitUserProfileActivity::class.java)
                 startActivity(intent)
                 finish()
                 return true

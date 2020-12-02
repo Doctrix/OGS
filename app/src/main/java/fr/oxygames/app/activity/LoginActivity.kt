@@ -38,8 +38,8 @@ class LoginActivity : AppCompatActivity()
         }
 
         binding.textRegister.setOnClickListener {
-            longToast("Input provided")
-            val intent = Intent(this, RegisterActivity::class.java) //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            longToast("Register loading ...")
+            val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -49,28 +49,29 @@ class LoginActivity : AppCompatActivity()
         val email: String = binding.emailLogin.text.toString()
         val password: String = binding.passwordLogin.text.toString()
 
-        when {
-            email == "" -> {
+        if (email == "" )
+        {
             longToast("Please write Email")
-            }
-            password == "" -> {
-                longToast("Please write Password")
-            }
-            else -> {
-                mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener { task ->
-                    if (task.isSuccessful)
-                    {
-                        val intent = Intent(this,MainActivity::class.java)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                        startActivity(intent)
-                        finish()
-                        longToast("Loading ...")
-                    }
-                    else
-                    {
-                        longToast("Error Message")
-                    }
+        }
+        else if (password == "")
+        {
+            longToast("Please write Password")
+        }
+        else
+        {
+            mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
+                if (task.isSuccessful)
+                {
+                    longToast("Loading ...")
+                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
+                    finish()
+                }
+                else
+                {
+                    longToast("Error Message")
                 }
             }
         }

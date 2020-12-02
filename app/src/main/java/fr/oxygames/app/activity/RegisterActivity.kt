@@ -44,7 +44,7 @@ class RegisterActivity : AppCompatActivity()
         }
 
         binding.textLogin.setOnClickListener {
-            longToast("Input provided")
+            longToast("Login Loading ...")
             val intent = Intent (this@RegisterActivity, LoginActivity::class.java)
             startActivity(intent)
             finish()

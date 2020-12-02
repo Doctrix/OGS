@@ -1,21 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <data>
-
-        <variable
-            name="user"
-            type="fr.oxygames.app.model.Data" />
-    </data>
-
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        tools:context=".activity.MessageChatActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary">
+        android:background="@color/colorPrimary"
+        tools:context=".activity.MessageChatActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/barLayout_message_chat"
@@ -43,11 +35,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="26dp"
+                    android:layout_marginLeft="26dp"
                     android:text="@string/label_username"
                     android:textColor="@color/white"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="26dp">
+                    android:textStyle="bold">
 
                 </TextView>
 
@@ -77,9 +69,9 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
                 android:background="@drawable/ic_attach_file"
-                android:contentDescription="@string/description_image_file"
-                android:layout_alignParentLeft="true">
+                android:contentDescription="@string/description_image_file">
 
             </ImageView>
 
@@ -91,15 +83,15 @@
                 android:layout_marginStart="6dp"
                 android:layout_marginEnd="6dp"
                 android:layout_toStartOf="@+id/send_message_btn"
+                android:layout_toLeftOf="@+id/send_message_btn"
                 android:layout_toEndOf="@+id/attach_image_file_btn"
+                android:layout_toRightOf="@+id/attach_image_file_btn"
                 android:autofillHints=""
                 android:background="@color/transparent"
                 android:hint="@string/label_write_message_here"
                 android:inputType="textAutoComplete"
                 android:textColor="@color/colorAccent"
-                android:textColorHint="@color/white"
-                android:layout_toLeftOf="@+id/send_message_btn"
-                android:layout_toRightOf="@+id/attach_image_file_btn">
+                android:textColorHint="@color/white">
 
             </EditText>
 
@@ -108,9 +100,9 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:background="@drawable/ic_send"
-                android:contentDescription="@string/description_send_icone"
-                android:layout_alignParentRight="true">
+                android:contentDescription="@string/description_send_icone">
 
             </ImageView>
 

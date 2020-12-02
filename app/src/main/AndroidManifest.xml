@@ -18,7 +18,8 @@
         android:theme="@style/Theme.OxyGameS">
         <activity android:name=".activity.VisitUserProfileActivity" />
         <activity android:name=".activity.ViewFullImageActivity" />
-        <activity android:name=".activity.MessageChatActivity" />
+        <activity android:name=".activity.MessageChatActivity"
+            android:theme="@style/Theme.OxyGameS.NoActionBar" />
         <activity
             android:name=".activity.HomeActivity"
             android:theme="@style/Theme.OxyGameS.NoActionBar" />

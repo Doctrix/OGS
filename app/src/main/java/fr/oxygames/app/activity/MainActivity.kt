@@ -18,15 +18,13 @@ import org.jetbrains.anko.longToast
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
-
-    var refUsers: DatabaseReference? = null
     var firebaseUser: FirebaseUser? = null
+    var refUsers: DatabaseReference? = null
     lateinit var user: Users
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -118,7 +116,6 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId)
         {

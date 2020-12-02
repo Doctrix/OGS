@@ -8,6 +8,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.tasks.Continuation
@@ -31,65 +32,64 @@ import fr.oxygames.app.notifications.MyResponse
 import fr.oxygames.app.notifications.Sender
 import fr.oxygames.app.notifications.Token
 import org.jetbrains.anko.longToast
-import retrofit2.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-class MessageChatActivity : AppCompatActivity()
-{
-    private lateinit var binding: ActivityMessageChatBinding
+class MessageChatActivity : AppCompatActivity() {
+    lateinit var binding: ActivityMessageChatBinding
+    var notify = false
     var userIdVisit: String = ""
+    var apiService: APIService? = null
     var firebaseUser: FirebaseUser? = null
+    var reference: DatabaseReference? = null
     var chatsAdapter: ChatsAdapter? = null
     var mChatList: List<Chat>? = null
-    lateinit var recycler_view_chats: RecyclerView
-    var reference: DatabaseReference? = null
-    var notify = false
-    var apiService: APIService? = null
+    lateinit var recyclerViewChats: RecyclerView
+    private var user: Users? = null
 
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val binding = ActivityMessageChatBinding.inflate(layoutInflater)
+        binding = ActivityMessageChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val toolbar: androidx.appcompat.widget.Toolbar = binding.toolbarMessageChat
-
-        setSupportActionBar(binding.toolbarMessageChat)
-        binding.toolbarMessageChat.title = ""
-
+        // toolbar
+        val toolbar: Toolbar = binding.toolbarMessageChat
+        binding.toolbarMessageChat.title = "Chat"
+        setSupportActionBar(toolbar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener {
             finish()
         }
 
         apiService = Client.Client.getClient("https://fcm.googleapis.com/")!!.create(APIService::class.java)
 
-        intent = intent
-        userIdVisit = intent.getStringExtra("Visit_id")
+        intent = Intent()
+        val userIdVisit = intent.getStringExtra("visit_id")
         firebaseUser = FirebaseAuth.getInstance().currentUser
 
-        recycler_view_chats = findViewById(R.id.recycler_view_chats)
-        recycler_view_chats.setHasFixedSize(true)
-        var linearLayoutManager = LinearLayoutManager(applicationContext)
+        recyclerViewChats = binding.recyclerViewChats
+        recyclerViewChats.setHasFixedSize(true)
+        val linearLayoutManager = LinearLayoutManager(applicationContext)
         linearLayoutManager.stackFromEnd = true
-        recycler_view_chats.layoutManager = linearLayoutManager
+        recyclerViewChats.layoutManager = linearLayoutManager
 
-        reference = FirebaseDatabase.getInstance().reference
-            .child("Users").child(userIdVisit)
-        reference!!.addValueEventListener(object : ValueEventListener
-        {
+        reference = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
+        longToast("$userIdVisit")
+        reference!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot)
             {
-                val user: Users? = snapshot.getValue(Users::class.java)
+                user = snapshot.getValue(Users::class.java)
 
                 binding.usernameChat.text = user!!.getUsername()
-                Picasso.get().load(user.getAvatar()).into(binding.profileImageChat)
+                Picasso.get().load(user!!.getAvatar()).into(binding.profileImageChat)
 
-                retrieveMessages(firebaseUser!!.uid, userIdVisit, user.getAvatar())
+                retrieveMessages(firebaseUser!!.uid, userIdVisit, user!!.getAvatar())
             }
 
             override fun onCancelled(error: DatabaseError)
             {
-                longToast("error")
+
             }
         })
 
@@ -107,21 +107,21 @@ class MessageChatActivity : AppCompatActivity()
             binding.textMessageChat.setText("")
         }
 
-       binding.attachImageFileBtn.setOnClickListener {
+        binding.attachImageFileBtn.setOnClickListener {
             notify = true
             val intent = Intent()
             intent.action = Intent.ACTION_GET_CONTENT
             intent.type = "image/*"
             startActivityForResult(Intent.createChooser(intent, "Pick Image"), 438)
         }
-        seenMessage(userIdVisit)
+        //seenMessage(userIdVisit)
     }
 
     // send message to chats
     private fun sendMessageToUser(senderId: String, receiverId: String?, message: String)
     {
-        val reference = FirebaseDatabase.getInstance().reference
-        val messageKey = reference.push().key
+        reference = FirebaseDatabase.getInstance().reference
+        val messageKey = reference!!.push().key
 
         val messageHashMap = HashMap<String, Any?>()
         messageHashMap["sender"] = senderId
@@ -130,7 +130,7 @@ class MessageChatActivity : AppCompatActivity()
         messageHashMap["isSeen"] = false
         messageHashMap["url"] = ""
         messageHashMap["messageId"] = messageKey
-        reference.child("Chats")
+        reference!!.child("Chats")
         .child(messageKey!!)
         .setValue(messageHashMap)
         .addOnCompleteListener { task ->
@@ -159,23 +159,21 @@ class MessageChatActivity : AppCompatActivity()
 
                     override fun onCancelled(error: DatabaseError)
                     {
-                        longToast("error")
                     }
                 })
             }
         }
 
         //implement the push notifications using fcm
-        val usersReference = FirebaseDatabase.getInstance().reference
-            .child("Users").child(firebaseUser!!.uid)
-        reference.addValueEventListener(object : ValueEventListener
+        reference = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
+        reference!!.addValueEventListener(object : ValueEventListener
         {
             override fun onDataChange(snapshot: DataSnapshot)
             {
                 val user = snapshot.getValue(Users::class.java)
                 if (notify)
                 {
-                    sendNotification(receiverId, user!!.getUsername(), message)
+                    //sendNotification(receiverId, user!!.getUsername(), message)
                 }
                 notify = false
             }
@@ -189,9 +187,9 @@ class MessageChatActivity : AppCompatActivity()
 
     private fun sendNotification(receiverId: String?, username: String?, message: String)
     {
-        val ref = FirebaseDatabase.getInstance().reference.child("Tokens")
+        reference = FirebaseDatabase.getInstance().reference.child("Tokens")
 
-        val query = ref.orderByKey().equalTo(receiverId)
+        val query = reference!!.orderByKey().equalTo(receiverId)
 
         query.addValueEventListener(object: ValueEventListener
         {
@@ -201,17 +199,10 @@ class MessageChatActivity : AppCompatActivity()
                 {
                     val token: Token? = dataSnapshot.getValue(Token::class.java)
 
-                    val data = Data(
-                        firebaseUser!!.uid,
-                        R.mipmap.ic_launcher,
-                        "$username: $message",
-                        "New Message",
-                        userIdVisit
-                    )
-                    val sender = Sender(data!!, token!!.getToken().toString())
+                    val data = Data(firebaseUser!!.uid, R.mipmap.ic_launcher,"$username: $message","New Message", userIdVisit)
+                    val sender = Sender(data, token!!.getToken().toString())
 
-                apiService!!.sendNotification(sender)
-                    .enqueue(object : Callback<MyResponse>
+                apiService!!.sendNotification(sender).enqueue(object : Callback<MyResponse>
                     {
                         override fun onResponse(
                             call: Call<MyResponse>,
@@ -220,7 +211,7 @@ class MessageChatActivity : AppCompatActivity()
                         {
                             if (response.code() == 200)
                             {
-                                if (response.body()!!.success !== 1)
+                                if (response.body()!!.success != 1)
                                     longToast("Failed, Nothing happen.")
                             }
                         }
@@ -239,8 +230,7 @@ class MessageChatActivity : AppCompatActivity()
         })
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
-    {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode==438 && resultCode==RESULT_OK && data!=null && data.data!=null)
@@ -251,8 +241,8 @@ class MessageChatActivity : AppCompatActivity()
 
             val fileUri = data.data
             val storageReference = FirebaseStorage.getInstance().reference.child("Chats Images")
-            val ref = FirebaseDatabase.getInstance().reference
-            val messageId = ref.push().key
+            reference = FirebaseDatabase.getInstance().reference
+            val messageId = reference!!.push().key
             val filePath = storageReference.child("$messageId.jpg")
 
             val uploadTask: StorageTask<*>
@@ -278,22 +268,21 @@ class MessageChatActivity : AppCompatActivity()
                     messageHashMap["url"] = url
                     messageHashMap["messageId"] = messageId
 
-                ref.child("Chats").child(messageId!!).setValue(messageHashMap)
+                    reference!!.child("Chats").child(messageId!!).setValue(messageHashMap)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful)
                         {
                             progressBar.dismiss()
                             //implement the push notifications using fcm
-                            val reference = FirebaseDatabase.getInstance().reference
-                                .child("Users").child(firebaseUser!!.uid)
-                            reference.addValueEventListener(object : ValueEventListener
+                            reference = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
+                            reference!!.addValueEventListener(object : ValueEventListener
                             {
                                 override fun onDataChange(snapshot: DataSnapshot)
                                 {
                                     val user = snapshot.getValue(Users::class.java)
                                     if (notify)
                                     {
-                                        sendNotification(userIdVisit, user!!.getUsername(), "sent you an image.")
+                                        //sendNotification(userIdVisit, user!!.getUsername(), "sent you an image.")
                                     }
                                     notify = false
                                 }
@@ -314,47 +303,44 @@ class MessageChatActivity : AppCompatActivity()
         mChatList = ArrayList()
         val reference = FirebaseDatabase.getInstance().reference.child("Chats")
 
-        reference.addValueEventListener(object: ValueEventListener
-        {
-            override fun onDataChange(snapshot: DataSnapshot)
+        reference.addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(p0: DataSnapshot)
             {
                 (mChatList as ArrayList<Chat>).clear()
-                for (snapShot in snapshot.children)
+                for (snapShot in p0.children)
                 {
                     val chat = snapShot.getValue(Chat::class.java)
 
                     if (chat!!.getReceiver().equals(senderId) && chat.getSender().equals(receiverId)
-                        || chat.getReceiver().equals(receiverId) && chat.getSender().equals (senderId))
+                        || chat.getReceiver().equals(receiverId) && chat.getSender().equals(senderId))
                     {
                         (mChatList as ArrayList<Chat>).add(chat)
                     }
                     chatsAdapter = ChatsAdapter(this@MessageChatActivity, (mChatList as ArrayList<Chat>), receiverImageUrl!!)
-                    recycler_view_chats.adapter = chatsAdapter
+                    recyclerViewChats.adapter = chatsAdapter
                 }
             }
 
-            override fun onCancelled(error: DatabaseError)
-            {
-                longToast("error")
+            override fun onCancelled(p0: DatabaseError) {
+
             }
         })
     }
 
-    var seenListner: ValueEventListener? = null
+    var seenList: ValueEventListener? = null
 
-    private fun seenMessage(userId: String)
-    {
+    private fun seenMessage(userId: String) {
         val reference = FirebaseDatabase.getInstance().reference.child("Chats")
 
-        seenListner = reference!!.addValueEventListener(object : ValueEventListener
+        seenList = reference.addValueEventListener(object : ValueEventListener
         {
-            override fun onDataChange(snapshot: DataSnapshot)
+            override fun onDataChange(p0: DataSnapshot)
             {
-                for (dataSnapshot in snapshot.children)
+                for (dataSnapshot in p0.children)
                 {
                     val chat = dataSnapshot.getValue(Chat::class.java)
 
-                    if (chat!!.getReceiver().equals(firebaseUser!!.uid) && chat!!.getSender().equals(userId))
+                    if (chat!!.getReceiver().equals(firebaseUser!!.uid) && chat.getSender().equals(userId))
                     {
                         val hashMap = HashMap<String, Any>()
                         hashMap["isSeen"] = true
@@ -363,7 +349,7 @@ class MessageChatActivity : AppCompatActivity()
                 }
             }
 
-            override fun onCancelled(error: DatabaseError)
+            override fun onCancelled(p0: DatabaseError)
             {
 
             }
@@ -373,6 +359,6 @@ class MessageChatActivity : AppCompatActivity()
     override fun onPause() {
         super.onPause()
 
-        reference!!.removeEventListener(seenListner!!)
+        reference!!.removeEventListener(seenList!!)
     }
 }
