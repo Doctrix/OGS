@@ -19,7 +19,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-        binding.userViewModel = viewModel
+        binding.loginModel = null
         binding.lifecycleOwner = this
 
         // toolbar

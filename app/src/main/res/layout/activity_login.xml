@@ -8,6 +8,9 @@
         <variable
             name="loginModel"
             type="fr.oxygames.app.viewModel.LoginViewModel" />
+        <variable
+            name="presenter"
+            type="fr.oxygames.app.presenter.Presenter" />
 
     </data>
 
@@ -103,6 +106,7 @@
             android:text="@string/label_connection"
             android:textAlignment="center"
             android:textSize="18sp"
+            android:onClick="@{(v)->presenter.login()}"
             app:layout_constraintBottom_toTopOf="@+id/register_link"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
