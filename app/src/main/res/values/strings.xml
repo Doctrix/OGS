@@ -58,6 +58,6 @@
     <string name="label_seen">seen</string>
     <string name="label_send_message">Send Message</string>
     <string name="title_activity_tutorial">TutorialActivity</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_1_Tuto">Blueprint</string>
+    <string name="tab_2_Tuto">Web</string>
 </resources>
