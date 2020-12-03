@@ -47,7 +47,7 @@
             android:layout_marginTop="300dp"
             android:layout_marginEnd="20dp"
             android:text="@string/label_connection"
-            android:textSize="30sp" />
+            android:textSize="36sp" />
 
         <Button
             android:id="@+id/button_page_register"
@@ -58,7 +58,9 @@
             android:layout_marginEnd="20dp"
             android:text="@string/label_inscription"
             android:textSize="30sp"
-            app:layout_constraintTop_toBottomOf="@id/button_page_login" />
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/button_page_login"
+            tools:visibility="gone" />
 
         <Button
             android:id="@+id/button_page_help"

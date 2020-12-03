@@ -124,10 +124,12 @@
             android:gravity="center_horizontal"
             android:text="@string/label_inscription"
             android:textAlignment="center"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/copy"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_login" />
+            app:layout_constraintTop_toBottomOf="@+id/button_login"
+            tools:visibility="gone" />
 
         <TextView
             android:id="@+id/copy"

@@ -7,28 +7,21 @@ import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import fr.oxygames.app.databinding.ActivityLoginBinding
+import fr.oxygames.app.model.Users
 import fr.oxygames.app.presenter.Presenter
 import fr.oxygames.app.viewModel.LoginViewModel
 import org.jetbrains.anko.longToast
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
+    lateinit var user: Users
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
-        viewModel.getResultLogin().observe(this, Observer {
-            longToast("Welcome"+it)
-            val intent = Intent(this@LoginActivity, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-            finish()
-        })
-
-        // toolbar
+        // toolbar - back menu
         val toolbar: Toolbar = binding.toolbarLogin
         binding.toolbarLogin.title = "Login"
         setSupportActionBar(toolbar)
@@ -38,6 +31,14 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+        val viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+        viewModel.getResultLogin().observe(this, Observer {
+            longToast("$user.getUsername()")
+            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        })
 
         binding.presenter = object : Presenter {
             override fun login() {
@@ -54,19 +55,5 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-
     }
-
-    // si le user est deja connecter
-    /*override fun onStart() {
-        super.onStart()
-
-        if (FirebaseAuth.getInstance().currentUser != null)
-        {
-            val intent = Intent(this@LoginActivity, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-            finish()
-        }
-    }*/
 }

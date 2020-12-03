@@ -39,6 +39,8 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     def nav_version = "2.3.1"
     def kotlin_version = "1.4.20"
     def retrofit2 = "2.9.0"

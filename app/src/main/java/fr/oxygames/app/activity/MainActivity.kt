@@ -124,11 +124,28 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this@MainActivity, HomeActivity::class.java)
                 startActivity(intent)
                 finish()
-                longToast("Loading ...")
                 return true
             }
 
-            // button profile
+            // button tutorial
+            R.id.action_tutorial -> {
+                val intent = Intent(this@MainActivity, TutorialActivity::class.java)
+                startActivity(intent)
+                finish()
+                longToast("tutorial")
+                return true
+            }
+
+            // button store
+            R.id.action_store -> {
+                /*val intent = Intent(this@MainActivity, StoreActivity::class.java)
+                startActivity(intent)
+                finish()*/
+                longToast("store")
+                return true
+            }
+
+            // button support
             R.id.action_help -> {
                 val uri = Uri.parse("https://oxygames.fr")
                 val intent = Intent(Intent.ACTION_VIEW, uri)
@@ -143,7 +160,7 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent (this@MainActivity, WelcomeActivity::class.java)
                 startActivity(intent)
                 finish()
-                longToast("deco ...")
+                longToast("logout ...")
                 return true
             }
         }

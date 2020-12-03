@@ -8,6 +8,16 @@
         android:title="@string/label_home"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_tutorial"
+        android:orderInCategory="100"
+        android:title="Tuto"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_store"
+        android:orderInCategory="100"
+        android:title="Store"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_help"
         android:orderInCategory="100"
         android:title="@string/label_website"
