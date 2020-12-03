@@ -38,11 +38,9 @@ class RegisterActivity : AppCompatActivity()
         }
 
         mAuth = FirebaseAuth.getInstance()
-
         binding.buttonRegister.setOnClickListener {
             registerUser()
         }
-
         binding.textLogin.setOnClickListener {
             longToast("Login Loading ...")
             val intent = Intent (this@RegisterActivity, LoginActivity::class.java)

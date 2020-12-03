@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <data>
+        <variable
+            name="userViewModel"
+            type="fr.oxygames.app.view.UserViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/ic_login_background"
@@ -57,6 +64,7 @@
             android:hint="@string/label_email"
             android:inputType="textEmailAddress"
             android:padding="10dp"
+            android:text="@={userViewModel.email}"
             app:layout_constraintBottom_toTopOf="@+id/password_login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -74,6 +82,7 @@
             android:importantForAutofill="no"
             android:inputType="textPassword"
             android:padding="10dp"
+            android:text="@={userViewModel.password}"
             app:layout_constraintBottom_toTopOf="@+id/button_login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.504"
@@ -84,22 +93,23 @@
             android:id="@+id/button_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
+            android:layout_marginStart="50dp"
             android:layout_marginTop="50dp"
-            android:layout_marginEnd="100dp"
+            android:layout_marginEnd="50dp"
             android:layout_marginBottom="50dp"
             android:background="@drawable/ic_button_background"
             android:gravity="center_horizontal"
             android:text="@string/label_connection"
             android:textAlignment="center"
-            app:layout_constraintBottom_toTopOf="@+id/text_register"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/register_link"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/password_login"
             app:layout_constraintVertical_bias="0.835" />
 
         <TextView
-            android:id="@+id/text_register"
+            android:id="@+id/register_link"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="177dp"

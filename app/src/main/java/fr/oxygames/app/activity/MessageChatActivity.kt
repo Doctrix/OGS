@@ -39,7 +39,7 @@ import retrofit2.Response
 class MessageChatActivity : AppCompatActivity() {
     lateinit var binding: ActivityMessageChatBinding
     var notify = false
-    var userIdVisit: String = ""
+    lateinit var userIdVisit: String
     var apiService: APIService? = null
     var firebaseUser: FirebaseUser? = null
     var reference: DatabaseReference? = null
@@ -64,7 +64,7 @@ class MessageChatActivity : AppCompatActivity() {
 
         apiService = Client.Client.getClient("https://fcm.googleapis.com/")!!.create(APIService::class.java)
 
-        intent = Intent()
+        val intent = Intent()
         val userIdVisit = intent.getStringExtra("visit_id")
         firebaseUser = FirebaseAuth.getInstance().currentUser
 
@@ -75,7 +75,7 @@ class MessageChatActivity : AppCompatActivity() {
         recyclerViewChats.layoutManager = linearLayoutManager
 
         reference = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
-        longToast("$userIdVisit")
+        longToast("visit_id")
         reference!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot)
             {
