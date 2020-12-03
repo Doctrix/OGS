@@ -4,23 +4,29 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.google.firebase.auth.FirebaseAuth
 import fr.oxygames.app.databinding.ActivityLoginBinding
-import fr.oxygames.app.viewModel.UserViewModel
+import fr.oxygames.app.presenter.Presenter
+import fr.oxygames.app.viewModel.LoginViewModel
 import org.jetbrains.anko.longToast
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityLoginBinding
-    private var mAuth: FirebaseAuth? = null
+    lateinit var binding: ActivityLoginBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
+
+        val binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-        binding.loginModel = null
-        binding.lifecycleOwner = this
+        val viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+        viewModel.getResultLogin().observe(this, Observer {
+            longToast("Welcome"+it)
+            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+            finish()
+        })
 
         // toolbar
         val toolbar: Toolbar = binding.toolbarLogin
@@ -33,14 +39,15 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
-        val btnLogin = binding.buttonLogin
-        val linkRegister = binding.registerLink
-
-        FirebaseAuth.getInstance()
-
-        btnLogin.setOnClickListener {
-            loginUser()
+        binding.presenter = object : Presenter {
+            override fun login() {
+                val email: String = binding.emailLogin.text.toString()
+                val password: String = binding.passwordLogin.text.toString()
+                viewModel.loginCall(email, password)
+            }
         }
+
+        val linkRegister = binding.registerLink
         linkRegister.setOnClickListener {
             longToast("Register loading ...")
             val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
@@ -49,37 +56,6 @@ class LoginActivity : AppCompatActivity() {
         }
 
     }
-
-    private fun loginUser() {
-        val email = binding.userViewModel!!.user.value!!.getEmail()
-        val password = binding.userViewModel!!.user.value!!.getPassword()
-        when {
-            email == "" -> {
-                longToast("Please write Email")
-            }
-            password == "" -> {
-                longToast("Please write Password")
-            }
-            else -> {
-                mAuth!!.signInWithEmailAndPassword(email,password)
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            longToast("okokok")
-                            /*val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                            startActivity(intent)
-                            finish()*/
-                        } else {
-                            longToast("nononono")
-                            /*val message = task.exception!!.toString()
-                            longToast("Error $message")
-                            FirebaseAuth.getInstance().signOut()*/
-                        }
-                    }
-            }
-        }
-    }
-
 
     // si le user est deja connecter
     /*override fun onStart() {
