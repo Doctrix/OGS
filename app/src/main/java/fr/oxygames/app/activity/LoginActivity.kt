@@ -7,18 +7,20 @@ import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.FirebaseAuth
 import fr.oxygames.app.databinding.ActivityLoginBinding
-import fr.oxygames.app.view.UserViewModel
+import fr.oxygames.app.viewModel.UserViewModel
 import org.jetbrains.anko.longToast
 
 class LoginActivity : AppCompatActivity() {
-    lateinit var binding: ActivityLoginBinding
+    private lateinit var binding: ActivityLoginBinding
     private var mAuth: FirebaseAuth? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        var viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        val viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        binding.userViewModel = viewModel
+        binding.lifecycleOwner = this
 
         // toolbar
         val toolbar: Toolbar = binding.toolbarLogin
@@ -49,8 +51,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun loginUser() {
-        val email = binding.userViewModel.user.value!!.getEmail()
-        val password = binding.userViewModel.user.value!!.getPassword()
+        val email = binding.userViewModel!!.user.value!!.getEmail()
+        val password = binding.userViewModel!!.user.value!!.getPassword()
         when {
             email == "" -> {
                 longToast("Please write Email")
@@ -62,15 +64,16 @@ class LoginActivity : AppCompatActivity() {
                 mAuth!!.signInWithEmailAndPassword(email,password)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-
-                            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                            longToast("okokok")
+                            /*val intent = Intent(this@LoginActivity, MainActivity::class.java)
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                             startActivity(intent)
-                            finish()
+                            finish()*/
                         } else {
-                            val message = task.exception!!.toString()
+                            longToast("nononono")
+                            /*val message = task.exception!!.toString()
                             longToast("Error $message")
-                            FirebaseAuth.getInstance().signOut()
+                            FirebaseAuth.getInstance().signOut()*/
                         }
                     }
             }
