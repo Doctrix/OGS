@@ -5,6 +5,10 @@
     <item
         android:id="@+id/action_add"
         android:icon="@android:drawable/ic_menu_add"
-        android:title="Add Post"
+        android:title="@string/label_add_post"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/label_settings"
+        app:showAsAction="never" />
 </menu>

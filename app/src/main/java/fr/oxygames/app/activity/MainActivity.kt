@@ -18,15 +18,18 @@ import org.jetbrains.anko.longToast
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+    lateinit var user: Users
     var firebaseUser: FirebaseUser? = null
     var refUsers: DatabaseReference? = null
-    lateinit var user: Users
-    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        firebaseUser = FirebaseAuth.getInstance().currentUser
+        refUsers = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
 
         // toolbar
         val toolbar: Toolbar = binding.toolbarMain
@@ -36,9 +39,6 @@ class MainActivity : AppCompatActivity() {
         toolbar.setNavigationOnClickListener {
             finish()
         }
-
-        firebaseUser = FirebaseAuth.getInstance().currentUser
-        refUsers = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
 
         // data user
         refUsers!!.addValueEventListener(object : ValueEventListener {
@@ -128,8 +128,8 @@ class MainActivity : AppCompatActivity() {
             }
 
             // button tutorial
-            R.id.action_tutorial -> {
-                val intent = Intent(this@MainActivity, TutorialActivity::class.java)
+            R.id.action_blog -> {
+                val intent = Intent(this@MainActivity, BlogActivity::class.java)
                 startActivity(intent)
                 finish()
                 longToast("tutorial")

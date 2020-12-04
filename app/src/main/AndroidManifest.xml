@@ -16,10 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OxyGameS">
+        <activity android:name=".activity.PostActivity"/>
         <activity
-            android:name=".activity.TutorialActivity"
-            android:label="@string/title_activity_tutorial"
-            android:theme="@style/Theme.OxyGameS.NoActionBar"></activity>
+            android:name=".activity.BlogActivity"
+            android:theme="@style/Theme.OxyGameS.NoActionBar" />
         <activity android:name=".activity.VisitUserProfileActivity" />
         <activity android:name=".activity.ViewFullImageActivity" />
         <activity
@@ -46,7 +46,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <service
             android:name=".notifications.FirebaseMessaging"
             android:enabled="true"

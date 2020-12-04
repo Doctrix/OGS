@@ -62,4 +62,6 @@
     <string name="tab_2_Tuto">Web</string>
     <string name="label_tutorial">Tutorial</string>
     <string name="label_store">Store</string>
+    <string name="label_blog">BLOG</string>
+    <string name="label_add_post">Add Post</string>
 </resources>

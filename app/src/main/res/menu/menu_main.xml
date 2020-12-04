@@ -9,9 +9,10 @@
         android:title="@string/label_home"
         app:showAsAction="always" />
     <item
-        android:id="@+id/action_tutorial"
+        android:id="@+id/action_blog"
+        android:icon="@android:drawable/ic_dialog_dialer"
         android:orderInCategory="100"
-        android:title="@string/label_tutorial"
+        android:title="@string/label_blog"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_store"
