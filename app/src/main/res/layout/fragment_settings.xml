@@ -81,7 +81,7 @@
                 android:layout_marginRight="35dp"
                 android:contentDescription="@string/label_todo"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_fb">
+                android:src="@drawable/ic_facebook">
 
             </ImageView>
 
@@ -94,7 +94,7 @@
                 android:layout_marginRight="35dp"
                 android:contentDescription="@string/label_todo"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_inst">
+                android:src="@drawable/ic_instagram">
 
             </ImageView>
 

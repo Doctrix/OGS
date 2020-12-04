@@ -60,4 +60,6 @@
     <string name="title_activity_tutorial">TutorialActivity</string>
     <string name="tab_1_Tuto">Blueprint</string>
     <string name="tab_2_Tuto">Web</string>
+    <string name="label_tutorial">Tutorial</string>
+    <string name="label_store">Store</string>
 </resources>

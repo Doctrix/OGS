@@ -162,7 +162,7 @@
                     android:text="@string/label_instagram"
                     android:textColor="@color/white"
                     android:textSize="24sp"
-                    app:drawableLeftCompat="@drawable/ic_inst"
+                    app:drawableLeftCompat="@drawable/ic_instagram"
                     app:drawableTint="#AA00FF" />
 
                 <TextView
@@ -179,7 +179,7 @@
                     android:text="@string/label_facebook"
                     android:textColor="@color/white"
                     android:textSize="24sp"
-                    app:drawableLeftCompat="@drawable/ic_fb"
+                    app:drawableLeftCompat="@drawable/ic_facebook"
                     app:drawableTint="#2962FF" />
 
             </LinearLayout>

@@ -40,6 +40,14 @@
     <string name="attachment_title">Download incoming attachments</string>
     <string name="attachment_summary_on">Automatically download attachments for incoming emails</string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="label_aide">AIDE</string>
     <string name="label_deja_connecter">deja connecter</string>
     <string name="label_chats">Chats</string>
@@ -49,4 +57,9 @@
     <string name="label_testing_message">testing message</string>
     <string name="label_seen">seen</string>
     <string name="label_send_message">Send Message</string>
+    <string name="title_activity_tutorial">TutorialActivity</string>
+    <string name="tab_1_Tuto">Blueprint</string>
+    <string name="tab_2_Tuto">Web</string>
+    <string name="label_tutorial">Tutorial</string>
+    <string name="label_store">Store</string>
 </resources>

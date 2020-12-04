@@ -111,14 +111,14 @@ class HomeActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId)
         {
-            // button home
+            /*// button home
             R.id.action_home -> {
                 longToast("Loading ...")
                 val intent = Intent(this@HomeActivity, MainActivity::class.java)
                 startActivity(intent)
                 finish()
                 return true
-            }
+            }*/
 
             // button profile
             R.id.action_profile -> {
