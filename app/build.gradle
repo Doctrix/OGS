@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application'
-    id 'kotlin-android'
     id 'com.google.gms.google-services'
+    id 'kotlin-android'
     id 'kotlin-kapt'
 }
 
@@ -18,19 +18,23 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
     ndkVersion '22.0.6917172 rc1'
     buildFeatures {
         dataBinding = true
@@ -50,7 +54,7 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'org.jetbrains.anko:anko-commons:0.10.8'
-    kapt "com.android.databinding:compiler:$androidPluginVersion"
+    kapt "com.android.databinding:compiler:$gradle_version"
     // test
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
