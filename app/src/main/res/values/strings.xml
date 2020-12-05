@@ -64,4 +64,7 @@
     <string name="label_store">Store</string>
     <string name="label_blog">BLOG</string>
     <string name="label_add_post">Add Post</string>
+    <string name="label_submit_post">Submit Post</string>
+    <string name="label_post_description">Post Description ...</string>
+    <string name="label_post_title">Post Title ...</string>
 </resources>

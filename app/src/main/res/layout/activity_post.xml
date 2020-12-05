@@ -8,10 +8,10 @@
         android:layout_height="match_parent"
         tools:context=".activity.PostActivity">
 
-        <ImageView
-            android:id="@+id/imageViewPickUp"
+        <ImageButton
+            android:id="@+id/imageSelect"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="300dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:adjustViewBounds="true"
@@ -22,10 +22,10 @@
             app:srcCompat="@drawable/ic_login_background" />
 
         <EditText
-            android:id="@+id/editTextPostTitle"
+            android:id="@+id/titleField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imageViewPickUp"
+            android:layout_below="@+id/imageSelect"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
@@ -35,15 +35,15 @@
             android:autofillHints=""
             android:background="@drawable/input_outline"
             android:ems="10"
-            android:hint="Post Title ..."
+            android:hint="@string/label_post_title"
             android:inputType="textPersonName"
             android:padding="15dp" />
 
         <EditText
-            android:id="@+id/editTextPostDescription"
+            android:id="@+id/descField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/editTextPostTitle"
+            android:layout_below="@+id/titleField"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
@@ -51,24 +51,24 @@
             android:layout_marginRight="20dp"
             android:background="@drawable/input_outline"
             android:ems="10"
-            android:hint="Post Description ..."
+            android:hint="@string/label_post_description"
             android:gravity="start|top"
             android:importantForAutofill="no"
             android:inputType="textMultiLine"
             android:padding="15dp" />
 
         <Button
-            android:id="@+id/buttonPost"
+            android:id="@+id/submitBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/editTextPostDescription"
+            android:layout_below="@+id/descField"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="80dp"
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
             android:padding="15dp"
-            android:text="Submit Post" />
+            android:text="@string/label_submit_post" />
 
     </RelativeLayout>
 </layout>
