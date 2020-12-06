@@ -1,4 +1,4 @@
-package fr.oxygames.app.activity.ui.main
+package fr.oxygames.app.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -1,0 +1,9 @@
+#set($USER = "Doctrix") 
+--
+-- Created by IntelliJ IDEA.
+-- User: ${USER}
+-- Date: ${DATE}
+-- Time: ${TIME}
+-- To change this template use File | Settings | File Templates.
+--
+

@@ -1,4 +1,4 @@
-package fr.oxygames.app.activity.ui.main
+package fr.oxygames.app.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,11 +8,11 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import fr.oxygames.app.R
+import fr.oxygames.app.viewModel.PageViewModel
+
 
 /**
  * A placeholder fragment containing a simple view.
@@ -28,6 +28,7 @@ class PlaceholderFragment : Fragment() {
         pageViewModel = ViewModelProvider(this).get(PageViewModel::class.java).apply {
             setIndex(arguments?.getInt(ARG_SECTION_NUMBER) ?: 1)
         }
+
     }
 
     override fun onCreateView(
@@ -35,15 +36,11 @@ class PlaceholderFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        firebasePost = FirebaseAuth.getInstance().currentUser
-        postBlog = FirebaseDatabase.getInstance().reference.child("Blog")
-
         val root = inflater.inflate(R.layout.fragment_blog_list, container, false)
         val titlePage: TextView = root.findViewById(R.id.copyright)
 
         pageViewModel.text.observe(viewLifecycleOwner, Observer<String> {
             titlePage.text = it
-
         })
         return root
     }

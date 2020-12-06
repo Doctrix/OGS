@@ -1,12 +1,11 @@
-package fr.oxygames.app.activity.ui.main
+package fr.oxygames.app.adapter
 
 import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import fr.oxygames.app.R
-import fr.oxygames.app.databinding.BlogRowBinding
-import fr.oxygames.app.model.Blog
+import fr.oxygames.app.fragment.PlaceholderFragment
 
 private val TAB_TITLES = arrayOf(
     R.string.tab_2_Tuto,
@@ -24,14 +23,7 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
 
-        return PlaceholderFragment.newInstance(position + 1).apply {
-
-            val binding: BlogRowBinding? = null
-            val blogRow: Blog? = null
-
-            binding!!.postTitle.text = blogRow!!.getTitle()
-            binding.postDesc.text = blogRow.getDesc()
-        }
+        return PlaceholderFragment.newInstance(position + 1)
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
