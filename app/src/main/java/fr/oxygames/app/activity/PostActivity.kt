@@ -3,6 +3,7 @@
 package fr.oxygames.app.activity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -16,6 +17,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DatabaseReference
@@ -59,6 +61,7 @@ class PostActivity : AppCompatActivity(), View.OnClickListener {
             startPosting()
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPostBinding.inflate(layoutInflater)
@@ -77,6 +80,17 @@ class PostActivity : AppCompatActivity(), View.OnClickListener {
         @Suppress("DEPRECATION")
         progressBar = ProgressDialog(this)
 
+        // toolbar
+        val toolbar: Toolbar = binding.toolbarPost
+        toolbar.title = "New Post"
+        binding.titlePost.text = "add"
+        setSupportActionBar(toolbar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        toolbar.setNavigationOnClickListener {
+            val intent = Intent(this, BlogActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
         // Select images
         selectImage!!.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

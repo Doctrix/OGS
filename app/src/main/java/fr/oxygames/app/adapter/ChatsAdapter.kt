@@ -68,7 +68,7 @@ class ChatsAdapter (
                         "Delete Image",
                         "Cancel"
                     )
-                    var builder: AlertDialog.Builder = AlertDialog.Builder(holder.itemView.context)
+                    val builder: AlertDialog.Builder = AlertDialog.Builder(holder.itemView.context)
                     builder.setTitle("What do you want?")
 
                     builder.setItems(options, DialogInterface.OnClickListener{
@@ -100,7 +100,7 @@ class ChatsAdapter (
                         "Delete Image",
                         "Cancel"
                     )
-                    var builder: AlertDialog.Builder = AlertDialog.Builder(holder.itemView.context)
+                    val builder: AlertDialog.Builder = AlertDialog.Builder(holder.itemView.context)
                     builder.setTitle("What do you want?")
 
                     builder.setItems(options, DialogInterface.OnClickListener{
@@ -129,7 +129,7 @@ class ChatsAdapter (
                         "Cancel"
                     )
 
-                    var builder: AlertDialog.Builder = AlertDialog.Builder(holder.itemView.context)
+                    val builder: AlertDialog.Builder = AlertDialog.Builder(holder.itemView.context)
                     builder.setTitle("What do you want?")
 
                     builder.setItems(options, DialogInterface.OnClickListener{

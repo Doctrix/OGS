@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import fr.oxygames.app.R
 
 /**
@@ -27,35 +28,22 @@ class PlaceholderFragment : Fragment() {
         pageViewModel = ViewModelProvider(this).get(PageViewModel::class.java).apply {
             setIndex(arguments?.getInt(ARG_SECTION_NUMBER) ?: 1)
         }
-        firebasePost = FirebaseAuth.getInstance().currentUser
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        firebasePost = FirebaseAuth.getInstance().currentUser
+        postBlog = FirebaseDatabase.getInstance().reference.child("Blog")
+
         val root = inflater.inflate(R.layout.fragment_blog_list, container, false)
         val titlePage: TextView = root.findViewById(R.id.copyright)
-        /*val titleBlog: TextView = root.findViewById(R.id.titleBlog)
-        val imageBlog: ImageView = root.findViewById(R.id.imageBlog)
-        val descriptionBlog: TextView = root.findViewById(R.id.descriptionBlog)
-        postBlog = FirebaseDatabase.getInstance().reference.child("Blog").child(firebasePost!!.uid)*/
 
         pageViewModel.text.observe(viewLifecycleOwner, Observer<String> {
             titlePage.text = it
-            /*postBlog!!.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.exists())
-                    {
-                        titleBlog.text = postBlog!!.child("title").toString()
 
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                }
-            })*/
         })
         return root
     }

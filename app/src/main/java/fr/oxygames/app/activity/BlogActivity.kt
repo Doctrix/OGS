@@ -18,11 +18,13 @@ import fr.oxygames.app.model.Users
 import org.jetbrains.anko.longToast
 
 class BlogActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityBlogBinding
-    var firebaseUser: FirebaseUser? = null
-    var refUsers: DatabaseReference? = null
+
     private var database: DatabaseReference? = null
 
+    var firebaseUser: FirebaseUser? = null
+    var refUsers: DatabaseReference? = null
     lateinit var user: Users
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,5 +92,10 @@ class BlogActivity : AppCompatActivity() {
         return false
     }
     // menu -->
+
+    override fun onStart() {
+        super.onStart()
+
+    }
 
 }
