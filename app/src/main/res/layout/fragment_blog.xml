@@ -22,5 +22,54 @@
             tools:layout_constraintLeft_creator="1"
             tools:layout_constraintTop_creator="1" />
 
+        <TextView
+            android:id="@+id/titleBlog"
+            android:layout_width="201dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="100dp"
+            android:layout_marginRight="100dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/label_title_blog"
+            app:layout_constraintBottom_toTopOf="@+id/imageBlog"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageBlog"
+            android:layout_width="317dp"
+            android:layout_height="216dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="20dp"
+            android:contentDescription="@string/label_todo"
+            app:layout_constraintBottom_toTopOf="@+id/descriptionBlog"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleBlog"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        <TextView
+            android:id="@+id/descriptionBlog"
+            android:layout_width="372dp"
+            android:layout_height="169dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/label_description_blog"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageBlog" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

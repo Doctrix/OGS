@@ -2,8 +2,7 @@ package fr.oxygames.app.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
@@ -22,6 +21,8 @@ class BlogActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBlogBinding
     var firebaseUser: FirebaseUser? = null
     var refUsers: DatabaseReference? = null
+    private var database: DatabaseReference? = null
+
     lateinit var user: Users
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,12 +32,13 @@ class BlogActivity : AppCompatActivity() {
 
         firebaseUser = FirebaseAuth.getInstance().currentUser
         refUsers = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
+        //database = FirebaseDatabase.getInstance().reference.child("Blog")
 
         val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
-        val viewPager: ViewPager = binding.viewPager
-        viewPager.adapter = sectionsPagerAdapter
-        val tabs: TabLayout = binding.tabs
-        tabs.setupWithViewPager(viewPager)
+        val viewPage: ViewPager = binding.viewPager
+        viewPage.adapter = sectionsPagerAdapter
+        val tab: TabLayout = binding.tabs
+        tab.setupWithViewPager(viewPage)
 
         // toolbar
         val toolbar: Toolbar = binding.toolbarBlog
@@ -68,6 +70,7 @@ class BlogActivity : AppCompatActivity() {
             Snackbar.make(view, "Support", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
+
     }
 
     // <-- menu
@@ -87,4 +90,5 @@ class BlogActivity : AppCompatActivity() {
         return false
     }
     // menu -->
+
 }

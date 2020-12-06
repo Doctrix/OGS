@@ -48,17 +48,20 @@ class SettingsFragment : Fragment() {
 
         // firebase - data user
         firebaseUser = FirebaseAuth.getInstance().currentUser
-        usersReference = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
+        usersReference =
+            FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
         storageRef = FirebaseStorage.getInstance().reference.child("User Images")
-        usersReference!!.addValueEventListener(object : ValueEventListener{
+        usersReference!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
-                if (p0.exists()){
+                if (p0.exists()) {
                     user = p0.getValue(Users::class.java)
 
                     if (context != null) {
                         binding.usernameSettings.text = user!!.getUsername()
-                        Picasso.get().load(user!!.getCover()).placeholder(R.drawable.ic_cover).into(binding.coverImageSettings)
-                        Picasso.get().load(user!!.getAvatar()).placeholder(R.drawable.ic_avatar).into(binding.profileImageSettings)
+                        Picasso.get().load(user!!.getCover()).placeholder(R.drawable.ic_cover)
+                            .into(binding.coverImageSettings)
+                        Picasso.get().load(user!!.getAvatar()).placeholder(R.drawable.ic_avatar)
+                            .into(binding.profileImageSettings)
                     }
                 }
             }
@@ -94,40 +97,29 @@ class SettingsFragment : Fragment() {
     private fun setSocialLinks() {
         val builder: AlertDialog.Builder =
             AlertDialog.Builder(context, R.style.ThemeOverlay_AppCompat_Dialog_Alert)
-        if (socialChecker == "website")
-        {
+        if (socialChecker == "website") {
             builder.setTitle("Write URL:")
-        }
-        else
-        {
+        } else {
             builder.setTitle("Write name:")
         }
 
         val editText = EditText(context)
 
-        if (socialChecker == "website")
-        {
+        if (socialChecker == "website") {
             editText.hint = "e.g www.OxyGameS.fr"
-        }
-        else
-        {
+        } else {
             editText.hint = "e.g OxyGame Studio"
         }
         builder.setView(editText)
-        builder.setPositiveButton("Create", DialogInterface.OnClickListener{
-                dialog, which ->
+        builder.setPositiveButton("Create", DialogInterface.OnClickListener { dialog, which ->
             val str = editText.text.toString()
-            if (str == "")
-            {
+            if (str == "") {
                 Toast.makeText(context, "Please write something...", Toast.LENGTH_LONG).show()
-            }
-            else
-            {
+            } else {
                 saveSocialLink(str)
             }
         })
-        builder.setNegativeButton("Cancel", DialogInterface.OnClickListener{
-                dialog, which ->
+        builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which ->
             dialog.cancel()
         })
         builder.show()
@@ -136,25 +128,19 @@ class SettingsFragment : Fragment() {
     private fun saveSocialLink(str: String) {
         val mapSocial = HashMap<String, Any>()
 
-        when(socialChecker)
-        {
-            "facebook" ->
-            {
+        when (socialChecker) {
+            "facebook" -> {
                 mapSocial["facebook"] = "https://m.facebook.com/$str"
             }
-            "instagram" ->
-            {
+            "instagram" -> {
                 mapSocial["instagram"] = "https://m.instagram.com/$str"
             }
-            "website" ->
-            {
+            "website" -> {
                 mapSocial["website"] = "https://$str"
             }
         }
-        usersReference!!.updateChildren(mapSocial).addOnCompleteListener {
-            task ->
-            if(task.isSuccessful)
-            {
+        usersReference!!.updateChildren(mapSocial).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
                 Toast.makeText(context, "updated Successfully.", Toast.LENGTH_LONG).show()
             }
         }
@@ -171,8 +157,7 @@ class SettingsFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == requestCode && resultCode == Activity.RESULT_OK && data!!.data != null)
-        {
+        if (requestCode == requestCode && resultCode == Activity.RESULT_OK && data!!.data != null) {
             imageUri = data.data
             Toast.makeText(context, "", Toast.LENGTH_LONG).show()
             uploadImageToDatabase()
@@ -184,33 +169,28 @@ class SettingsFragment : Fragment() {
         progressBar.setMessage("image is uploading, please wait....")
         progressBar.show()
 
-        if (imageUri!=null)
-        {
+        if (imageUri != null) {
             val fileRef = storageRef!!.child(System.currentTimeMillis().toString() + ".jpg")
             val uploadTask: StorageTask<*>
             uploadTask = fileRef.putFile(imageUri!!)
-            uploadTask.continueWithTask(Continuation <UploadTask.TaskSnapshot, Task<Uri>>{ task ->
-                if(!task.isSuccessful){
+            uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
+                if (!task.isSuccessful) {
                     task.exception?.let {
                         throw it
                     }
                 }
                 return@Continuation fileRef.downloadUrl
             }).addOnCompleteListener { task ->
-                if (task.isSuccessful)
-                {
+                if (task.isSuccessful) {
                     val downloadUrl = task.result
                     val url = downloadUrl.toString()
 
-                    if (coverChecker == "cover")
-                    {
+                    if (coverChecker == "cover") {
                         val mapCoverImg = HashMap<String, Any>()
                         mapCoverImg["cover"] = url
                         usersReference!!.updateChildren(mapCoverImg)
                         coverChecker = ""
-                    }
-                    else
-                    {
+                    } else {
                         val mapProfileImg = HashMap<String, Any>()
                         mapProfileImg["profile"] = url
                         usersReference!!.updateChildren(mapProfileImg)

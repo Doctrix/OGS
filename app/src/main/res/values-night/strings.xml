@@ -67,4 +67,6 @@
     <string name="label_submit_post">Submit Post</string>
     <string name="label_post_description">Post Description ...</string>
     <string name="label_post_title">Post Title ...</string>
+    <string name="label_title_blog">Page blog exemple</string>
+    <string name="label_description_blog">Description</string>
 </resources>

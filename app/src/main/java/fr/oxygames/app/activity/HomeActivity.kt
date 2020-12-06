@@ -44,7 +44,7 @@ class HomeActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener {
-            val intent = Intent (this@HomeActivity, MainActivity::class.java)
+            val intent = Intent(this@HomeActivity, MainActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -58,12 +58,12 @@ class HomeActivity : AppCompatActivity() {
         // username and profile picture
         refUsers!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
-                if (p0.exists())
-                {
+                if (p0.exists()) {
                     user = p0.getValue(Users::class.java)!!
 
                     binding.usernameHome.text = user.getUsername()
-                    Picasso.get().load(user.getAvatar()).placeholder(R.drawable.ic_avatar).into(binding.profileImageHome)
+                    Picasso.get().load(user.getAvatar()).placeholder(R.drawable.ic_avatar)
+                        .into(binding.profileImageHome)
                 }
             }
 
@@ -71,23 +71,20 @@ class HomeActivity : AppCompatActivity() {
                 longToast("error")
             }
         })
-        ref.addValueEventListener(object : ValueEventListener{
+        ref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
                 val viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
                 var countUnreadMessages = 0
 
-                for (dataSnapShot in p0.children)
-                {
+                for (dataSnapShot in p0.children) {
                     chat = dataSnapShot.getValue(Chat::class.java)!!
-                    if (chat.getReceiver().equals(firebaseUser!!.uid) && !chat.getIsSeen()){
+                    if (chat.getReceiver().equals(firebaseUser!!.uid) && !chat.getIsSeen()) {
                         countUnreadMessages += 1
                     }
                 }
-                if (countUnreadMessages == 0){
+                if (countUnreadMessages == 0) {
                     viewPagerAdapter.addFragment(ChatsFragment(), "Chats")
-                }
-                else
-                {
+                } else {
                     viewPagerAdapter.addFragment(ChatsFragment(), "($countUnreadMessages) Chats")
                 }
                 viewPagerAdapter.addFragment(SearchFragment(), "Search")
@@ -108,9 +105,9 @@ class HomeActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.menu_home, menu)
         return true
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId)
-        {
+        when (item.itemId) {
             /*// button home
             R.id.action_home -> {
                 longToast("Loading ...")
@@ -133,7 +130,7 @@ class HomeActivity : AppCompatActivity() {
             R.id.action_logout -> {
                 FirebaseAuth.getInstance().signOut()
                 longToast("deco ...")
-                val intent = Intent (this@HomeActivity, WelcomeActivity::class.java)
+                val intent = Intent(this@HomeActivity, WelcomeActivity::class.java)
                 startActivity(intent)
                 finish()
                 return true
@@ -161,8 +158,7 @@ class HomeActivity : AppCompatActivity() {
             return fragments.size
         }
 
-        fun addFragment(fragment: Fragment, title: String)
-        {
+        fun addFragment(fragment: Fragment, title: String) {
             fragments.add(fragment)
             titles.add(title)
         }
@@ -172,7 +168,7 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateStatus(status : String) {
+    private fun updateStatus(status: String) {
         val ref = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
         val hashMap = HashMap<String, Any>()
         hashMap["status"] = status
