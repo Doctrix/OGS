@@ -29,14 +29,19 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     lateinit var chat: Chat
     lateinit var user: Users
-
-    var refUsers: DatabaseReference? = null
+    lateinit var database: FirebaseDatabase
+    lateinit var refUsers: DatabaseReference
     var firebaseUser: FirebaseUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        firebaseUser = FirebaseAuth.getInstance().currentUser
+        database = FirebaseDatabase.getInstance()
+        refUsers = database.reference.child("Users").child(firebaseUser!!.uid)
+        val refChat = database.reference.child("Chats")
 
         // toolbar
         val toolbar: Toolbar = binding.toolbarHome
@@ -51,16 +56,11 @@ class HomeActivity : AppCompatActivity() {
         val tabLayout: TabLayout = binding.tabLayoutHome
         val viewPager: ViewPager = binding.viewPagerHome
 
-        firebaseUser = FirebaseAuth.getInstance().currentUser
-        refUsers = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
-        val ref = FirebaseDatabase.getInstance().reference.child("Chats")
-
         // username and profile picture
-        refUsers!!.addValueEventListener(object : ValueEventListener {
+        refUsers.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
                 if (p0.exists()) {
                     user = p0.getValue(Users::class.java)!!
-
                     binding.usernameHome.text = user.getUsername()
                     Picasso.get().load(user.getAvatar()).placeholder(R.drawable.ic_avatar)
                         .into(binding.profileImageHome)
@@ -71,7 +71,7 @@ class HomeActivity : AppCompatActivity() {
                 longToast("error")
             }
         })
-        ref.addValueEventListener(object : ValueEventListener {
+        refChat.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
                 val viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
                 var countUnreadMessages = 0

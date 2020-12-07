@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
@@ -24,17 +25,17 @@ import fr.oxygames.app.model.Users
 import org.jetbrains.anko.longToast
 
 class BlogActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityBlogBinding
     private lateinit var bindingBlogList: FragmentBlogListBinding
-
-    var listItems: MutableList<Blog> = mutableListOf()
-    var adapter: BlogListAdapter = BlogListAdapter(this,listItems)
-
-    private var database: DatabaseReference? = null
-    var firebaseUser: FirebaseUser? = null
-    var refUsers: DatabaseReference? = null
+    lateinit var blog :Blog
     lateinit var user: Users
+    lateinit var auth: FirebaseAuth
+    lateinit var firebaseUser: FirebaseUser
+    lateinit var refUsers: DatabaseReference
+    lateinit var databaseReference: DatabaseReference
+    lateinit var database: FirebaseDatabase
+    var listItems: MutableList<Blog> = mutableListOf()
+    var adapter: BlogListAdapter = BlogListAdapter(this, listItems)
 
     @SuppressLint("WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,14 +44,16 @@ class BlogActivity : AppCompatActivity() {
         bindingBlogList = FragmentBlogListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        firebaseUser = FirebaseAuth.getInstance().currentUser
-        refUsers = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
-        //database = FirebaseDatabase.getInstance().reference.child("Blog")
+        auth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance()
+        firebaseUser = auth.currentUser!!
+        refUsers = database.reference.child("Users").child(firebaseUser.uid)
+        databaseReference = database.reference.child("Blog")
 
         val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
         val viewPage: ViewPager = binding.viewPager
-        viewPage.adapter = sectionsPagerAdapter
         val tab: TabLayout = binding.tabs
+        viewPage.adapter = sectionsPagerAdapter
         tab.setupWithViewPager(viewPage)
 
         // toolbar
@@ -65,12 +68,12 @@ class BlogActivity : AppCompatActivity() {
         }
 
         // data user
-        refUsers!!.addValueEventListener(object : ValueEventListener {
+        refUsers.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists())
-                {
+                if (snapshot.exists()) {
                     user = snapshot.getValue(Users::class.java)!!
                     binding.title.text = user.getUsername()
+                    fillListItems()
                 }
             }
 
@@ -80,10 +83,18 @@ class BlogActivity : AppCompatActivity() {
         })
 
         val blogListRow = bindingBlogList.blogList
-        blogListRow.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL,false)
+        blogListRow.setHasFixedSize(true)
+        blogListRow.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
         blogListRow.adapter = adapter
 
-        fillListItems()
+        blogListRow.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE){
+
+                }
+            }
+        })
 
         binding.fab.setOnClickListener { view ->
             Snackbar.make(view, "Support", Snackbar.LENGTH_LONG)
@@ -92,13 +103,14 @@ class BlogActivity : AppCompatActivity() {
     }
 
     private fun fillListItems() {
+        val postId = auth.currentUser
+        val postReference = databaseReference.child(postId?.uid!!)
         listItems.clear()
-        for (x in 1..3) {
-            val model: Blog = Blog()
-            model.setTitle("Title $x")
-            model.setDesc("desc $x")
-            listItems.add(model)
-        }
+        val model: Blog = Blog()
+        model.setTitle("title")
+        model.setDesc("desc")
+        model.setImage("image")
+        listItems.add(model)
     }
 
     // <-- menu
