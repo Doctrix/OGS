@@ -10,13 +10,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
 import fr.oxygames.app.R
 import fr.oxygames.app.model.Blog
 import fr.oxygames.app.viewModel.PageViewModel
-
 
 /**
  * A placeholder fragment containing a simple view.
@@ -24,14 +25,13 @@ import fr.oxygames.app.viewModel.PageViewModel
 class PlaceholderFragment : Fragment() {
 
     private lateinit var pageViewModel: PageViewModel
-    var firebasePost: FirebaseUser? = null
-    var postBlog: DatabaseReference? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         pageViewModel = ViewModelProvider(this).get(PageViewModel::class.java).apply {
             setIndex(arguments?.getInt(ARG_SECTION_NUMBER) ?: 1)
         }
+
     }
 
     override fun onCreateView(
@@ -44,7 +44,7 @@ class PlaceholderFragment : Fragment() {
         val row = inflater.inflate(R.layout.blog_row, container, false)
 
         val titlePage: TextView = root.findViewById(R.id.copyright)
-        val list: RecyclerView = root.findViewById(R.id.blog_list)
+        val blogList: RecyclerView = root.findViewById(R.id.blog_list)
         val imagePost: ImageView = row.findViewById(R.id.post_image)
         val titlePost: TextView = row.findViewById(R.id.post_title)
         val descPost: TextView = row.findViewById(R.id.post_desc)
@@ -60,7 +60,9 @@ class PlaceholderFragment : Fragment() {
                         titlePage.text = it
                         titlePost.text = blog!!.getTitle()
                         descPost.text = blog.getDesc()
-                        Picasso.get().load(blog.getImage()).placeholder(R.drawable.ic_profile)
+                        Picasso.get()
+                            .load(blog.getImage())
+                            .placeholder(R.drawable.ic_profile)
                             .into(imagePost)
                     }
                 }

@@ -69,4 +69,5 @@
     <string name="label_post_title">Post Title ...</string>
     <string name="label_title_blog">Page blog exemple</string>
     <string name="label_description_blog">Description</string>
+    <string name="label_refesh">Refresh</string>
 </resources>
