@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
-import com.google.firebase.iid.FirebaseInstanceId
 import fr.oxygames.app.adapter.UserAdapter
 import fr.oxygames.app.databinding.FragmentChatsBinding
 import fr.oxygames.app.model.ChatListModel
@@ -62,7 +61,7 @@ class ChatsFragment : Fragment() {
 
             }
         })
-        updateToken(FirebaseInstanceId.getInstance().token)
+        updateToken(firebaseUser!!.uid)
 
         return binding.root
     }

@@ -25,7 +25,7 @@ import fr.oxygames.app.adapter.ChatsAdapter
 import fr.oxygames.app.databinding.ActivityMessageChatBinding
 import fr.oxygames.app.fragment.APIService
 import fr.oxygames.app.model.ChatModel
-import fr.oxygames.app.model.Data
+import fr.oxygames.app.model.DataModel
 import fr.oxygames.app.model.UsersModel
 import fr.oxygames.app.notifications.Client
 import fr.oxygames.app.notifications.MyResponse
@@ -199,7 +199,7 @@ class MessageChatActivity : AppCompatActivity() {
                 {
                     val token: Token? = dataSnapshot.getValue(Token::class.java)
 
-                    val data = Data(firebaseUser!!.uid, R.mipmap.ic_launcher,"$username: $message","New Message", userIdVisit)
+                    val data = DataModel(firebaseUser!!.uid, R.mipmap.ic_launcher,"$username: $message","New Message", userIdVisit)
                     val sender = Sender(data, token!!.getToken().toString())
 
                 apiService!!.sendNotification(sender).enqueue(object : Callback<MyResponse>
