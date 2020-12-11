@@ -91,6 +91,7 @@ class PostActivity : AppCompatActivity(), View.OnClickListener {
             startActivity(intent)
             finish()
         }
+
         // Select images
         selectImage!!.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

@@ -1,5 +1,6 @@
 package fr.oxygames.app.fragment
 
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,9 +14,10 @@ import com.google.firebase.database.*
 import com.google.firebase.iid.FirebaseInstanceId
 import fr.oxygames.app.adapter.UserAdapter
 import fr.oxygames.app.databinding.FragmentChatsBinding
-import fr.oxygames.app.model.ChatList
-import fr.oxygames.app.model.Users
+import fr.oxygames.app.model.ChatListModel
+import fr.oxygames.app.model.UsersModel
 import fr.oxygames.app.notifications.Token
+import java.util.*
 
 class ChatsFragment : Fragment() {
     private lateinit var binding: FragmentChatsBinding
@@ -23,9 +25,9 @@ class ChatsFragment : Fragment() {
     private var usersReference: DatabaseReference? = null
     private var firebaseUser: FirebaseUser? = null
     private var userAdapter: UserAdapter? = null
-    private var chatList: ChatList? = null
-    private var mUsers: List<Users>? = null
-    private var usersChatList: List<ChatList>? = null
+    private var chatListModel: ChatListModel? = null
+    private var mUsers: List<UsersModel>? = null
+    private var usersChatListModel: List<ChatListModel>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,14 +46,14 @@ class ChatsFragment : Fragment() {
         usersReference!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot)
             {
-                usersChatList = ArrayList()
+                usersChatListModel = ArrayList()
 
-                (usersChatList as ArrayList).clear()
+                (usersChatListModel as ArrayList).clear()
 
                 for (dataSnapshot in snapshot.children){
-                    chatList = dataSnapshot.getValue(ChatList::class.java)
+                    chatListModel = dataSnapshot.getValue(ChatListModel::class.java)
 
-                    (usersChatList as ArrayList).add(chatList!!)
+                    (usersChatListModel as ArrayList).add(chatListModel!!)
                 }
                 retrieveChatList()
             }
@@ -81,8 +83,8 @@ class ChatsFragment : Fragment() {
                 (mUsers as ArrayList).clear()
                 for (dataSnapshot in snapshot.children)
                 {
-                    val user = dataSnapshot.getValue(Users::class.java)
-                    for (eachChatList in usersChatList!!)
+                    val user = dataSnapshot.getValue(UsersModel::class.java)
+                    for (eachChatList in usersChatListModel!!)
                     {
                         if (user!!.getUID().equals(eachChatList.getId()))
                         {
@@ -90,7 +92,7 @@ class ChatsFragment : Fragment() {
                         }
                     }
                 }
-                userAdapter = UserAdapter(context!!, (mUsers as ArrayList<Users>), true)
+                userAdapter = UserAdapter(context!!, (mUsers as ArrayList<UsersModel>), true)
                 recyclerViewChatList!!.adapter = userAdapter
             }
             override fun onCancelled(error: DatabaseError) {

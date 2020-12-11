@@ -19,11 +19,11 @@ import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import fr.oxygames.app.R
 import fr.oxygames.app.activity.ViewFullImageActivity
-import fr.oxygames.app.model.Chat
+import fr.oxygames.app.model.ChatModel
 
 class ChatsAdapter (
     private val mContext: Context,
-    private val mChatList: List<Chat>,
+    private val mChatModelList: List<ChatModel>,
     private val imageUrl: String
 ) : RecyclerView.Adapter<ChatsAdapter.ViewHolder?>()
 {
@@ -43,24 +43,24 @@ class ChatsAdapter (
     }
 
     override fun getItemCount(): Int {
-        return mChatList.size
+        return mChatModelList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int)
     {
-        val chat: Chat = mChatList[position]
+        val chatModel: ChatModel = mChatModelList[position]
 
         Picasso.get().load(imageUrl).into(holder.profile_image)
 
         //images messages
-        if (chat.getMessage().equals("hello") && !chat.getUrl().equals(""))
+        if (chatModel.getMessage().equals("hello") && !chatModel.getUrl().equals(""))
         {
             // image message - right side
-            if (chat.getSender().equals(firebaseUser!!.uid))
+            if (chatModel.getSender().equals(firebaseUser!!.uid))
             {
                 holder.show_text_message!!.visibility = View.GONE
                 holder.right_image_view!!.visibility = View.VISIBLE
-                Picasso.get().load(chat.getUrl()).into(holder.right_image_view)
+                Picasso.get().load(chatModel.getUrl()).into(holder.right_image_view)
 
                 holder.right_image_view!!.setOnClickListener {
                     val options = arrayOf<CharSequence>(
@@ -76,7 +76,7 @@ class ChatsAdapter (
                         if (which == 0)
                         {
                             val intent = Intent (mContext, ViewFullImageActivity::class.java)
-                            intent.putExtra("url", chat.getUrl())
+                            intent.putExtra("url", chatModel.getUrl())
                             mContext.startActivity(intent)
                         }
                         else if (which == 1)
@@ -89,11 +89,11 @@ class ChatsAdapter (
             }
 
             // image message - left side
-            else if (!chat.getSender().equals(firebaseUser!!.uid))
+            else if (!chatModel.getSender().equals(firebaseUser!!.uid))
             {
                 holder.show_text_message!!.visibility = View.GONE
                 holder.left_image_view!!.visibility = View.VISIBLE
-                Picasso.get().load(chat.getUrl()).into(holder.left_image_view)
+                Picasso.get().load(chatModel.getUrl()).into(holder.left_image_view)
 
                 holder.left_image_view!!.setOnClickListener {
                     val options = arrayOf<CharSequence>(
@@ -108,7 +108,7 @@ class ChatsAdapter (
                         if (which == 0)
                         {
                             val intent = Intent (mContext, ViewFullImageActivity::class.java)
-                            intent.putExtra("url", chat.getUrl())
+                            intent.putExtra("url", chatModel.getUrl())
                             mContext.startActivity(intent)
                         }
                     })
@@ -119,9 +119,9 @@ class ChatsAdapter (
 
         //text message
         else {
-            holder.show_text_message!!.text = chat.getMessage()
+            holder.show_text_message!!.text = chatModel.getMessage()
 
-            if (firebaseUser!!.uid == chat.getSender())
+            if (firebaseUser!!.uid == chatModel.getSender())
             {
                 holder.show_text_message!!.setOnClickListener {
                     val options = arrayOf<CharSequence>(
@@ -145,13 +145,13 @@ class ChatsAdapter (
         }
 
         //sent and seen message
-        if (position == mChatList.size-1)
+        if (position == mChatModelList.size-1)
         {
-            if (chat.getIsSeen())
+            if (chatModel.getIsSeen())
             {
                 holder.text_seen!!.text = "Seen"
 
-                if (chat.getMessage().equals("sent you an image.") && !chat.getUrl().equals(""))
+                if (chatModel.getMessage().equals("sent you an image.") && !chatModel.getUrl().equals(""))
                 {
                     val lp: RelativeLayout.LayoutParams? = holder.text_seen!!.layoutParams as RelativeLayout.LayoutParams
                     lp!!.setMargins(0,245,10,0)
@@ -162,7 +162,7 @@ class ChatsAdapter (
             {
                 holder.text_seen!!.text = "Sent"
 
-                if (chat.getMessage().equals("sent you an image.") && !chat.getUrl().equals(""))
+                if (chatModel.getMessage().equals("sent you an image.") && !chatModel.getUrl().equals(""))
                 {
                     val lp: RelativeLayout.LayoutParams? = holder.text_seen!!.layoutParams as RelativeLayout.LayoutParams
                     lp!!.setMargins(0,245,10,0)
@@ -196,7 +196,7 @@ class ChatsAdapter (
 
     override fun getItemViewType(position: Int): Int
     {
-        return if (mChatList[position].getSender().equals(firebaseUser!!.uid))
+        return if (mChatModelList[position].getSender().equals(firebaseUser!!.uid))
         {
             1
         }
@@ -209,7 +209,7 @@ class ChatsAdapter (
     private fun deleteSentMessage(position: Int, holder: ChatsAdapter.ViewHolder)
     {
         val ref = FirebaseDatabase.getInstance().reference.child("Chats")
-            .child(mChatList.get(position).getMessageId()!!)
+            .child(mChatModelList.get(position).getMessageId()!!)
             .removeValue()
             .addOnCompleteListener{ task ->
                 if (task.isSuccessful)

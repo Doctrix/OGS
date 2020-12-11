@@ -21,14 +21,14 @@ import fr.oxygames.app.databinding.ActivityHomeBinding
 import fr.oxygames.app.fragment.ChatsFragment
 import fr.oxygames.app.fragment.SearchFragment
 import fr.oxygames.app.fragment.SettingsFragment
-import fr.oxygames.app.model.Chat
-import fr.oxygames.app.model.Users
+import fr.oxygames.app.model.ChatModel
+import fr.oxygames.app.model.UsersModel
 import org.jetbrains.anko.longToast
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
-    lateinit var chat: Chat
-    lateinit var user: Users
+    lateinit var chatModel: ChatModel
+    lateinit var user: UsersModel
     lateinit var database: FirebaseDatabase
     lateinit var refUsers: DatabaseReference
     var firebaseUser: FirebaseUser? = null
@@ -60,7 +60,7 @@ class HomeActivity : AppCompatActivity() {
         refUsers.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
                 if (p0.exists()) {
-                    user = p0.getValue(Users::class.java)!!
+                    user = p0.getValue(UsersModel::class.java)!!
                     binding.usernameHome.text = user.getUsername()
                     Picasso.get().load(user.getAvatar()).placeholder(R.drawable.ic_avatar)
                         .into(binding.profileImageHome)
@@ -77,8 +77,8 @@ class HomeActivity : AppCompatActivity() {
                 var countUnreadMessages = 0
 
                 for (dataSnapShot in p0.children) {
-                    chat = dataSnapShot.getValue(Chat::class.java)!!
-                    if (chat.getReceiver().equals(firebaseUser!!.uid) && !chat.getIsSeen()) {
+                    chatModel = dataSnapShot.getValue(ChatModel::class.java)!!
+                    if (chatModel.getReceiver().equals(firebaseUser!!.uid) && !chatModel.getIsSeen()) {
                         countUnreadMessages += 1
                     }
                 }

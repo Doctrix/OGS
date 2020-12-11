@@ -24,9 +24,9 @@ import fr.oxygames.app.R
 import fr.oxygames.app.adapter.ChatsAdapter
 import fr.oxygames.app.databinding.ActivityMessageChatBinding
 import fr.oxygames.app.fragment.APIService
-import fr.oxygames.app.model.Chat
+import fr.oxygames.app.model.ChatModel
 import fr.oxygames.app.model.Data
-import fr.oxygames.app.model.Users
+import fr.oxygames.app.model.UsersModel
 import fr.oxygames.app.notifications.Client
 import fr.oxygames.app.notifications.MyResponse
 import fr.oxygames.app.notifications.Sender
@@ -44,9 +44,9 @@ class MessageChatActivity : AppCompatActivity() {
     var firebaseUser: FirebaseUser? = null
     var reference: DatabaseReference? = null
     var chatsAdapter: ChatsAdapter? = null
-    var mChatList: List<Chat>? = null
+    var mChatModelList: List<ChatModel>? = null
     lateinit var recyclerViewChats: RecyclerView
-    private var user: Users? = null
+    private var user: UsersModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,7 +79,7 @@ class MessageChatActivity : AppCompatActivity() {
         reference!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot)
             {
-                user = snapshot.getValue(Users::class.java)
+                user = snapshot.getValue(UsersModel::class.java)
 
                 binding.usernameChat.text = user!!.getUsername()
                 Picasso.get().load(user!!.getAvatar()).into(binding.profileImageChat)
@@ -170,7 +170,7 @@ class MessageChatActivity : AppCompatActivity() {
         {
             override fun onDataChange(snapshot: DataSnapshot)
             {
-                val user = snapshot.getValue(Users::class.java)
+                val user = snapshot.getValue(UsersModel::class.java)
                 if (notify)
                 {
                     //sendNotification(receiverId, user!!.getUsername(), message)
@@ -279,7 +279,7 @@ class MessageChatActivity : AppCompatActivity() {
                             {
                                 override fun onDataChange(snapshot: DataSnapshot)
                                 {
-                                    val user = snapshot.getValue(Users::class.java)
+                                    val user = snapshot.getValue(UsersModel::class.java)
                                     if (notify)
                                     {
                                         //sendNotification(userIdVisit, user!!.getUsername(), "sent you an image.")
@@ -300,23 +300,23 @@ class MessageChatActivity : AppCompatActivity() {
     }
 
     private fun retrieveMessages(senderId: String, receiverId: String?, receiverImageUrl: String?) {
-        mChatList = ArrayList()
+        mChatModelList = ArrayList()
         val reference = FirebaseDatabase.getInstance().reference.child("Chats")
 
         reference.addValueEventListener(object: ValueEventListener{
             override fun onDataChange(p0: DataSnapshot)
             {
-                (mChatList as ArrayList<Chat>).clear()
+                (mChatModelList as ArrayList<ChatModel>).clear()
                 for (snapShot in p0.children)
                 {
-                    val chat = snapShot.getValue(Chat::class.java)
+                    val chat = snapShot.getValue(ChatModel::class.java)
 
                     if (chat!!.getReceiver().equals(senderId) && chat.getSender().equals(receiverId)
                         || chat.getReceiver().equals(receiverId) && chat.getSender().equals(senderId))
                     {
-                        (mChatList as ArrayList<Chat>).add(chat)
+                        (mChatModelList as ArrayList<ChatModel>).add(chat)
                     }
-                    chatsAdapter = ChatsAdapter(this@MessageChatActivity, (mChatList as ArrayList<Chat>), receiverImageUrl!!)
+                    chatsAdapter = ChatsAdapter(this@MessageChatActivity, (mChatModelList as ArrayList<ChatModel>), receiverImageUrl!!)
                     recyclerViewChats.adapter = chatsAdapter
                 }
             }
@@ -338,7 +338,7 @@ class MessageChatActivity : AppCompatActivity() {
             {
                 for (dataSnapshot in p0.children)
                 {
-                    val chat = dataSnapshot.getValue(Chat::class.java)
+                    val chat = dataSnapshot.getValue(ChatModel::class.java)
 
                     if (chat!!.getReceiver().equals(firebaseUser!!.uid) && chat.getSender().equals(userId))
                     {

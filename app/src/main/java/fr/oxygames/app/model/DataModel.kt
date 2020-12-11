@@ -1,6 +1,6 @@
 package fr.oxygames.app.model
 
-class Data {
+class DataModel {
     private var user: String = ""
     private var icon = 0
     private var body: String = ""

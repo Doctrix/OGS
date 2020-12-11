@@ -1,6 +1,6 @@
 package fr.oxygames.app.model
 
-class Blog {
+class BlogModel {
     private var uid: String = ""
     private var title: String = ""
     private var desc: String = ""

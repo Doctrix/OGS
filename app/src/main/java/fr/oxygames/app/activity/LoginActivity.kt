@@ -7,14 +7,14 @@ import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import fr.oxygames.app.databinding.ActivityLoginBinding
-import fr.oxygames.app.model.Users
+import fr.oxygames.app.model.UsersModel
 import fr.oxygames.app.presenter.Presenter
 import fr.oxygames.app.viewModel.LoginViewModel
 import org.jetbrains.anko.longToast
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
-    lateinit var user: Users
+    lateinit var user: UsersModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

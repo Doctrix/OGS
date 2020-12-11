@@ -1,6 +1,6 @@
 package fr.oxygames.app.model
 
-class Chat {
+class ChatModel {
     private var sender: String = ""
     private var message: String = ""
     private var receiver: String = ""

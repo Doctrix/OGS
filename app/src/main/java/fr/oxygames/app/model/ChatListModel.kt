@@ -1,6 +1,6 @@
 package fr.oxygames.app.model
 
-class ChatList {
+class ChatListModel {
     private var id: String = ""
 
     constructor(){}

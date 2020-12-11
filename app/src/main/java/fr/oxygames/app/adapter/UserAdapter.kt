@@ -19,12 +19,12 @@ import de.hdodenhof.circleimageview.CircleImageView
 import fr.oxygames.app.R
 import fr.oxygames.app.activity.MessageChatActivity
 import fr.oxygames.app.activity.VisitUserProfileActivity
-import fr.oxygames.app.model.Chat
-import fr.oxygames.app.model.Users
+import fr.oxygames.app.model.ChatModel
+import fr.oxygames.app.model.UsersModel
 
 class UserAdapter(
     private val context: Context,
-    private val users: List<Users>,
+    private val users: List<UsersModel>,
     private var isChatCheck: Boolean
     ) : RecyclerView.Adapter<UserAdapter.ViewHolder?>() {
     var lastMsg: String = ""
@@ -40,7 +40,7 @@ class UserAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, i: Int) {
 
-        val user: Users = users[i]
+        val user: UsersModel = users[i]
         holder.userNameTxt.text = user.getUsername()
         Picasso.get().load(user.getAvatar()).placeholder(R.drawable.ic_profile).into(holder.profileImageView)
 
@@ -117,13 +117,13 @@ class UserAdapter(
         reference.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(p0: DataSnapshot) {
                 for (dataSnapshot in p0.children) {
-                    val chat: Chat? = dataSnapshot.getValue(Chat::class.java)
-                    if (firebaseUser != null && chat != null) {
-                        if (chat.getReceiver() == firebaseUser.uid &&
-                            chat.getSender() == chatUserId ||
-                                chat.getReceiver() == chatUserId &&
-                                chat.getSender() == firebaseUser.uid) {
-                            lastMsg = chat.getMessage()!!
+                    val chatModel: ChatModel? = dataSnapshot.getValue(ChatModel::class.java)
+                    if (firebaseUser != null && chatModel != null) {
+                        if (chatModel.getReceiver() == firebaseUser.uid &&
+                            chatModel.getSender() == chatUserId ||
+                                chatModel.getReceiver() == chatUserId &&
+                                chatModel.getSender() == firebaseUser.uid) {
+                            lastMsg = chatModel.getMessage()!!
                         }
                     }
                 }

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:orientation="vertical"
-    android:gravity="center">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/section_label"
@@ -29,7 +29,7 @@
         android:contentDescription="@string/label_todo"
         android:duplicateParentState="false"
         android:padding="20dp"
-        app:layout_constraintEnd_toEndOf="@id/post_title"
+        android:layout_below="@id/section_label"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <TextView
@@ -48,7 +48,7 @@
         android:text="@string/label_title_blog"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/post_image" />
+        android:layout_below="@+id/post_image" />
 
     <TextView
         android:id="@+id/post_desc"
@@ -65,6 +65,12 @@
         android:paddingRight="20dp"
         android:text="@string/label_description_blog"
         android:textStyle="italic"
-        app:layout_constraintTop_toBottomOf="@+id/post_title" />
+        android:layout_below="@+id/post_title" />
 
-</LinearLayout>
+    <view
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/post_desc" />
+</RelativeLayout>
