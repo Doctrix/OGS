@@ -21,8 +21,8 @@ import fr.oxygames.app.model.PostModel
 class PostsAdapter (
     internal var context: Context,
     internal var data:List<PostModel>) : PagerAdapter() {
+    internal var layoutInflater: LayoutInflater
 
-    internal var layoutInflater:LayoutInflater
     init {
         layoutInflater = LayoutInflater.from(context)
     }
@@ -43,23 +43,23 @@ class PostsAdapter (
         //Inflate view
         val view = layoutInflater.inflate(R.layout.activity_posts_details,container,false)
         //View
-        val postImage = view.findViewById<View>(R.id.iv_image_post_details) as ImageView
-        val postTitle = view.findViewById<View>(R.id.tv_title_post_details) as TextView
-        val postDate = view.findViewById<View>(R.id.tv_relative_time_post_details) as TextView
-        val postDesc = view.findViewById<View>(R.id.tv_description_post_details) as TextView
+        val postImage = view.findViewById<View>(R.id.iv_image_posts_details) as ImageView
+        val postTitle = view.findViewById<View>(R.id.tv_title_posts_details) as TextView
+        val postDate = view.findViewById<View>(R.id.tv_relative_time_posts_details) as TextView
+        val postDescription = view.findViewById<View>(R.id.tv_description_posts_details) as TextView
         val postBtnFav = view.findViewById<View>(R.id.fab_fav_posts) as FloatingActionButton
 
         //Set Data
         Picasso.get().load(data[position].getImage()).into(postImage)
         postTitle.text = data[position].getTitle()
-        postDesc.text = data[position].getDesc()
+        postDescription.text = data[position].getDescription()
+        postDate.text = data[position].getDate()
 
-        //
         postBtnFav.setOnClickListener {
             Toast.makeText(context,"Btn Fav Clicked", Toast.LENGTH_SHORT).show()
         }
 
-        view.setOnClickListener{
+        view.setOnClickListener {
             Toast.makeText(context,""+data[position].getTitle(), Toast.LENGTH_SHORT).show()
         }
 

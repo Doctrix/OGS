@@ -6,19 +6,22 @@ package fr.oxygames.app.model
 
 class PostModel {
     private var title: String = ""
-    private var desc: String = ""
+    private var description: String = ""
     private var image: String = ""
+    private var date: String = ""
 
     constructor(){}
 
     constructor(
         title: String,
-        desc: String,
+        description: String,
         image: String,
+        date: String
     ) {
         this.title = title
-        this.desc = desc
+        this.description = description
         this.image = image
+        this.date = date
     }
 
     // title
@@ -30,18 +33,26 @@ class PostModel {
     }
 
     // description
-    fun getDesc(): String{
-        return desc
+    fun getDescription(): String{
+        return description
     }
-    fun setDesc(desc: String?){
-        this.desc = desc!!
+    fun setDescription(description: String){
+        this.description = description
     }
 
     // image
     fun getImage(): String{
         return image
     }
-    fun setImage(image: String?){
-        this.image = image!!
+    fun setImage(image: String){
+        this.image = image
+    }
+
+    // date
+    fun getDate(): String{
+        return date
+    }
+    fun setDate(date: String){
+        this.date = date
     }
 }

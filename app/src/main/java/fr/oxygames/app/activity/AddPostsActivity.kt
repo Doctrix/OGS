@@ -87,7 +87,7 @@ class AddPostsActivity : AppCompatActivity(), View.OnClickListener {
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener {
-            val intent = Intent(this, AddPostsActivity::class.java)
+            val intent = Intent(this@AddPostsActivity, PostsActivity::class.java)
             startActivity(intent)
             finish()
         }

@@ -36,75 +36,84 @@ class UserModel {
         this.website = website
     }
 
-    fun getUID(): String?{
+    //id
+    fun getUID(): String {
         return uid
     }
 
-    fun setUID(uid: String){
+    fun setUID(uid: String) {
         this.uid = uid
     }
 
-    fun getUsername(): String? {
+    //username
+    fun getUsername(): String {
         return username
     }
 
-    fun setUsername(username: String){
+    fun setUsername(username: String) {
         this.username = username
     }
 
-    fun getAvatar(): String?{
+    //avatar
+    fun getAvatar(): String {
         return avatar
     }
 
-    fun setAvatar(avatar: String){
+    fun setAvatar(avatar: String) {
         this.avatar = avatar
     }
 
-    fun getCover(): String?{
+    //cover
+    fun getCover(): String {
         return cover
     }
 
-    fun setCover(cover: String){
+    fun setCover(cover: String) {
         this.cover = cover
     }
 
-    fun getStatus(): String? {
+    //status
+    fun getStatus(): String {
         return status
     }
 
-    fun setStatus(status: String?){
-        this.status = status!!
+    fun setStatus(status: String) {
+        this.status = status
     }
 
-    fun getSearch(): String?{
+    //search
+    fun getSearch(): String {
         return search
     }
 
-    fun setSearch(search: String){
+    fun setSearch(search: String) {
         this.search = search
     }
 
-    fun getFacebook(): String?{
+    //facebook
+    fun getFacebook(): String {
         return facebook
     }
 
-    fun setFacebook(facebook: String){
+    fun setFacebook(facebook: String) {
         this.facebook = facebook
     }
 
-    fun getInstagram(): String?{
+    //instagram
+    fun getInstagram(): String {
         return instagram
     }
 
-    fun setInstagram(instagram: String){
+    fun setInstagram(instagram: String) {
         this.instagram = instagram
     }
 
-    fun getWebsite(): String?{
+    //website
+    fun getWebsite(): String {
         return website
     }
 
-    fun setWebsite(website: String){
+    fun setWebsite(website: String) {
         this.website = website
     }
 }

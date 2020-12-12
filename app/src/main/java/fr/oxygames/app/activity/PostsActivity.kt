@@ -3,39 +3,91 @@ package fr.oxygames.app.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.viewpager.widget.ViewPager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import fr.oxygames.app.R
 import fr.oxygames.app.adapter.PostsAdapter
 import fr.oxygames.app.databinding.ActivityPostsBinding
-import fr.oxygames.app.databinding.ActivityPostsDetailsBinding
+import fr.oxygames.app.listener.IFirebaseLoadDone
 import fr.oxygames.app.model.PostModel
 import fr.oxygames.app.model.UserModel
-import org.jetbrains.anko.longToast
+import fr.oxygames.app.transformer.DepthPageTransformer
 
 /**
  * Created by Doctrix on 06/12/2020.
  */
+class PostsActivity : AppCompatActivity(), IFirebaseLoadDone, ValueEventListener {
 
-//private const val TAG = "PostsActivity"
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finishAffinity()
+    }
 
-class PostsActivity : AppCompatActivity() {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_admin, menu)
+        return true
+    }
 
-    private lateinit var binding: ActivityPostsBinding
-    private lateinit var bindingPost: ActivityPostsDetailsBinding
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_add -> {
+                val intent = Intent(this@PostsActivity, AddPostsActivity::class.java)
+                startActivity(intent)
+                finish()
+                return true
+            }
+            /*R.id.action_refresh -> {
 
-    private lateinit var auth: FirebaseAuth
-    private lateinit var firebaseUser: FirebaseUser
-    private lateinit var refUsers: DatabaseReference
-    lateinit var posts: MutableList<PostModel>
+                return true
+            }*/
+        }
+        return false
+    }
 
-    lateinit var adapter: PostsAdapter
-    lateinit var rvPosts: ViewPager
-    lateinit var refPosts: DatabaseReference
+    override fun onCancelled(error: DatabaseError) {
+        iFirebaseLoadDone.onPostLoadFailed(error.message)
+    }
+
+    override fun onDataChange(snapshot: DataSnapshot) {
+        val posts:MutableList<PostModel> = ArrayList()
+        for (postSnapShot in snapshot.children) {
+            val post = postSnapShot.getValue(PostModel::class.java)
+            posts.add(post!!)
+        }
+        iFirebaseLoadDone.onPostLoadSuccess(posts)
+    }
+
+    private lateinit var binding:ActivityPostsBinding
+
+    override fun onPostLoadSuccess(postsList: List<PostModel>) {
+        adapter = PostsAdapter(this, postsList)
+        binding.vpPosts.adapter = adapter
+    }
+
+    override fun onPostLoadFailed(message: String) {
+        Toast.makeText(this,""+message,Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        posts.addValueEventListener(this)
+    }
+
+    override fun onDestroy() {
+        posts.removeEventListener(this)
+        super.onDestroy()
+    }
+
+    private lateinit var auth:FirebaseAuth
+    private lateinit var firebaseUser:FirebaseUser
+    private lateinit var refUsers:DatabaseReference
+    private lateinit var adapter:PostsAdapter
+    private lateinit var posts:DatabaseReference
+    private lateinit var iFirebaseLoadDone:IFirebaseLoadDone
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,8 +97,6 @@ class PostsActivity : AppCompatActivity() {
         val databaseInstance = FirebaseDatabase.getInstance()
         auth = FirebaseAuth.getInstance()
         firebaseUser = auth.currentUser!!
-
-        //posts = mutableListOf()
 
         // toolbar
         val toolbar: Toolbar = binding.toolbarPosts
@@ -74,54 +124,18 @@ class PostsActivity : AppCompatActivity() {
             }
         })
 
-        refPosts = databaseInstance.reference.child("Blog").child(firebaseUser.uid)
+        //Init DB Posts - "Blog"
+        posts = databaseInstance.reference.child("Blog")
 
-        rvPosts = binding.vpPosts
-        //rvPosts.setHasFixedSize(true)
-        //rvPosts.layoutManager = LinearLayoutManager(this)
+        //Init event
+        iFirebaseLoadDone = this
 
-        adapter = PostsAdapter(this, posts)
-        rvPosts.adapter = adapter
-        //loadPosts()
+        loadPosts()
+
+        binding.vpPosts.setPageTransformer(true,DepthPageTransformer())
     }
 
     private fun loadPosts() {
-        refPosts.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    val posts = snapshot.getValue(PostModel::class.java)!!
-                    bindingPost.tvTitlePostDetails.text = posts.setTitle("title").toString()
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                longToast("error")
-            }
-        })
+       posts.addValueEventListener(this)
     }
-
-        // menu toolbar
-        override fun onCreateOptionsMenu(menu: Menu): Boolean {
-            menuInflater.inflate(R.menu.menu_admin, menu)
-            return true
-        }
-        override fun onOptionsItemSelected(item: MenuItem): Boolean {
-            when (item.itemId) {
-                R.id.action_add -> {
-                    val intent = Intent(this@PostsActivity, AddPostsActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                    return true
-                }
-                /*R.id.action_refresh -> {
-
-                    return true
-                }*/
-            }
-            return false
-        }
-        override fun onBackPressed() {
-            super.onBackPressed()
-            finishAffinity()
-        }
-    }
+}
