@@ -20,11 +20,11 @@ import fr.oxygames.app.R
 import fr.oxygames.app.activity.MessageChatActivity
 import fr.oxygames.app.activity.VisitUserProfileActivity
 import fr.oxygames.app.model.ChatModel
-import fr.oxygames.app.model.UsersModel
+import fr.oxygames.app.model.UserModel
 
 class UserAdapter(
     private val context: Context,
-    private val users: List<UsersModel>,
+    private val users: List<UserModel>,
     private var isChatCheck: Boolean
     ) : RecyclerView.Adapter<UserAdapter.ViewHolder?>() {
     var lastMsg: String = ""
@@ -39,8 +39,7 @@ class UserAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, i: Int) {
-
-        val user: UsersModel = users[i]
+        val user: UserModel = users[i]
         holder.userNameTxt.text = user.getUsername()
         Picasso.get().load(user.getAvatar()).placeholder(R.drawable.ic_profile).into(holder.profileImageView)
 

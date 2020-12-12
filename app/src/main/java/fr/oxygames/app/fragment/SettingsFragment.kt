@@ -25,7 +25,7 @@ import com.google.firebase.storage.UploadTask
 import com.squareup.picasso.Picasso
 import fr.oxygames.app.R
 import fr.oxygames.app.databinding.FragmentSettingsBinding
-import fr.oxygames.app.model.UsersModel
+import fr.oxygames.app.model.UserModel
 
 class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
@@ -36,7 +36,7 @@ class SettingsFragment : Fragment() {
     private var storageRef: StorageReference? = null
     private var coverChecker: String? = ""
     private var socialChecker: String? = ""
-    private var user: UsersModel? = null
+    private var user: UserModel? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,7 +54,7 @@ class SettingsFragment : Fragment() {
         usersReference!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
                 if (p0.exists()) {
-                    user = p0.getValue(UsersModel::class.java)
+                    user = p0.getValue(UserModel::class.java)
 
                     if (context != null) {
                         binding.usernameSettings.text = user!!.getUsername()

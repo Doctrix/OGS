@@ -10,12 +10,12 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
 import fr.oxygames.app.databinding.ActivityVisitUserProfileBinding
-import fr.oxygames.app.model.UsersModel
+import fr.oxygames.app.model.UserModel
 
 class VisitUserProfileActivity : AppCompatActivity()
 {
     private var userVisitId: String = ""
-    var user: UsersModel? = null
+    var user: UserModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +29,7 @@ class VisitUserProfileActivity : AppCompatActivity()
         ref.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
-                    user = snapshot.getValue(UsersModel::class.java)
+                    user = snapshot.getValue(UserModel::class.java)
 
                     binding.usernameDisplay.text = user!!.getUsername()
                     Picasso.get().load(user!!.getAvatar()).into(binding.profileImageDisplay)

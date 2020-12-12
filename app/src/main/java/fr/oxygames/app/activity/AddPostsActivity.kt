@@ -26,15 +26,15 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
-import fr.oxygames.app.databinding.ActivityPostBinding
+import fr.oxygames.app.databinding.ActivityAddPostsBinding
 import org.jetbrains.anko.longToast
 import java.io.IOException
 import java.util.*
 import kotlin.collections.ArrayList
 
-class PostActivity : AppCompatActivity(), View.OnClickListener {
+class AddPostsActivity : AppCompatActivity(), View.OnClickListener {
 
-    private lateinit var binding: ActivityPostBinding
+    private lateinit var binding: ActivityAddPostsBinding
 
     private var selectImage: ImageButton? = null
     private var postTitle: EditText? = null
@@ -64,7 +64,7 @@ class PostActivity : AppCompatActivity(), View.OnClickListener {
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityPostBinding.inflate(layoutInflater)
+        binding = ActivityAddPostsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // Init Firebase
@@ -87,7 +87,7 @@ class PostActivity : AppCompatActivity(), View.OnClickListener {
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener {
-            val intent = Intent(this, BlogActivity::class.java)
+            val intent = Intent(this, AddPostsActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -144,7 +144,7 @@ class PostActivity : AppCompatActivity(), View.OnClickListener {
                     .addOnSuccessListener {
                         longToast("Post Uploaded")
                         progressBar.dismiss()
-                        val intent = Intent(this@PostActivity, BlogActivity::class.java)
+                        val intent = Intent(this@AddPostsActivity, PostsActivity::class.java)
                         startActivity(intent)
                         finish()
                     }

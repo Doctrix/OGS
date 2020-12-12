@@ -6,7 +6,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activity.PostActivity">
+        tools:context=".activity.AddPostsActivity">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_post"

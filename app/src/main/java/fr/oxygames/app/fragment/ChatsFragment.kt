@@ -14,7 +14,7 @@ import com.google.firebase.database.*
 import fr.oxygames.app.adapter.UserAdapter
 import fr.oxygames.app.databinding.FragmentChatsBinding
 import fr.oxygames.app.model.ChatListModel
-import fr.oxygames.app.model.UsersModel
+import fr.oxygames.app.model.UserModel
 import fr.oxygames.app.notifications.Token
 import java.util.*
 
@@ -25,7 +25,7 @@ class ChatsFragment : Fragment() {
     private var firebaseUser: FirebaseUser? = null
     private var userAdapter: UserAdapter? = null
     private var chatListModel: ChatListModel? = null
-    private var mUsers: List<UsersModel>? = null
+    private var mUsers: List<UserModel>? = null
     private var usersChatListModel: List<ChatListModel>? = null
 
     override fun onCreateView(
@@ -82,7 +82,7 @@ class ChatsFragment : Fragment() {
                 (mUsers as ArrayList).clear()
                 for (dataSnapshot in snapshot.children)
                 {
-                    val user = dataSnapshot.getValue(UsersModel::class.java)
+                    val user = dataSnapshot.getValue(UserModel::class.java)
                     for (eachChatList in usersChatListModel!!)
                     {
                         if (user!!.getUID().equals(eachChatList.getId()))
@@ -91,7 +91,7 @@ class ChatsFragment : Fragment() {
                         }
                     }
                 }
-                userAdapter = UserAdapter(context!!, (mUsers as ArrayList<UsersModel>), true)
+                userAdapter = UserAdapter(context!!, (mUsers as ArrayList<UserModel>), true)
                 recyclerViewChatList!!.adapter = userAdapter
             }
             override fun onCancelled(error: DatabaseError) {

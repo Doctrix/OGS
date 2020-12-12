@@ -13,13 +13,13 @@ import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import fr.oxygames.app.R
 import fr.oxygames.app.databinding.ActivityMainBinding
-import fr.oxygames.app.model.UsersModel
+import fr.oxygames.app.model.UserModel
 import org.jetbrains.anko.longToast
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    lateinit var user: UsersModel
+    lateinit var user: UserModel
     var firebaseUser: FirebaseUser? = null
     var refUsers: DatabaseReference? = null
 
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists())
                 {
-                    user = snapshot.getValue(UsersModel::class.java)!!
+                    user = snapshot.getValue(UserModel::class.java)!!
                     binding.usernameMain.text = user.getUsername()
                     binding.facebookMain.text = user.getFacebook()
                     binding.instMain.text = user.getInstagram()
@@ -128,10 +128,10 @@ class MainActivity : AppCompatActivity() {
 
             // button tutorial
             R.id.action_blog -> {
-                val intent = Intent(this@MainActivity, BlogActivity::class.java)
+                val intent = Intent(this@MainActivity, PostsActivity::class.java)
                 startActivity(intent)
                 finish()
-                longToast("tutorial")
+                longToast("Blog")
                 return true
             }
 

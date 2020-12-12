@@ -1,7 +1,10 @@
 package fr.oxygames.app.model
 
-class BlogModel {
-    private var uid: String = ""
+/**
+ * Created by Doctrix on 06/12/2020.
+ */
+
+class PostModel {
     private var title: String = ""
     private var desc: String = ""
     private var image: String = ""
@@ -9,23 +12,13 @@ class BlogModel {
     constructor(){}
 
     constructor(
-        uid: String,
         title: String,
         desc: String,
         image: String,
     ) {
-        this.uid = uid
         this.title = title
         this.desc = desc
         this.image = image
-    }
-
-    fun getUID(): String?{
-        return uid
-    }
-
-    fun setUID(uid: String){
-        this.uid = uid
     }
 
     // title

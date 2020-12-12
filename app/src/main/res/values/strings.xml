@@ -70,4 +70,5 @@
     <string name="label_title_blog">Page blog exemple</string>
     <string name="label_description_blog">Description</string>
     <string name="label_refesh">Refresh</string>
+    <string name="label_date_post">48 minutes ago</string>
 </resources>

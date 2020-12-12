@@ -17,13 +17,13 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import fr.oxygames.app.R
 import fr.oxygames.app.adapter.UserAdapter
-import fr.oxygames.app.model.UsersModel
+import fr.oxygames.app.model.UserModel
 import java.util.*
 import kotlin.collections.ArrayList
 
 class SearchFragment : Fragment() {
     private var userAdapter: UserAdapter? = null
-    private var mUsers: List<UsersModel>? = null
+    private var mUsers: List<UserModel>? = null
     private var recyclerView: RecyclerView? = null
     private var searchEditText: EditText? = null
 
@@ -65,15 +65,15 @@ class SearchFragment : Fragment() {
         {
             override fun onDataChange(p0: DataSnapshot)
             {
-                (mUsers as ArrayList<UsersModel>).clear()
+                (mUsers as ArrayList<UserModel>).clear()
                 if (searchEditText!!.text.toString() == "")
                 {
                     for (snapshot in p0.children)
                     {
-                        val user: UsersModel? = snapshot.getValue(UsersModel::class.java)
+                        val user: UserModel? = snapshot.getValue(UserModel::class.java)
                         if (!(user!!.getUID()).equals(firebaseUserID))
                         {
-                            (mUsers as ArrayList<UsersModel>).add(user)
+                            (mUsers as ArrayList<UserModel>).add(user)
                         }
                     }
                     userAdapter = UserAdapter(context!!, mUsers!!, false)
@@ -97,14 +97,14 @@ class SearchFragment : Fragment() {
 
         queryUsers.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
-                (mUsers as ArrayList<UsersModel>).clear()
+                (mUsers as ArrayList<UserModel>).clear()
 
                 for (snapshot in p0.children)
                 {
-                    val user: UsersModel? = snapshot.getValue(UsersModel::class.java)
+                    val user: UserModel? = snapshot.getValue(UserModel::class.java)
                     if ((user!!.getUID()) != (firebaseUserID))
                     {
-                        (mUsers as ArrayList<UsersModel>).add(user)
+                        (mUsers as ArrayList<UserModel>).add(user)
                     }
                 }
                 userAdapter = UserAdapter(context!!, mUsers!!, false)

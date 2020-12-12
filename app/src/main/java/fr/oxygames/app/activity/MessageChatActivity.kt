@@ -26,7 +26,7 @@ import fr.oxygames.app.databinding.ActivityMessageChatBinding
 import fr.oxygames.app.fragment.APIService
 import fr.oxygames.app.model.ChatModel
 import fr.oxygames.app.model.DataModel
-import fr.oxygames.app.model.UsersModel
+import fr.oxygames.app.model.UserModel
 import fr.oxygames.app.notifications.Client
 import fr.oxygames.app.notifications.MyResponse
 import fr.oxygames.app.notifications.Sender
@@ -46,7 +46,7 @@ class MessageChatActivity : AppCompatActivity() {
     var chatsAdapter: ChatsAdapter? = null
     var mChatModelList: List<ChatModel>? = null
     lateinit var recyclerViewChats: RecyclerView
-    private var user: UsersModel? = null
+    private var user: UserModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,7 +79,7 @@ class MessageChatActivity : AppCompatActivity() {
         reference!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot)
             {
-                user = snapshot.getValue(UsersModel::class.java)
+                user = snapshot.getValue(UserModel::class.java)
 
                 binding.usernameChat.text = user!!.getUsername()
                 Picasso.get().load(user!!.getAvatar()).into(binding.profileImageChat)
@@ -170,7 +170,7 @@ class MessageChatActivity : AppCompatActivity() {
         {
             override fun onDataChange(snapshot: DataSnapshot)
             {
-                val user = snapshot.getValue(UsersModel::class.java)
+                val user = snapshot.getValue(UserModel::class.java)
                 if (notify)
                 {
                     //sendNotification(receiverId, user!!.getUsername(), message)
@@ -279,7 +279,7 @@ class MessageChatActivity : AppCompatActivity() {
                             {
                                 override fun onDataChange(snapshot: DataSnapshot)
                                 {
-                                    val user = snapshot.getValue(UsersModel::class.java)
+                                    val user = snapshot.getValue(UserModel::class.java)
                                     if (notify)
                                     {
                                         //sendNotification(userIdVisit, user!!.getUsername(), "sent you an image.")

@@ -6,7 +6,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activity.BlogActivity">
+        tools:context=".activity.PostsActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -36,13 +36,14 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/blog_list"
+            android:clipToPadding="false"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            tools:listitem="@layout/activity_posts_details"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/blog_row"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

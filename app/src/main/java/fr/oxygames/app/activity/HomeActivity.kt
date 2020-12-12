@@ -22,13 +22,13 @@ import fr.oxygames.app.fragment.ChatsFragment
 import fr.oxygames.app.fragment.SearchFragment
 import fr.oxygames.app.fragment.SettingsFragment
 import fr.oxygames.app.model.ChatModel
-import fr.oxygames.app.model.UsersModel
+import fr.oxygames.app.model.UserModel
 import org.jetbrains.anko.longToast
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     lateinit var chatModel: ChatModel
-    lateinit var user: UsersModel
+    lateinit var user: UserModel
     lateinit var database: FirebaseDatabase
     lateinit var refUsers: DatabaseReference
     var firebaseUser: FirebaseUser? = null
@@ -60,7 +60,7 @@ class HomeActivity : AppCompatActivity() {
         refUsers.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
                 if (p0.exists()) {
-                    user = p0.getValue(UsersModel::class.java)!!
+                    user = p0.getValue(UserModel::class.java)!!
                     binding.usernameHome.text = user.getUsername()
                     Picasso.get().load(user.getAvatar()).placeholder(R.drawable.ic_avatar)
                         .into(binding.profileImageHome)
