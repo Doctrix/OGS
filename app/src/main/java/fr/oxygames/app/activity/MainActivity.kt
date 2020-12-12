@@ -18,7 +18,9 @@ import org.jetbrains.anko.longToast
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityMainBinding
+
     lateinit var user: UserModel
     var firebaseUser: FirebaseUser? = null
     var refUsers: DatabaseReference? = null

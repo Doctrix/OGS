@@ -6,7 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
+import android.widget.Toast
+import androidx.viewpager.widget.PagerAdapter
+import androidx.viewpager.widget.ViewPager
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.squareup.picasso.Picasso
 import fr.oxygames.app.R
 import fr.oxygames.app.model.PostModel
@@ -15,34 +18,54 @@ import fr.oxygames.app.model.PostModel
  * Created by Doctrix on 06/12/2020.
  */
 
-class PostsAdapter (val context: Context, val posts: List<PostModel>) :
-    RecyclerView.Adapter<PostsAdapter.ViewHolder>() {
+class PostsAdapter (
+    internal var context: Context,
+    internal var data:List<PostModel>) : PagerAdapter() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.activity_posts_details, parent,false)
-        return ViewHolder(view)
+    internal var layoutInflater:LayoutInflater
+    init {
+        layoutInflater = LayoutInflater.from(context)
     }
 
-    override fun getItemCount() = posts.size
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(posts[position])
+    override fun isViewFromObject(view: View, `object`: Any): Boolean {
+        return view==`object`
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(post: PostModel) {
+    override fun getCount() : Int {
+        return data.size
+    }
 
-            val imagePost: ImageView = itemView.findViewById(R.id.ivImagePost)
-            val titlePost: TextView = itemView.findViewById(R.id.tvTitlePost)
-            val descPost: TextView = itemView.findViewById(R.id.tvDescriptionPost)
+    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+        (container as ViewPager).removeView(`object` as View)
+    }
 
-            val image = post.getImage()
-            val title = post.getTitle()
-            val description = post.getDesc()
+    override fun instantiateItem(container: ViewGroup, position: Int): Any {
+        //Inflate view
+        val view = layoutInflater.inflate(R.layout.activity_posts_details,container,false)
+        //View
+        val postImage = view.findViewById<View>(R.id.iv_image_post_details) as ImageView
+        val postTitle = view.findViewById<View>(R.id.tv_title_post_details) as TextView
+        val postDate = view.findViewById<View>(R.id.tv_relative_time_post_details) as TextView
+        val postDesc = view.findViewById<View>(R.id.tv_description_post_details) as TextView
+        val postBtnFav = view.findViewById<View>(R.id.fab_fav_posts) as FloatingActionButton
 
-            Picasso.get().load(image).placeholder(R.drawable.ic_profile).into(imagePost)
-            titlePost.text = title
-            descPost.text = description
+        //Set Data
+        Picasso.get().load(data[position].getImage()).into(postImage)
+        postTitle.text = data[position].getTitle()
+        postDesc.text = data[position].getDesc()
+
+        //
+        postBtnFav.setOnClickListener {
+            Toast.makeText(context,"Btn Fav Clicked", Toast.LENGTH_SHORT).show()
         }
+
+        view.setOnClickListener{
+            Toast.makeText(context,""+data[position].getTitle(), Toast.LENGTH_SHORT).show()
+        }
+
+        container.addView(view)
+        return view
     }
 }
+
+

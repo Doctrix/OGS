@@ -9,19 +9,20 @@
         tools:context=".activity.PostsActivity">
 
         <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar_layout_posts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/Theme.OxyGameS.AppBarOverlay">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar_blog"
+                android:id="@+id/toolbar_posts"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
                 app:popupTheme="@style/Theme.OxyGameS.PopupOverlay">
 
             <TextView
-                android:id="@+id/title"
+                android:id="@+id/tv_title_posts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -34,25 +35,11 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/blog_list"
-            android:clipToPadding="false"
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vp_posts"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/activity_posts_details"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            android:contentDescription="@string/label_todo"
-            app:srcCompat="@android:drawable/ic_dialog_info" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

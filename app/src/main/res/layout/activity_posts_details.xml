@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvTitlePost"
+            android:id="@+id/tv_title_post_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -25,14 +25,14 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tvRelativeTimePost"
+            android:id="@+id/tv_relative_time_post_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_date_post"
             android:textSize="12sp" />
 
         <ImageView
-            android:id="@+id/ivImagePost"
+            android:id="@+id/iv_image_post_details"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:layout_marginTop="4dp"
@@ -41,7 +41,7 @@
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
         <TextView
-            android:id="@+id/tvDescriptionPost"
+            android:id="@+id/tv_description_post_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -50,5 +50,14 @@
             android:text="@string/label_description_blog"
             android:textSize="18sp"
             android:textStyle="italic" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_fav_posts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:contentDescription="@string/label_todo"
+            app:srcCompat="@android:drawable/ic_dialog_info" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
