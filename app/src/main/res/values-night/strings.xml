@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OxyGameS</string>
-    <string name="copyright">oxygames.fr</string>
+    <string name="app_name" translatable="false">OxyGameS</string>
+    <string name="copyright" translatable="false">oxygames.fr</string>
 
     <!-- label -->
-    <string name="label_inscription">INSCRIPTION</string>
+    <string name="label_inscription" translatable="false">INSCRIPTION</string>
     <string name="label_connection">CONNECTION</string>
     <string name="label_email">Email</string>
     <string name="label_logout">Logout</string>

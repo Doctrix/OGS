@@ -40,10 +40,12 @@ class PostsActivity : AppCompatActivity(), IFirebaseLoadDone, ValueEventListener
                 finish()
                 return true
             }
-            /*R.id.action_refresh -> {
-
+            R.id.action_refresh -> {
+                val intent = Intent(this@PostsActivity, UpdateActivity::class.java)
+                startActivity(intent)
+                finish()
                 return true
-            }*/
+            }
         }
         return false
     }
@@ -80,6 +82,11 @@ class PostsActivity : AppCompatActivity(), IFirebaseLoadDone, ValueEventListener
     override fun onDestroy() {
         posts.removeEventListener(this)
         super.onDestroy()
+    }
+
+    override fun onStop() {
+        posts.removeEventListener(this)
+        super.onStop()
     }
 
     private lateinit var auth:FirebaseAuth
