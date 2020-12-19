@@ -4,11 +4,11 @@ class ChatModel {
     private var sender: String = ""
     private var message: String = ""
     private var receiver: String = ""
-    private var isSeen: Boolean = false
+    private var isSeen = false
     private var url: String = ""
     private var messageId: String = ""
 
-    constructor(){}
+    constructor() {}
 
     constructor(
         sender: String,
@@ -27,50 +27,56 @@ class ChatModel {
     }
 
     // sender
-    fun getSender(): String?{
+    fun getSender(): String? {
         return sender
     }
-    fun setSender(sender: String?){
+
+    fun setSender(sender: String?) {
         this.sender = sender!!
     }
 
     // message
-    fun getMessage(): String?{
+    fun getMessage(): String? {
         return message
     }
-    fun setMessage(message: String?){
+
+    fun setMessage(message: String?) {
         this.message = message!!
     }
 
     // receiver
-    fun getReceiver(): String?{
+    fun getReceiver(): String? {
         return receiver
     }
-    fun setReceiver(receiver: String?){
+
+    fun setReceiver(receiver: String?) {
         this.receiver = receiver!!
     }
 
     // isSeen
-    fun getIsSeen(): Boolean {
+    fun isIsSeen(): Boolean {
         return isSeen
     }
-    fun setIsSeen(isSeen: Boolean?){
+
+    fun setIsSeen(isSeen: Boolean?) {
         this.isSeen = isSeen!!
     }
 
     // url
-    fun getUrl(): String?{
+    fun getUrl(): String? {
         return url
     }
-    fun setUrl(url: String?){
+
+    fun setUrl(url: String?) {
         this.url = url!!
     }
 
     // message id
-    fun getMessageId(): String?{
+    fun getMessageId(): String? {
         return messageId
     }
-    fun setMessageId(messageId: String?){
+
+    fun setMessageId(messageId: String?) {
         this.messageId = messageId!!
     }
 }

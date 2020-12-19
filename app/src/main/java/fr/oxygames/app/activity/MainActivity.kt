@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         val toolbar: Toolbar = binding.toolbarMain
         binding.toolbarMain.title = "My account"
         setSupportActionBar(toolbar)
+
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener {
             finish()
@@ -45,16 +46,17 @@ class MainActivity : AppCompatActivity() {
         // data user
         refUsers!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists())
-                {
+                if (snapshot.exists()) {
                     user = snapshot.getValue(UserModel::class.java)!!
                     binding.usernameMain.text = user.getUsername()
                     binding.facebookMain.text = user.getFacebook()
                     binding.instMain.text = user.getInstagram()
                     binding.websiteMain.text = user.getWebsite()
                     binding.statusProfilMain.text = user.getStatus()
-                    Picasso.get().load(user.getCover()).placeholder(R.drawable.ic_cover).into(binding.coverMain)
-                    Picasso.get().load(user.getAvatar()).placeholder(R.drawable.ic_profile).into(binding.imageProfilMain)
+                    Picasso.get().load(user.getCover()).placeholder(R.drawable.ic_cover)
+                        .into(binding.coverMain)
+                    Picasso.get().load(user.getAvatar()).placeholder(R.drawable.ic_profile)
+                        .into(binding.imageProfilMain)
                 }
             }
 
@@ -78,7 +80,7 @@ class MainActivity : AppCompatActivity() {
             longToast("Website : $uri")
         }
 
-        // open page ingram
+        // open page instagram
         binding.instMain.setOnClickListener {
             val uri = Uri.parse(user.getInstagram())
             val intent = Intent(Intent.ACTION_VIEW, uri)
@@ -93,9 +95,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             longToast("Page Facebook")
         }
+
     }
 
-    private fun updateStatus(status : String) {
+    private fun updateStatus(status: String) {
         val ref = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
         val hashMap = HashMap<String, Any>()
         hashMap["status"] = status
@@ -109,7 +112,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        updateStatus("offline")
+        updateStatus("Offline")
     }
 
     // <-- menu
@@ -117,9 +120,9 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId)
-        {
+        when (item.itemId) {
             // button home
             R.id.action_home -> {
                 val intent = Intent(this@MainActivity, HomeActivity::class.java)
@@ -133,16 +136,24 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this@MainActivity, PostsActivity::class.java)
                 startActivity(intent)
                 finish()
-                longToast("Blog")
                 return true
             }
 
             // button store
             R.id.action_store -> {
-                /*val intent = Intent(this@MainActivity, StoreActivity::class.java)
+                val intent = Intent(this@MainActivity, StoreActivity::class.java)
                 startActivity(intent)
-                finish()*/
-                longToast("store")
+                finish()
+                longToast("Store")
+                return true
+            }
+
+            // button server
+            R.id.action_server -> {
+                val intent = Intent(this@MainActivity, LoginServerActivity::class.java)
+                startActivity(intent)
+                finish()
+                longToast("Login to server")
                 return true
             }
 
@@ -158,7 +169,7 @@ class MainActivity : AppCompatActivity() {
             // button logout
             R.id.action_logout -> {
                 FirebaseAuth.getInstance().signOut()
-                val intent = Intent (this@MainActivity, WelcomeActivity::class.java)
+                val intent = Intent(this@MainActivity, WelcomeActivity::class.java)
                 startActivity(intent)
                 finish()
                 longToast("logout ...")

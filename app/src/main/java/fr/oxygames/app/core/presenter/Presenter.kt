@@ -1,4 +1,4 @@
-package fr.oxygames.app.presenter
+package fr.oxygames.app.core.presenter
 
 interface Presenter {
     fun login()

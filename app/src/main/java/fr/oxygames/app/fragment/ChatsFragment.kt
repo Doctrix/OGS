@@ -11,48 +11,53 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import com.google.firebase.iid.FirebaseInstanceId
 import fr.oxygames.app.adapter.UserAdapter
 import fr.oxygames.app.databinding.FragmentChatsBinding
 import fr.oxygames.app.model.ChatListModel
+import fr.oxygames.app.model.ChatModel
 import fr.oxygames.app.model.UserModel
 import fr.oxygames.app.notifications.Token
 import java.util.*
 
 class ChatsFragment : Fragment() {
     private lateinit var binding: FragmentChatsBinding
-    private var recyclerViewChatList: RecyclerView? = null
-    private var usersReference: DatabaseReference? = null
-    private var firebaseUser: FirebaseUser? = null
+
     private var userAdapter: UserAdapter? = null
-    private var chatListModel: ChatListModel? = null
     private var mUsers: List<UserModel>? = null
-    private var usersChatListModel: List<ChatListModel>? = null
+    private var usersChatList: List<ChatListModel>? = null
+    lateinit var recyclerViewChatList: RecyclerView
+    private var firebaseUser: FirebaseUser? = null
+
+    private var usersReference: DatabaseReference? = null
+    private var chatModel: ChatModel? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-
+    ): View? {
         binding = FragmentChatsBinding.inflate(layoutInflater)
 
         recyclerViewChatList = binding.recyclerViewChatList
-        recyclerViewChatList!!.setHasFixedSize(true)
-        recyclerViewChatList!!.layoutManager = LinearLayoutManager(context)
+        recyclerViewChatList.setHasFixedSize(true)
+        recyclerViewChatList.layoutManager = LinearLayoutManager(context)
 
         firebaseUser = FirebaseAuth.getInstance().currentUser
-        usersReference = FirebaseDatabase.getInstance().reference.child("ChatList").child(firebaseUser!!.uid)
-        usersReference!!.addValueEventListener(object : ValueEventListener {
+
+        usersChatList = ArrayList()
+
+        val ref = FirebaseDatabase.getInstance().reference.child("ChatList").child(firebaseUser!!.uid)
+        ref!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot)
             {
-                usersChatListModel = ArrayList()
+                (usersChatList as ArrayList).clear()
 
-                (usersChatListModel as ArrayList).clear()
+                for (dataSnapshot in snapshot.children)
+                {
+                    val chatModel = dataSnapshot.getValue(ChatListModel::class.java)
 
-                for (dataSnapshot in snapshot.children){
-                    chatListModel = dataSnapshot.getValue(ChatListModel::class.java)
-
-                    (usersChatListModel as ArrayList).add(chatListModel!!)
+                    (usersChatList as ArrayList).add(chatModel!!)
                 }
                 retrieveChatList()
             }
@@ -61,7 +66,8 @@ class ChatsFragment : Fragment() {
 
             }
         })
-        updateToken(firebaseUser!!.uid)
+
+        updateToken(FirebaseInstanceId.getInstance().token)
 
         return binding.root
     }
@@ -73,26 +79,29 @@ class ChatsFragment : Fragment() {
     }
 
     private fun retrieveChatList() {
+
         mUsers = ArrayList()
-        firebaseUser = FirebaseAuth.getInstance().currentUser
+
+        val firebaseUser = FirebaseAuth.getInstance().currentUser
+
         val ref = FirebaseDatabase.getInstance().reference.child("Users")
-        ref.addValueEventListener(object : ValueEventListener {
+        ref!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot)
             {
                 (mUsers as ArrayList).clear()
                 for (dataSnapshot in snapshot.children)
                 {
                     val user = dataSnapshot.getValue(UserModel::class.java)
-                    for (eachChatList in usersChatListModel!!)
+                    for (eachChatList in usersChatList!!)
                     {
                         if (user!!.getUID().equals(eachChatList.getId()))
                         {
-                            (mUsers as ArrayList).add(user)
+                            (mUsers as ArrayList).add(user!!)
                         }
                     }
                 }
                 userAdapter = UserAdapter(context!!, (mUsers as ArrayList<UserModel>), true)
-                recyclerViewChatList!!.adapter = userAdapter
+                recyclerViewChatList.adapter = userAdapter
             }
             override fun onCancelled(error: DatabaseError) {
 

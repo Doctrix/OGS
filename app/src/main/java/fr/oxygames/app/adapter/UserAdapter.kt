@@ -23,23 +23,33 @@ import fr.oxygames.app.model.ChatModel
 import fr.oxygames.app.model.UserModel
 
 class UserAdapter(
-    private val context: Context,
-    private val users: List<UserModel>,
+    mContext: Context,
+    mUsers: List<UserModel>,
+    isChatCheck: Boolean
+    ) : RecyclerView.Adapter<UserAdapter.ViewHolder?>()
+{
+    private val mContext: Context
+    private val mUsers: List<UserModel>
     private var isChatCheck: Boolean
-    ) : RecyclerView.Adapter<UserAdapter.ViewHolder?>() {
     var lastMsg: String = ""
 
+    init {
+        this.mUsers = mUsers
+        this.mContext = mContext
+        this.isChatCheck = isChatCheck
+    }
+
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        val view: View = LayoutInflater.from(context).inflate(R.layout.user_search_item_layout, viewGroup, false)
+        val view: View = LayoutInflater.from(mContext).inflate(R.layout.user_search_item_layout, viewGroup, false)
         return UserAdapter.ViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        return users.size
+        return mUsers.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, i: Int) {
-        val user: UserModel = users[i]
+        val user: UserModel = mUsers[i]
         holder.userNameTxt.text = user.getUsername()
         Picasso.get().load(user.getAvatar()).placeholder(R.drawable.ic_profile).into(holder.profileImageView)
 
@@ -54,7 +64,7 @@ class UserAdapter(
 
         if (isChatCheck)
         {
-            if (user.getStatus() == "online")
+            if (user.getStatus() == "Online")
             {
                 holder.onlineImageView.visibility = View.VISIBLE
                 holder.offlineImageView.visibility = View.GONE
@@ -76,21 +86,21 @@ class UserAdapter(
                 "Send Message",
                 "Visit Profile"
             )
-            val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+            val builder: AlertDialog.Builder = AlertDialog.Builder(mContext)
             builder.setTitle("What do you want?")
             builder.setItems(options, DialogInterface.OnClickListener{
                     dialog, position ->
                 if (position == 0)
                 {
-                    val intent = Intent(context, MessageChatActivity::class.java)
+                    val intent = Intent(mContext, MessageChatActivity::class.java)
                     intent.putExtra("visit_id", user.getUID())
-                    context.startActivity(intent)
+                    mContext.startActivity(intent)
                 }
                 if (position == 1)
                 {
-                    val intent = Intent(context, VisitUserProfileActivity::class.java)
+                    val intent = Intent(mContext, VisitUserProfileActivity::class.java)
                     intent.putExtra("visit_id", user.getUID())
-                    context.startActivity(intent)
+                    mContext.startActivity(intent)
                 }
             })
             builder.show()
@@ -98,11 +108,19 @@ class UserAdapter(
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val userNameTxt: TextView = itemView.findViewById(R.id.username)
-        val profileImageView: CircleImageView = itemView.findViewById(R.id.image_profil)
-        val onlineImageView: CircleImageView = itemView.findViewById(R.id.image_online)
-        val offlineImageView: CircleImageView = itemView.findViewById(R.id.image_offline)
-        val lastMessageTxt: TextView = itemView.findViewById(R.id.message_last)
+        var userNameTxt: TextView
+        var profileImageView: CircleImageView
+        var onlineImageView: CircleImageView
+        var offlineImageView: CircleImageView
+        var lastMessageTxt: TextView
+
+        init {
+            userNameTxt = itemView.findViewById(R.id.username)
+            profileImageView = itemView.findViewById(R.id.image_profil)
+            onlineImageView = itemView.findViewById(R.id.image_online)
+            offlineImageView = itemView.findViewById(R.id.image_offline)
+            lastMessageTxt = itemView.findViewById(R.id.message_last)
+        }
     }
 
     private fun retrieveLastMessage(chatUserId: String?, lastMessageTxt: TextView)
@@ -118,17 +136,17 @@ class UserAdapter(
                 for (dataSnapshot in p0.children) {
                     val chatModel: ChatModel? = dataSnapshot.getValue(ChatModel::class.java)
                     if (firebaseUser != null && chatModel != null) {
-                        if (chatModel.getReceiver() == firebaseUser.uid &&
+                        if (chatModel.getReceiver() == firebaseUser!!.uid &&
                             chatModel.getSender() == chatUserId ||
                                 chatModel.getReceiver() == chatUserId &&
-                                chatModel.getSender() == firebaseUser.uid) {
+                                chatModel.getSender() == firebaseUser!!.uid) {
                             lastMsg = chatModel.getMessage()!!
                         }
                     }
                 }
                 when (lastMsg) {
                     "defaultMsg" -> lastMessageTxt.text = "No Message"
-                    "hello" -> lastMessageTxt.text = "image sent"
+                    "hello" -> lastMessageTxt.text = "image sent."
                     else -> lastMessageTxt.text = lastMsg
                 }
                 lastMsg = "defaultMsg"

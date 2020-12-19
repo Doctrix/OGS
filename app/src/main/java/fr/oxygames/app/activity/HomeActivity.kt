@@ -27,10 +27,12 @@ import org.jetbrains.anko.longToast
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
+
     lateinit var chatModel: ChatModel
     lateinit var user: UserModel
     lateinit var database: FirebaseDatabase
     lateinit var refUsers: DatabaseReference
+
     var firebaseUser: FirebaseUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,26 +40,28 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        firebaseUser = FirebaseAuth.getInstance().currentUser
-        database = FirebaseDatabase.getInstance()
-        refUsers = database.reference.child("Users").child(firebaseUser!!.uid)
-        val refChat = database.reference.child("Chats")
-
         // toolbar
         val toolbar: Toolbar = binding.toolbarHome
         binding.toolbarHome.title = ""
         setSupportActionBar(toolbar)
+
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener {
             val intent = Intent(this@HomeActivity, MainActivity::class.java)
             startActivity(intent)
             finish()
         }
+
         val tabLayout: TabLayout = binding.tabLayoutHome
         val viewPager: ViewPager = binding.viewPagerHome
 
+        database = FirebaseDatabase.getInstance()
+
+        firebaseUser = FirebaseAuth.getInstance().currentUser
+
+        refUsers = database.reference.child("Users").child(firebaseUser!!.uid)
         // username and profile picture
-        refUsers.addValueEventListener(object : ValueEventListener {
+        refUsers!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
                 if (p0.exists()) {
                     user = p0.getValue(UserModel::class.java)!!
@@ -71,14 +75,16 @@ class HomeActivity : AppCompatActivity() {
                 longToast("error")
             }
         })
-        refChat.addValueEventListener(object : ValueEventListener {
+
+        val refChat = database.reference.child("Chats")
+        refChat!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
                 val viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
                 var countUnreadMessages = 0
 
                 for (dataSnapShot in p0.children) {
-                    chatModel = dataSnapShot.getValue(ChatModel::class.java)!!
-                    if (chatModel.getReceiver().equals(firebaseUser!!.uid) && !chatModel.getIsSeen()) {
+                    val chatModel = dataSnapShot.getValue(ChatModel::class.java)
+                    if (chatModel!!.getReceiver() == firebaseUser!!.uid && !chatModel.isIsSeen()) {
                         countUnreadMessages += 1
                     }
                 }
@@ -87,9 +93,9 @@ class HomeActivity : AppCompatActivity() {
                 } else {
                     viewPagerAdapter.addFragment(ChatsFragment(), "($countUnreadMessages) Chats")
                 }
+
                 viewPagerAdapter.addFragment(SearchFragment(), "Search")
                 viewPagerAdapter.addFragment(SettingsFragment(), "Settings")
-
                 viewPager.adapter = viewPagerAdapter
                 tabLayout.setupWithViewPager(viewPager)
             }
@@ -108,19 +114,9 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            /*// button home
-            R.id.action_home -> {
-                longToast("Loading ...")
-                val intent = Intent(this@HomeActivity, MainActivity::class.java)
-                startActivity(intent)
-                finish()
-                return true
-            }*/
-
             // button profile
             R.id.action_profile -> {
-                longToast("Loading ...")
-                val intent = Intent(this@HomeActivity, VisitUserProfileActivity::class.java)
+                val intent = Intent(this@HomeActivity, MainActivity::class.java)
                 startActivity(intent)
                 finish()
                 return true
@@ -129,7 +125,6 @@ class HomeActivity : AppCompatActivity() {
             // button logout
             R.id.action_logout -> {
                 FirebaseAuth.getInstance().signOut()
-                longToast("deco ...")
                 val intent = Intent(this@HomeActivity, WelcomeActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -182,7 +177,6 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-
-        updateStatus("offline")
+        updateStatus("Offline")
     }
 }

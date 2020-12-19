@@ -3,7 +3,7 @@ package fr.oxygames.app.model
 class ChatListModel {
     private var id: String = ""
 
-    constructor(){}
+    constructor()
 
     constructor(id: String) {
         this.id = id
@@ -13,6 +13,7 @@ class ChatListModel {
     fun getId(): String? {
         return id
     }
+
     fun setId(id: String?) {
         this.id = id!!
     }

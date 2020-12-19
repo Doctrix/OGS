@@ -10,7 +10,7 @@
             type="fr.oxygames.app.viewModel.LoginViewModel" />
         <variable
             name="presenter"
-            type="fr.oxygames.app.core.presenter.Presenter" />
+            type="fr.oxygames.app.core.server.DataBase" />
 
     </data>
 
@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/ic_login_background"
-        tools:context=".activity.LoginActivity">
+        tools:context=".activity.LoginServerActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -106,7 +106,7 @@
             android:text="@string/label_connection"
             android:textAlignment="center"
             android:textSize="18sp"
-            android:onClick="@{(v)->presenter.login()}"
+            android:onClick="@{(v)->presenter.connection()}"
             app:layout_constraintBottom_toTopOf="@+id/register_link"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
