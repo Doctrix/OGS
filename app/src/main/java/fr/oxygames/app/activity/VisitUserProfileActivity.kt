@@ -23,7 +23,7 @@ class VisitUserProfileActivity : AppCompatActivity()
         val binding = ActivityVisitUserProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        userVisitId = intent.getStringExtra("visit_id")
+        userVisitId = intent.getStringExtra("visit_id").toString()
 
         val ref = FirebaseDatabase.getInstance().reference.child("Users").child(userVisitId)
         ref.addValueEventListener(object : ValueEventListener{

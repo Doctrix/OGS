@@ -17,7 +17,7 @@ class ViewFullImageActivity : AppCompatActivity() {
         binding = ActivityViewFullImageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        imageUrl = intent.getStringExtra("url")
+        imageUrl = intent.getStringExtra("url").toString()
         imageView = binding.imageViewer
 
         Picasso.get().load(imageUrl).into(imageView)
